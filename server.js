@@ -1,22 +1,22 @@
 'use strict';
 
-//// Requires meanio
-//var mean = require('meanio');
+// Requires meanio
+var mean = require('meanio');
+
+// Creates and serves mean application
+mean.serve({ /*options placeholder*/ }, function(app, config) {
+  console.log('Mean app started on port ' + config.http.port + ' (' + process.env.NODE_ENV + ')');
+  if(config.https && config.https.port){
+    console.log('Mean secure app started on port ' + config.https.port + ' (' + process.env.NODE_ENV + ')');
+  }
+});
+
+//var express = require('express');
+//var app = express();
 //
-//// Creates and serves mean application
-//mean.serve({ /*options placeholder*/ }, function(app, config) {
-//  console.log('Mean app started on port ' + config.http.port + ' (' + process.env.NODE_ENV + ')');
-//  if(config.https && config.https.port){
-//    console.log('Mean secure app started on port ' + config.https.port + ' (' + process.env.NODE_ENV + ')');
-//  }
-//});
-
-var express = require('express');
-var app = express();
-
-app.use(express.static(__dirname + '/packages/system/public/views'));
-
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
-
-app.listen(port, ipaddress);
+//app.use(express.static(__dirname + '/packages/system/public/views'));
+//
+//var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+//var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+//
+//app.listen(port, ipaddress);
