@@ -10,17 +10,16 @@
 
         $routeProvider
             .when("/search",{
-                templateUrl: "index.html",
-                controller: "IndexController as model"
-            })
+                            templateUrl: "search.html",
+                            controller: "SearchController"
+                        })
+            .when("/details",{
+                            templateUrl: "details.html",
+                            controller: "DetailsController"
+                        })
             .otherwise({
-
-                redirectTo:"/search"
-
-
-
+                redirectTo: "/search"
             });
-
     }
 
 })();

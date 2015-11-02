@@ -2,9 +2,9 @@
 
     angular
         .module("eventapp")
-        .factory("EventService", EventService);
+        .factory("SearchService", SearchService);
 
-    function EventService($http){
+    function SearchService($http){
 
         var api = {
                 searchEventByNameAndLocation: searchEventByNameAndLocation
