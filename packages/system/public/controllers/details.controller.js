@@ -4,11 +4,20 @@
         .module("eventapp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($scope){
+    function DetailsController($routeParams,$scope, DetailsService){
 
-        console.log("Inside Details controller");
+        var id = $routeParams.id;
 
-    }
+        console.log("Inside Details controller " + id);
+
+        DetailsService.searchById(id).then(function(response){
+
+                $scope.event = response;
+                $scope.$apply();
+         });
+        }
+
+
 
 })();
 

@@ -10,11 +10,11 @@
 
         $routeProvider
             .when("/search",{
-                            templateUrl: "search.html",
+                            templateUrl: "views/search.html",
                             controller: "SearchController"
                         })
-            .when("/details",{
-                            templateUrl: "details.html",
+            .when("/details/:id",{
+                            templateUrl: "views/details.html",
                             controller: "DetailsController"
                         })
             .otherwise({

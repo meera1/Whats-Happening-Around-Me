@@ -31,7 +31,7 @@
                     <p>{{ event.description.text | limitTo: 300 }}{{event.description.text.length > 300 ? '...' :
                         ''}}</p>
 
-                    <p align="center"><a href="#" class="btn btn-primary btn-block">Open</a>
+                    <p align="center"><a href="#/details/{{event.id}}" class="btn btn-primary btn-block">Details</a>
                     </p>
                 </div>
             </div>
