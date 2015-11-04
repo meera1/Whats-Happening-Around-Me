@@ -17,6 +17,14 @@
                             templateUrl: "views/details.html",
                             controller: "DetailsController"
                         })
+            .when("/login",{
+                                        templateUrl: "views/login.html",
+                                        controller: "LoginController"
+                                    })
+            .when("/profile",{
+                                                    templateUrl: "views/profile.html",
+                                                    controller: "LoginController"
+                                                })
             .otherwise({
                 redirectTo: "/search"
             });
