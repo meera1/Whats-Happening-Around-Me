@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="eventapp">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!--<script src="../../../../bower_components/angular/angular.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="../../../bower_components/angular-route/angular-route.min.js"></script>
+
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+    <script src="services/search.service.js"></script>
+    <script src="services/details.service.js"></script>
+    <script src="controllers/search.controller.js"></script>
+    <script src="controllers/details.controller.js"></script>
+
+</head>
+
+<body >
+    <div ng-include="'views/header.html'">
+
+    </div>
+
+    <div class="container">
+
+        <div ng-view>
+
+        </div>
+
+    </div>
+</body>
+</html>
+
+
