@@ -9,6 +9,10 @@
         console.log("inside config.js");
 
         $routeProvider
+            .when("/home",{
+                            templateUrl: "views/home.html",
+                            controller: "HomeController"
+            })
             .when("/search",{
                             templateUrl: "views/search.html",
                             controller: "SearchController"
