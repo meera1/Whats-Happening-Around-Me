@@ -8,16 +8,28 @@
 
         var id = $routeParams.id;
 
-        console.log("Inside Details controller " + id);
+        var detailsModel = this;
+
+        detailsModel.addLikeForEvent = addLikeForEvent;
 
         DetailsService.searchById(id).then(function(response){
 
-                $scope.event = response;
+                detailsModel.event = response;
                 $scope.$apply();
          });
+
+        function addLikeForEvent(eventId){
+
+            DetailsService
+                   .addLikeForEvent(eventId)
+                   .then(function(response){
+
+                        $scope.blah = response;
+
+                   });
         }
 
-
+     }
 
 })();
 

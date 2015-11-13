@@ -4,10 +4,11 @@
         .module("eventapp")
         .factory("DetailsService", DetailsService);
 
-    function DetailsService($http){
+    function DetailsService($http, $q){
 
         var api = {
-                searchById: searchById
+                searchById: searchById,
+                addLikeForEvent: addLikeForEvent
         }
 
         return api;
@@ -28,6 +29,28 @@
                 });
 
             return deferred.promise;
+        }
+
+        function addLikeForEvent(eventId, callback){
+
+            var deferred = $q.defer();
+
+//            var likes = {
+//
+//                userId: 123,
+//                eventId: eventId
+//            };
+
+            console.log("here");
+
+            $http.post("/api/wham/eventapp/user/123/event/"+eventId+"/like")
+                .success(function(response){
+                    console.log("details service here");
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
+
         }
 
     }
