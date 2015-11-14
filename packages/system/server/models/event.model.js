@@ -7,11 +7,20 @@ module.exports = function(mongoose, db){
         "eventID":String
     },{collection: "likes"});
 
+    var EventSchemaForComment = mongoose.Schema({
+            "userID":String,
+            "eventID":String,
+            "comment":String
+        },{collection: "comments"});
+
     var EventModel = mongoose.model("EventModel", EventSchema);
+
+    var EventModelForComments = mongoose.model("EventModelForComments", EventSchemaForComment)
 
     var api = {
 
-        addLikeForEvent : addLikeForEvent
+        addLikeForEvent : addLikeForEvent,
+        addCommentForEvent: addCommentForEvent
     };
 
     return api;
@@ -33,5 +42,23 @@ module.exports = function(mongoose, db){
         return deferred.promise;
 
     }
+
+    function addCommentForEvent(commentForEvent){
+
+            var deferred = q.defer();
+
+            EventModelForComments.create(commentForEvent, function(err, doc){
+
+                EventModelForComments.find(err, function(err, response){
+
+                    deferred.resolve(response);
+
+                });
+
+            });
+
+            return deferred.promise;
+
+        }
 
 };

@@ -8,7 +8,8 @@
 
         var api = {
                 searchById: searchById,
-                addLikeForEvent: addLikeForEvent
+                addLikeForEvent: addLikeForEvent,
+                addCommentForEvent: addCommentForEvent
         }
 
         return api;
@@ -35,15 +36,23 @@
 
             var deferred = $q.defer();
 
-//            var likes = {
-//
-//                userId: 123,
-//                eventId: eventId
-//            };
+            $http.post("/api/wham/eventapp/user/123/event/"+eventId+"/like")
+                .success(function(response){
+                    console.log("details service here");
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
+
+        }
+
+        function addCommentForEvent(eventId, comment, callback){
+
+            var deferred = $q.defer();
 
             console.log("here");
 
-            $http.post("/api/wham/eventapp/user/123/event/"+eventId+"/like")
+            $http.post("/api/wham/eventapp/user/123/event/"+eventId+"/comment/"+comment)
                 .success(function(response){
                     console.log("details service here");
                     deferred.resolve(response);

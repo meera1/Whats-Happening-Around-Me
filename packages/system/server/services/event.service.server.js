@@ -2,25 +2,18 @@ module.exports = function(app, model){
 
     app.post("/api/wham/eventapp/user/:userId/event/:eventId/like", addLikeForEvent);
 
-    function addLikeForEvent(req, res){
+    app.post("/api/wham/eventapp/user/:userId/event/:eventId/comment/:comment", addCommentForEvent);
 
-            console.log("now here at server");
+    function addLikeForEvent(req, res){
 
             var userID = req.params.userId;
 
             var eventID = req.params.eventId;
 
-            console.log("userId: " + userID);
-
-            console.log("eventId: "+ eventID);
-
             var likeForEvent = {
                         userID: userID,
                         eventID: eventID
             };
-
-
-//            res.json(likesForEvent);
 
             model
                 .addLikeForEvent(likeForEvent)
@@ -30,5 +23,37 @@ module.exports = function(app, model){
 
                 });
     }
+
+    function addCommentForEvent(req, res){
+
+                console.log("now here at server");
+
+                var userID = req.params.userId;
+
+                var eventID = req.params.eventId;
+
+                var comment = req.params.comment;
+
+                console.log("userId: " + userID);
+
+                console.log("eventId: "+ eventID);
+
+                console.log("comment: " + comment);
+
+
+                var commentForEvent = {
+                            userID: userID,
+                            eventID: eventID,
+                            comment: comment
+                };
+
+                model
+                    .addCommentForEvent(commentForEvent)
+                    .then(function(response){
+    
+                        res.json(response);
+
+                    });
+        }
 
 };
