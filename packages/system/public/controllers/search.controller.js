@@ -8,15 +8,19 @@
 
         console.log("Inside Search controller");
 
-        $scope.search = search;
+        var model = this;
+
+//        $scope.search = search;
+
+        model.search = search;
 
         function search(eventName, eventLocation){
 
             SearchService.searchEventByNameAndLocation(eventName,eventLocation).then(function(response){
 
-                $scope.data = response.events;
+                model.data = response.events;
                 $scope.$apply();
-                console.log($scope.data);
+                console.log($scope.model);
 
             });
         }

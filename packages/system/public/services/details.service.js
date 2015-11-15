@@ -4,10 +4,12 @@
         .module("eventapp")
         .factory("DetailsService", DetailsService);
 
-    function DetailsService($http){
+    function DetailsService($http, $q){
 
         var api = {
-                searchById: searchById
+                searchById: searchById,
+                addLikeForEvent: addLikeForEvent,
+                addCommentForEvent: addCommentForEvent
         }
 
         return api;
@@ -28,6 +30,36 @@
                 });
 
             return deferred.promise;
+        }
+
+        function addLikeForEvent(eventId, callback){
+
+            var deferred = $q.defer();
+
+            $http.post("/api/wham/eventapp/user/123/event/"+eventId+"/like")
+                .success(function(response){
+                    console.log("details service here");
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
+
+        }
+
+        function addCommentForEvent(eventId, comment, callback){
+
+            var deferred = $q.defer();
+
+            console.log("here");
+
+            $http.post("/api/wham/eventapp/user/123/event/"+eventId+"/comment/"+comment)
+                .success(function(response){
+                    console.log("details service here");
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
+
         }
 
     }
