@@ -18,13 +18,17 @@
             var $q = injector.get("$q");
             var deferred = $q.defer();
 
-            var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&location.address=boston,ma";
+            //var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&location.address=boston,ma";
+            var url = "http://api.eventful.com/json/events/search?app_key=rjZLWfCmWpqWjhPd&keywords=&location=San+Diego&date=Future&callback=JSON_CALLBACK";
 
-            $http.get(url)
-                .success(function(response){
+            $http({
+                 method: "JSONP",
+                 url: url,
+                 responseType: "json"
+                }).success(function(response){
+                    console.log("Test");
                     console.log(response);
                     deferred.resolve(response);
-
                 });
 
             return deferred.promise;
