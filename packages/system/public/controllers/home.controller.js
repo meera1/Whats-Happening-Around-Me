@@ -6,13 +6,14 @@
 
     function HomeController($scope){
 
-        console.log("Inside Home controller");
+        console.log(" == inside HomeController");
+        $scope.userName = "";
 
-        $scope.home = home;
+        $scope.greet = greet;
 
-        function home(){
-
-
+        function greet(userName){
+            console.log("hello " + userName);
+            return "hello " + userName;
         }
 
     }
