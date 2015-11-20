@@ -15,11 +15,13 @@
             })
             .when("/search",{
                             templateUrl: "views/search.html",
-                            controller: "SearchController"
+                            controller: "SearchController",
+                            controllerAs: "model"
                         })
             .when("/details/:id",{
                             templateUrl: "views/details.html",
-                            controller: "DetailsController"
+                            controller: "DetailsController",
+                            controllerAs: "detailsModel"
                         })
             .when("/login",{
                             templateUrl: "views/login.html",
