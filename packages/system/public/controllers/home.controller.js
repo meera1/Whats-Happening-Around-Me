@@ -4,17 +4,19 @@
         .module("eventapp")
         .controller("HomeController", HomeController);
 
-    function HomeController($scope){
-
+    function HomeController($scope, $location){
+        var username;
         console.log(" == inside HomeController");
-        $scope.userName = "";
+        $scope.userName = "ameya";
+        $scope.greetMsg = "Hello World ";
 
-        $scope.greet = greet;
+        $scope.testFn = function() {
+            return "wham";
+        };
 
-        function greet(userName){
-            console.log("hello " + userName);
-            return "hello " + userName;
-        }
+        //$scope.isActive = function(route) {
+        //    return route === $location.path();
+        //};
 
     }
 
