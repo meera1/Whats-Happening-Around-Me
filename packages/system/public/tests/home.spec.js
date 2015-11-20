@@ -7,7 +7,7 @@
 
     "use strict";
 
-    describe('Home Controller check', function() {
+    describe('Home Controller Test Suite', function() {
 
         var controller, scope;
 
@@ -16,54 +16,41 @@
         beforeEach(inject(function($rootScope, $controller) {
             scope = $rootScope.$new();
             controller = $controller('HomeController', {$scope: scope})
-            //console.log(scope);
         }));
 
-        it('says hello world!', function () {
-            expect(scope.greetMsg).toEqual('Hello World ');
+        it('controller should not be null', function() {
+            expect(controller).not.toBeNull();
         });
-        it('says hello world!', function () {
-            expect(scope.userName).toEqual('ameya');
-         });
 
-        it('test fn should be wham', function () {
-            //console.log(scope.testFn);
+        it('says hello world!', function () {
+            expect(scope.greetMsg).toEqual('Hello, World!');
+        });
+
+        it('test fn should return wham', function () {
             expect(scope.testFn()).toEqual('wham');
         });
-        //
-        //it('test fn should not be anything than wham', function () {
-        //    expect(scope.testFn).toEqual('wham2');
-        //});
+
+        describe("$scope.testFn()", function() {
+
+            it("should return hello <name> for the name passed", function() {
+                var cases = [{
+                    input: "WHAM",
+                    expected: "Hello, WHAM!"
+                },
+                    {
+                    input: "J.A.R.V.I.S.",
+                    expected: "Hello, J.A.R.V.I.S.!"
+                }];
+
+                cases.forEach(function(testCase) {
+                    var result = scope.greet(testCase.input);
+                    expect(result).toEqual(testCase.expected);
+
+                });
+            });
 
 
-
-        //it('should exist', function() {
-        //    console.log('home controller exists');
-        //    expect(controller).to.exist
-        //});
-
-        //describe("$scope.greet()", function() {
-
-            //it('should add a greet method on the scope', function() {
-            //    expect($scope.greet).to.exist
-            //});
-
-
-            //it("should return hello <name> for the name passed", function() {
-            //    var cases = [{
-            //        input: "Dries",
-            //        expected: "hello Dries"
-            //    }];
-            //
-            //    cases.forEach(function(testCase) {
-            //        var result = $scope.greet(testCase.input);
-            //        expect(result).to.equal(testCase.expected);
-            //
-            //    });
-            //});
-
-
-        //});
+        });
 
     });
 
