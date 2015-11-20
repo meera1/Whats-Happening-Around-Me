@@ -4,16 +4,18 @@
         .module("eventapp")
         .controller("HomeController", HomeController);
 
-    function HomeController($scope){
+    function HomeController($scope, $location){
+        console.log(" == inside HomeController");
 
-        console.log("Inside Home controller");
+        $scope.greetMsg = "Hello, World!";
 
-        $scope.home = home;
+        $scope.testFn = function() {
+            return "wham";
+        };
 
-        function home(){
-
-
-        }
+        $scope.greet = function(name) {
+            return "Hello, " + name + "!";
+        };
 
     }
 

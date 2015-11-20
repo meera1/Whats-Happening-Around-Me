@@ -17,7 +17,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: _.flatten(_.values(assets.core.js)).concat([
       'packages/*/public/*.js',
-      'packages/*/public/*/*.js'
+      'packages/*/public/*/*.js',
+      "bower_components/angular-route/angular-route.min.js"
     ]),
 
     // list of files to exclude
@@ -25,15 +26,13 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress'],
 
     // coverage
     preprocessors: {
       // source files that you want to generate coverage for
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
-      'packages/*/public/controllers/*.js': ['coverage'],
-      'packages/*/public/services/*.js': ['coverage']
     },
 
     coverageReporter: {
