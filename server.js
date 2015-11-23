@@ -17,7 +17,6 @@ var app = express();
 var mongoose = require('mongoose');
 
 var connectionString = 'mongodb://localhost/';
-mongoose.connect(connectionString);
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -27,8 +26,9 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
         process.env.OPENSHIFT_APP_NAME;
 }
 
-var db = mongoose.connection;
-//var db = mongoose.connect(connectionString);
+//mongoose.connect(connectionString);
+//var db = mongoose.connection;
+var db = mongoose.connect(connectionString);
 
 app.use(express.static(__dirname + ''));
 
