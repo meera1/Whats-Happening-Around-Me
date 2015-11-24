@@ -3,6 +3,16 @@
     angular
         .module("eventapp")
         .controller("SearchController", SearchController);
+    var latitude = 0.0;
+    var longitude = 0.0;
+    var within = 10;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position){
+            console.log("Current location: " + position.coords.latitude + ", " + position.coords.longitude);
+            latitude = position.coords.latitude
+            longitude = position.coords.longitude;
+        });
+    }
 
     function SearchController($scope, SearchService){
 
@@ -17,7 +27,8 @@
         function search(eventName, eventLocation){
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
-            SearchService.searchEventByNameAndLocation(eventName,eventLocation).then(function(response){
+
+            SearchService.searchEventByNameAndLocation(eventName, eventLocation, within).then(function(response){
                 model.data = response.events;
                 $scope.$apply();
                 console.log($scope.model);
@@ -122,9 +133,13 @@
     }
 
     function getValidEventLocation(eventLocation){
-        if(eventLocation == undefined || eventLocation.trim() == "") eventLocation = "Boston, MA"
+        if(eventLocation == undefined || eventLocation.trim() == "")
+            if(latitude == 0.0 || longitude ==0.0){
+                eventLocation = "Boston, MA"
+            } else {
+                eventLocation = latitude + "," + longitude
+            }
         return eventLocation
     }
 
 })();
-
