@@ -15,11 +15,19 @@
         model.search = search;
 
         function search(eventName, eventLocation){
-
+            eventLocation = getValidEventLocation(eventLocation);
+            eventName = getValidEventName(eventName);
             SearchService.searchEventByNameAndLocation(eventName,eventLocation).then(function(response){
                 model.data = response.events;
                 $scope.$apply();
                 console.log($scope.model);
+                if(response.events == null){
+                    document.getElementById("event-error").style.display = "block"
+                    document.getElementById("map_canvas").style.display = "none"
+                } else {
+                    document.getElementById("event-error").style.display = "none"
+                    document.getElementById("map_canvas").style.display = "block"
+                }
                 populateMap(response.events);
             });
         }
@@ -106,6 +114,16 @@
             }
         }
 
+    }
+
+    function getValidEventName(eventName){
+        if(eventName == undefined) eventName = ""
+        return eventName
+    }
+
+    function getValidEventLocation(eventLocation){
+        if(eventLocation == undefined || eventLocation.trim() == "") eventLocation = "Boston, MA"
+        return eventLocation
     }
 
 })();
