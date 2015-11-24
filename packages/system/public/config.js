@@ -10,8 +10,9 @@
 
         $routeProvider
             .when("/home",{
-                            templateUrl: "views/home.html",
-                            controller: "HomeController"
+                            templateUrl: "views/search.html",
+                            controller: "SearchController",
+                            controllerAs: "model"
             })
             .when("/search",{
                             templateUrl: "views/search.html",
