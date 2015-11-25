@@ -19,10 +19,9 @@
         console.log("Inside Search controller");
 
         var model = this;
-
-//        $scope.search = search;
-
         model.search = search;
+        $scope.getValidEventLocation = getValidEventLocation;
+        $scope.getValidEventName = getValidEventName;
 
         function search(eventName, eventLocation){
             eventLocation = getValidEventLocation(eventLocation);
@@ -125,21 +124,23 @@
             }
         }
 
-    }
+        function getValidEventName(eventName){
+            if(eventName == undefined) eventName = ""
+            return eventName
+        }
 
-    function getValidEventName(eventName){
-        if(eventName == undefined) eventName = ""
-        return eventName
-    }
-
-    function getValidEventLocation(eventLocation){
-        if(eventLocation == undefined || eventLocation.trim() == "")
-            if(latitude == 0.0 || longitude ==0.0){
-                eventLocation = "Boston, MA"
-            } else {
-                eventLocation = latitude + "," + longitude
-            }
-        return eventLocation
+        function getValidEventLocation(eventLocation){
+            console.log("getValidEventLocation");
+            console.log("Input:" + eventLocation);
+            if(eventLocation == undefined || eventLocation.trim() == "")
+                if(latitude == 0.0 || longitude ==0.0){
+                    eventLocation = "Boston, MA"
+                } else {
+                    eventLocation = latitude + "," + longitude
+                }
+            console.log("Output:" + eventLocation);
+            return eventLocation
+        }
     }
 
 })();
