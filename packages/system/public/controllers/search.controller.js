@@ -193,9 +193,9 @@
             console.log("Input:" + eventLocation);
             if(eventLocation == undefined || eventLocation.trim() == "")
                 if(latitude == 0.0 || longitude ==0.0){
-                    eventLocation = "Boston, MA"
+                     eventLocation = "location.address=Boston, MA"
                 } else {
-                    eventLocation = latitude + "," + longitude
+                    eventLocation = "location.latitude=" + latitude + "&location.longitude=" + longitude;
                 }
             console.log("Output:" + eventLocation);
             return eventLocation
