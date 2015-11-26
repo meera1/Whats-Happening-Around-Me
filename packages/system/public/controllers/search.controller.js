@@ -61,17 +61,8 @@
                         var eventName = "<No Name Specified>";
                         var updatedURL = "#/details/" + eventsResponse.events[i].id;
 
-                        if(response.address.address_1 != null)
-                            completeAddress = completeAddress + response.address.address_1 + ", ";
-                        if(response.address.address_2 != null)
-                            completeAddress = completeAddress + response.address.address_2 + ", ";
-                        if(response.address.city != null)
-                            completeAddress = completeAddress + response.address.city + ", ";
-                        if(response.address.region != null)
-                            completeAddress = completeAddress + response.address.region;
-
-                        if(completeAddress.length === 0)
-                            completeAddress = "<No Address Specified>";
+                        completeAddress = getCompleteAddress(response.address.address_1,response.address.address_2,
+                                                   response.address.city,response.address.region);
 
                         if(response.name != null){
 
@@ -95,6 +86,29 @@
                   }, 2000);
 
             });
+        }
+
+
+        //this function can be tested
+
+        function getCompleteAddress(address_1, address_2, city, region){
+
+            var completeAddress = "";
+
+             if(address_1 != null)
+                completeAddress = completeAddress + address_1 + ", ";
+            if(address_2 != null)
+                completeAddress = completeAddress + address_2 + ", ";
+            if(city != null)
+                completeAddress = completeAddress + city + ", ";
+            if(region != null)
+                completeAddress = completeAddress + region;
+
+            if(completeAddress.length === 0)
+                completeAddress = "<No Address Specified>";
+
+            return completeAddress;
+
         }
 
         function populateMap(locations){
