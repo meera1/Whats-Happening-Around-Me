@@ -3,9 +3,11 @@
     angular
         .module("eventapp")
         .controller("SearchController", SearchController);
+
     var latitude = 0.0;
     var longitude = 0.0;
     var within = 10;
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position){
             console.log("Current location: " + position.coords.latitude + ", " + position.coords.longitude);
@@ -13,6 +15,7 @@
             longitude = position.coords.longitude;
         });
     }
+
 
     function SearchController($scope, SearchService){
 
@@ -24,30 +27,84 @@
 
         model.search = search;
 
+
         function search(eventName, eventLocation){
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
 
-            SearchService.searchEventByNameAndLocation(eventName, eventLocation, within).then(function(response){
-                model.data = response.events;
+            SearchService.searchEventByNameAndLocation(eventName, eventLocation).then(function(eventsResponse){
+                console.log("already reached controller with response: " + eventsResponse);
+                model.data = eventsResponse.events;
                 $scope.$apply();
                 console.log($scope.model);
-                if(response.events == null){
+
+                if(eventsResponse.events == null){
                     document.getElementById("event-error").style.display = "block"
                     document.getElementById("map_canvas").style.display = "none"
                 } else {
                     document.getElementById("event-error").style.display = "none"
                     document.getElementById("map_canvas").style.display = "block"
                 }
-                populateMap(response.events);
+
+
+                var results = [];
+
+                var newlocations = [];
+
+
+                for(i=0;i<15;i++){
+
+                    SearchService.getAllVenues(eventsResponse.events[i].venue_id).then(function(response){
+
+                        console.log("results are :" + response.latitude + response.name +response.longitude+ response.resource_uri);
+
+                        var completeAddress = "";
+                        var eventName = "<No Name Specified>";
+                        var updatedURL = "#/details/" + eventsResponse.events[i].id;
+
+                        if(response.address.address_1 != null)
+                            completeAddress = completeAddress + response.address.address_1 + ", ";
+                        if(response.address.address_2 != null)
+                            completeAddress = completeAddress + response.address.address_2 + ", ";
+                        if(response.address.city != null)
+                            completeAddress = completeAddress + response.address.city + ", ";
+                        if(response.address.region != null)
+                            completeAddress = completeAddress + response.address.region;
+
+                        if(completeAddress.length === 0)
+                            completeAddress = "<No Address Specified>";
+
+                        if(response.name != null){
+
+                            eventName = response.name;
+
+                        }else if(eventsResponse.events[i].name.text != null){
+
+                            eventName = eventsResponse.events[i].name.text;
+
+                        }
+
+                        newlocations.push([eventName,response.latitude+","+response.longitude,
+                                    updatedURL,completeAddress]);
+
+                    });
+
+                }
+
+                setTimeout(function() {
+                    populateMap(newlocations);
+                  }, 2000);
+
             });
         }
 
-        function populateMap(events){
-            locations = [];
-            events.event.forEach(function(event){
-                locations.push([event.title, event.latitude + "," + event.longitude, event.url])
-            });
+        function populateMap(locations){
+//            locations = [];
+
+//            events.event.forEach(function(event){
+//                locations.push([event.title, event.latitude + "," + event.longitude, event.url])
+//            });
+
             var geocoder;
             var map;
             var bounds = new google.maps.LatLngBounds();
@@ -73,6 +130,7 @@
                 var title = locations[i][0];
                 var address = locations[i][1];
                 var url = locations[i][2];
+                var completeAddress = locations[i][3];
                 geocoder.geocode({
                     'address': locations[i][1]
                 },
@@ -86,9 +144,10 @@
                             title: title,
                             animation: google.maps.Animation.DROP,
                             address: address,
-                            url: url
+                            url: url,
+                            completeAddress: completeAddress
                         })
-                        infoWindow(marker, map, title, address, url);
+                        infoWindow(marker, map, title, address, url, completeAddress);
                         bounds.extend(marker.getPosition());
                         map.fitBounds(bounds);
                     } else {
@@ -97,9 +156,9 @@
                 });
             }
 
-            function infoWindow(marker, map, title, address, url) {
+            function infoWindow(marker, map, title, address, url, completeAddress) {
                 google.maps.event.addListener(marker, 'click', function () {
-                    var html = "<div><h3>" + title + "</h3><p>" + address + "<br></div><a href='" + url + "'>View Event</a></p></div>";
+                    var html = "<div><h3>" + title + "</h3><p>" + completeAddress + "<br></div><a href='" + url + "'>View Event</a></p></div>";
                     iw = new google.maps.InfoWindow({
                         content: html,
                         maxWidth: 350
@@ -135,9 +194,9 @@
     function getValidEventLocation(eventLocation){
         if(eventLocation == undefined || eventLocation.trim() == "")
             if(latitude == 0.0 || longitude ==0.0){
-                eventLocation = "Boston, MA"
+                eventLocation = "location.address=Boston, MA"
             } else {
-                eventLocation = latitude + "," + longitude
+                eventLocation = "location.latitude=" + latitude + "&location.longitude=" + longitude;
             }
         return eventLocation
     }

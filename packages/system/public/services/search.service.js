@@ -7,32 +7,57 @@
     function SearchService($http){
 
         var api = {
-                searchEventByNameAndLocation: searchEventByNameAndLocation
+                searchEventByNameAndLocation: searchEventByNameAndLocation,
+                getAllVenues: getAllVenues
         }
 
         return api;
 
-        function searchEventByNameAndLocation(eventName, eventLocation, within, callback){
+        function searchEventByNameAndLocation(eventName, eventLocation, callback){
+
             if(eventName == undefined) eventName = "";
+
             var injector = angular.injector(["ng"]);
             var $q = injector.get("$q");
             var deferred = $q.defer();
 
-            //var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&location.address=boston,ma";
-            var url = "http://api.eventful.com/json/events/search?app_key=rjZLWfCmWpqWjhPd&keywords=" + eventName + "&location=" + eventLocation + "&date=Future&within=" + within + "&callback=JSON_CALLBACK";
+            var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&"+eventLocation;
 
-            $http({
-                 method: "JSONP",
-                 url: url,
-                 responseType: "json"
-                }).success(function(response){
-                    console.log(response);
-                    deferred.resolve(response);
-                })
+             $http.get(url)
+                   .success(function(response){
+                        console.log(response);
+                        deferred.resolve(response);
+                   })
+                   .finally(function(){
+                        console.log("inside finally for first api call");
+
+                   });
 
             return deferred.promise;
         }
 
+
+        function getAllVenues(venue_id){
+
+            var injector = angular.injector(["ng"]);
+            var $q = injector.get("$q");
+            var deferred = $q.defer();
+
+            var url = "https://www.eventbriteapi.com/v3/venues/"+venue_id+"/?token=WMM76DC53N75L2J5T32V&";
+
+             $http.get(url)
+                .success(function(response){
+                                    console.log(response);
+                                    deferred.resolve(response);
+                })
+                .finally(function(){
+                    console.log("inside finally for second api call");
+
+                });
+
+             return deferred.promise;
+
+        }
     }
 
 })();
