@@ -33,7 +33,14 @@
 
             SearchService.searchEventByNameAndLocation(eventName, eventLocation).then(function(eventsResponse){
                 console.log("already reached controller with response: " + eventsResponse);
-                model.data = eventsResponse.events;
+
+                var limitedResponse = [];
+
+                for(i=0;i<26;i++){
+                    limitedResponse[i] = eventsResponse.events[i];
+                }
+
+                model.data = limitedResponse;
                 $scope.$apply();
                 console.log($scope.model);
 
@@ -50,32 +57,42 @@
 
                 var newlocations = [];
 
+                for(i=0;i<limitedResponse.length;i++){
 
-                for(i=0;i<15;i++){
-
-                    SearchService.getAllVenues(eventsResponse.events[i].venue_id).then(function(response){
+                    SearchService.getAllVenues(limitedResponse[i].venue_id).then(function(response){
 
                         console.log("results are :" + response.latitude + response.name +response.longitude+ response.resource_uri);
 
                         var completeAddress = "";
-                        var eventName = "<No Name Specified>";
-                        var updatedURL = "#/details/" + eventsResponse.events[i].id;
+                        var venueName = "<No Name Specified>";
+                        var updatedURL = "";
+                        var eventName = "<No Event Name Specified>";
+
+                        for(var k in limitedResponse){
+
+                            if(limitedResponse[k].venue_id === response.id){
+                                console.log("venue id from eventsres: " + limitedResponse[k].venue_id + "name is: " + limitedResponse[k].name.text);
+                                console.log("venue id from response: " + response.id + "name is: " + response.name);
+                                updatedURL = "#/details/" + limitedResponse[k].id;
+                                if(limitedResponse[k].name.text != null){
+                                    eventName = limitedResponse[k].name.text;
+                                }
+                                break;
+                            }
+                        }
 
                         completeAddress = getCompleteAddress(response.address.address_1,response.address.address_2,
                                                    response.address.city,response.address.region);
 
                         if(response.name != null){
 
-                            eventName = response.name;
-
-                        }else if(eventsResponse.events[i].name.text != null){
-
-                            eventName = eventsResponse.events[i].name.text;
+                            venueName = response.name;
 
                         }
 
-                        newlocations.push([eventName,response.latitude+","+response.longitude,
-                                    updatedURL,completeAddress]);
+                        newlocations.push([venueName,response.latitude+","+response.longitude,
+                                    updatedURL,completeAddress,eventName]);
+
 
                     });
 
@@ -83,7 +100,7 @@
 
                 setTimeout(function() {
                     populateMap(newlocations);
-                  }, 2000);
+                  }, 5000);
 
             });
         }
@@ -144,6 +161,7 @@
                 var address = locations[i][1];
                 var url = locations[i][2];
                 var completeAddress = locations[i][3];
+                var eventName = locations[i][4];
                 geocoder.geocode({
                     'address': locations[i][1]
                 },
@@ -158,9 +176,10 @@
                             animation: google.maps.Animation.DROP,
                             address: address,
                             url: url,
-                            completeAddress: completeAddress
+                            completeAddress: completeAddress,
+                            eventName: eventName
                         })
-                        infoWindow(marker, map, title, address, url, completeAddress);
+                        infoWindow(marker, map, title, address, url, completeAddress, eventName);
                         bounds.extend(marker.getPosition());
                         map.fitBounds(bounds);
                     } else {
@@ -169,9 +188,9 @@
                 });
             }
 
-            function infoWindow(marker, map, title, address, url, completeAddress) {
+            function infoWindow(marker, map, title, address, url, completeAddress, eventName) {
                 google.maps.event.addListener(marker, 'click', function () {
-                    var html = "<div><h3>" + title + "</h3><p>" + completeAddress + "<br></div><a href='" + url + "'>View Event</a></p></div>";
+                    var html = "<div><h3>" + eventName + "</h3><p>"+ title + "</p><p>" + completeAddress + "</p><p><a href='" + url + "'>View Event</a></p></div>";
                     iw = new google.maps.InfoWindow({
                         content: html,
                         maxWidth: 350

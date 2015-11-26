@@ -43,7 +43,7 @@
             var $q = injector.get("$q");
             var deferred = $q.defer();
 
-            var url = "https://www.eventbriteapi.com/v3/venues/"+venue_id+"/?token=WMM76DC53N75L2J5T32V&";
+            var url = "https://www.eventbriteapi.com/v3/venues/"+venue_id+"/?token=WMM76DC53N75L2J5T32V";
 
              $http.get(url)
                 .success(function(response){
