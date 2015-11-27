@@ -34,13 +34,27 @@
             SearchService.searchEventByNameAndLocation(eventName, eventLocation).then(function(eventsResponse){
                 console.log("already reached controller with response: " + eventsResponse);
 
-                var limitedResponse = [];
+                var filteredResponse = [];
 
-                for(i=0;i<26;i++){
-                    limitedResponse[i] = eventsResponse.events[i];
+//                for(i=0;i<6;i++){
+//                    filteredResponse[i] = eventsResponse.events[i];
+//                }
+
+                var j=0;
+                for(i=0;i<6;i++){
+                    if(eventsResponse.events[i].name != null && eventsResponse.events[i].name.text!=null
+                                && eventsResponse.events[i].name.text.length>10
+                                && eventsResponse.events[i].description!=null
+                                && eventsResponse.events[i].description.text != null
+                                && eventsResponse.events[i].description.text.length>30
+                                && eventsResponse.events[i].logo!=null && eventsResponse.events[i].logo.url!=null){
+
+                        filteredResponse[j] = eventsResponse.events[i];
+                        j++;
+                    }
                 }
 
-                model.data = limitedResponse;
+                model.data = filteredResponse;
                 $scope.$apply();
                 console.log($scope.model);
 
@@ -57,44 +71,44 @@
 
                 var newlocations = [];
 
-                for(i=0;i<limitedResponse.length;i++){
+                for(i=0;i<filteredResponse.length;i++){
 
-                    SearchService.getAllVenues(limitedResponse[i].venue_id).then(function(response){
+                        SearchService.getAllVenues(filteredResponse[i].venue_id).then(function(response){
 
-                        console.log("results are :" + response.latitude + response.name +response.longitude+ response.resource_uri);
+                            console.log("results are :" + response.latitude + response.name +response.longitude+ response.resource_uri);
 
-                        var completeAddress = "";
-                        var venueName = "<No Name Specified>";
-                        var updatedURL = "";
-                        var eventName = "<No Event Name Specified>";
+                            var completeAddress = "";
+                            var venueName = "<No Name Specified>";
+                            var updatedURL = "";
+                            var eventName = "<No Event Name Specified>";
 
-                        for(var k in limitedResponse){
+                            for(var k in filteredResponse){
 
-                            if(limitedResponse[k].venue_id === response.id){
-                                console.log("venue id from eventsres: " + limitedResponse[k].venue_id + "name is: " + limitedResponse[k].name.text);
-                                console.log("venue id from response: " + response.id + "name is: " + response.name);
-                                updatedURL = "#/details/" + limitedResponse[k].id;
-                                if(limitedResponse[k].name.text != null){
-                                    eventName = limitedResponse[k].name.text;
+                                if(filteredResponse[k].venue_id === response.id){
+                                    console.log("venue id from eventsres: " + filteredResponse[k].venue_id + "name is: " + filteredResponse[k].name.text);
+                                    console.log("venue id from response: " + response.id + "name is: " + response.name);
+                                    updatedURL = "#/details/" + filteredResponse[k].id;
+                                    if(filteredResponse[k].name.text != null){
+                                        eventName = filteredResponse[k].name.text;
+                                    }
+                                    break;
                                 }
-                                break;
                             }
-                        }
 
-                        completeAddress = getCompleteAddress(response.address.address_1,response.address.address_2,
-                                                   response.address.city,response.address.region);
+                            completeAddress = getCompleteAddress(response.address.address_1,response.address.address_2,
+                                                       response.address.city,response.address.region);
 
-                        if(response.name != null){
+                            if(response.name != null){
 
-                            venueName = response.name;
+                                venueName = response.name;
 
-                        }
+                            }
 
-                        newlocations.push([venueName,response.latitude+","+response.longitude,
-                                    updatedURL,completeAddress,eventName]);
+                            newlocations.push([venueName,response.latitude+","+response.longitude,
+                                        updatedURL,completeAddress,eventName]);
 
 
-                    });
+                        });
 
                 }
 
@@ -104,7 +118,6 @@
 
             });
         }
-
 
         //this function can be tested
 
