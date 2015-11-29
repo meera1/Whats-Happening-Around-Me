@@ -34,25 +34,7 @@
             SearchService.searchEventByNameAndLocation(eventName, eventLocation).then(function(eventsResponse){
                 console.log("already reached controller with response: " + eventsResponse);
 
-                var filteredResponse = [];
-
-//                for(i=0;i<6;i++){
-//                    filteredResponse[i] = eventsResponse.events[i];
-//                }
-
-                var j=0;
-                for(i=0;i<6;i++){
-                    if(eventsResponse.events[i].name != null && eventsResponse.events[i].name.text!=null
-                                && eventsResponse.events[i].name.text.length>10
-                                && eventsResponse.events[i].description!=null
-                                && eventsResponse.events[i].description.text != null
-                                && eventsResponse.events[i].description.text.length>30
-                                && eventsResponse.events[i].logo!=null && eventsResponse.events[i].logo.url!=null){
-
-                        filteredResponse[j] = eventsResponse.events[i];
-                        j++;
-                    }
-                }
+                var filteredResponse = getOnlyValidEvents(eventsResponse);
 
                 model.data = filteredResponse;
                 $scope.$apply();
@@ -71,7 +53,7 @@
 
                 var newlocations = [];
 
-                for(i=0;i<filteredResponse.length;i++){
+                for(i=0;i<10;i++){
 
                         SearchService.getAllVenues(filteredResponse[i].venue_id).then(function(response){
 
@@ -114,9 +96,29 @@
 
                 setTimeout(function() {
                     populateMap(newlocations);
-                  }, 5000);
+                  }, 2000);
 
             });
+        }
+
+        //this function can be tested
+        function getOnlyValidEvents(eventsResponse){
+
+            var filteredResponse = [];
+
+             for(i=0;i<eventsResponse.events.length;i++){
+                if(eventsResponse.events[i].name != null && eventsResponse.events[i].name.text!=null
+                            && eventsResponse.events[i].name.text.length>10
+                            && eventsResponse.events[i].description!=null
+                            && eventsResponse.events[i].description.text != null
+                            && eventsResponse.events[i].description.text.length>30
+                            && eventsResponse.events[i].logo!=null && eventsResponse.events[i].logo.url!=null){
+
+                    filteredResponse.push(eventsResponse.events[i]);
+                }
+             }
+
+             return filteredResponse;
         }
 
         //this function can be tested

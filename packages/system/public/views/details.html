@@ -11,6 +11,12 @@
                     <p>{{detailsModel.event.description.text}}</p>
 
                     <p>
+                        <a target="_blank" ng-href={{detailsModel.event.url}} class="btn btn-info">
+                            view at Eventbrite
+                        </a>
+                    </p>
+
+                    <p>
                         <button ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-info">
                             <span class="glyphicon glyphicon-thumbs-up"></span>
                         </button>
