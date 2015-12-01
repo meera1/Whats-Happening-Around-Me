@@ -4,6 +4,9 @@ module.exports = function(app, model){
 
     app.post("/api/wham/eventapp/user/:userId/event/:eventId/comment/:comment", addCommentForEvent);
 
+
+
+
     function addLikeForEvent(req, res){
 
             var userID = req.params.userId;
@@ -55,5 +58,28 @@ module.exports = function(app, model){
 
                     });
         }
+
+//
+//        function loginUser (req, res) {
+//
+//            var user = req.body;
+//            //console.log("cookies:  " + req.cookies);
+//            model
+//                .findUser(user)
+//                .then(function(response){
+//
+//                    res.json(response);
+//
+//                });
+//
+//        };
+//
+//
+//        function logoutUser (req, res) {
+//
+//            req.logout();
+//            res.send(200);
+//        };
+
 
 };

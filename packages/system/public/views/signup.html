@@ -1,33 +1,39 @@
-<div class="container">
+<div class="container" ng-controller="SignupController">
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <div class="row myborder">
             <h4 style="color: #7EB59E; margin: initial; margin-bottom: 10px;">Sign Up Now</h4><hr>
             <div class="input-group margin-bottom-20">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
-                <input size="60" maxlength="255" class="form-control" placeholder="User Name" name="UserRegistration[username]" id="UserRegistration_username" type="text">
+                <input ng-model="user.username" size="60" maxlength="255" class="form-control" placeholder="Username" name="username" id="username" type="text">
             </div>
+            &nbsp;
             <div class="input-group margin-bottom-20">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock mycolor"></i></span>
-                <input size="60" maxlength="255" class="form-control" placeholder="Password" name="UserRegistration[password]" id="UserRegistration_password" type="password">
+                <input ng-model="user.password" size="60" maxlength="255" class="form-control" placeholder="Password" name="password" id="password" type="password">
             </div>
+            &nbsp;
             <div class="input-group margin-bottom-20">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
-                <input size="60" maxlength="255" class="form-control" placeholder="First Name" name="UserRegistration[fname]" id="UserRegistration_fname" type="text">
+                <input ng-model="user.fname" size="60" maxlength="255" class="form-control" placeholder="First Name" name="fname" id="fname" type="text">
             </div>
+            &nbsp;
             <div class="input-group margin-bottom-20">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
-                <input size="60" maxlength="255" class="form-control" placeholder="Last Name" name="UserRegistration[lname]" id="UserRegistration_lname" type="text">
+                <input ng-model="user.lname" size="60" maxlength="255" class="form-control" placeholder="Last Name" name="lname" id="lname" type="text">
             </div>
+            &nbsp;
             <div class="input-group margin-bottom-20">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope mycolor"></i></span>
-                <input size="60" maxlength="255" class="form-control" placeholder="Email Address" name="UserRegistration[address]" id="UserRegistration_address" type="text">
+                <input ng-model="user.email" size="60" maxlength="255" class="form-control" placeholder="Email Address" name="email" id="email" type="email">
             </div>
+            &nbsp;
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn-u pull-left" type="submit">Sign Up</button>
+                    <button class="btn btn-info btn-block" type="submit" ng-click="signup(user)">Sign Up</button>
                 </div>
             </div>
+            &nbsp;
         </div>
         <div class="col-md-2"></div>
     </div>

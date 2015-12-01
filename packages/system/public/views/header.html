@@ -14,8 +14,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#/home">Home</a></li>
-                <li><a href="#/profile">Profile</a></li>
+                <li ng-class="{'active' : $location.url() == '/home'}"><a href="#/home">Home</a></li>
+                <li ng-class="{'active' : $location.url() == '/profile'}"><a href="#/profile">Profile</a></li>
                 <!--<li class="active"><a href="#">Link</a></li>-->
                 <!--<li><a href="#">Link</a></li>-->
                 <!--<li class="active"><a href="#">Link</a></li>-->
@@ -23,8 +23,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <!--<li><a href="#">Login</a></li>-->
-                <li><a href="#/login">Login</a></li>
-                <li><a href="#/signup">SignUp</a></li>
+                <li ng-class="{'active' : $location.url() == '/login'}"><a href="#/login">Login</a></li>
+                <li ng-class="{'active' : $location.url() == '/signup'}"><a href="#/signup">SignUp</a></li>
             </ul>
             </li>
             </ul>
