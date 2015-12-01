@@ -25,7 +25,8 @@
         model.search = search;
         $scope.getValidEventLocation = getValidEventLocation;
         $scope.getValidEventName = getValidEventName;
-
+        $scope.getCompleteAddress = getCompleteAddress;
+        $scope.getOnlyValidEvents = getOnlyValidEvents;
 
         function search(eventName, eventLocation){
             eventLocation = getValidEventLocation(eventLocation);
@@ -127,13 +128,13 @@
 
             var completeAddress = "";
 
-             if(address_1 != null)
+             if(address_1 != "")
                 completeAddress = completeAddress + address_1 + ", ";
-            if(address_2 != null)
+            if(address_2 != "")
                 completeAddress = completeAddress + address_2 + ", ";
-            if(city != null)
+            if(city != "")
                 completeAddress = completeAddress + city + ", ";
-            if(region != null)
+            if(region != "")
                 completeAddress = completeAddress + region;
 
             if(completeAddress.length === 0)
@@ -245,6 +246,9 @@
                 } else {
                     eventLocation = "location.latitude=" + latitude + "&location.longitude=" + longitude;
                 }
+            else{
+                eventLocation = "location.address=" + eventLocation;
+            }
             console.log("Output:" + eventLocation);
             return eventLocation
         }
