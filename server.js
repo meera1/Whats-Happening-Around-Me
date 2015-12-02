@@ -16,7 +16,7 @@ var app = express();
 
 var mongoose = require('mongoose');
 
-var connectionString = 'mongodb://localhost/';
+var connectionString = 'mongodb://localhost/eventappDb';
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +

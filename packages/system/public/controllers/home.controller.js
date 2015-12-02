@@ -4,18 +4,14 @@
         .module("eventapp")
         .controller("HomeController", HomeController);
 
-    function HomeController($scope, $location){
+    function HomeController($scope, HomeService){
         console.log(" == inside HomeController");
+        var homeModel = this;
 
-        $scope.greetMsg = "Hello, World!";
-
-        $scope.testFn = function() {
-            return "wham";
-        };
-
-        $scope.greet = function(name) {
-            return "Hello, " + name + "!";
-        };
+        HomeService.getCategories().then(function(response){
+            homeModel.data = response.categories;
+            $scope.$apply();
+        });
 
     }
 
