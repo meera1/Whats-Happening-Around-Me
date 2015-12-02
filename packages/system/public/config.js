@@ -27,12 +27,12 @@
                             templateUrl: "views/login.html",
                             controller: "LoginController"
                         })
-            .when("/logout",{
-                            templateUrl: "views/search.html",
-                            controller: "SearchController",
-                            controllerAs: "model"
-                        })
-            .when("/profile/:username",{
+//            .when("/logout",{
+//                            templateUrl: "views/home.html",
+//                            controller: "HomeController"
+//
+//                        })
+            .when("/profile",{
                             templateUrl: "views/profile.html",
                             controller: "ProfileController"
                         })

@@ -222,11 +222,10 @@ app.listen(port, ipaddress);
     });
 
 
+    app.post('rest/logout', function (req, res) {
 
-
-    app.post('/logout', function (req, res) {
-
-        req.logout();
+        req.logOut();
+        //req.session.destroy();
         res.send(200);
     });
 

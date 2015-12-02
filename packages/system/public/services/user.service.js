@@ -25,6 +25,7 @@
 
         function lookupUserByUsername(username, callback)
         {
+            console.log(username +" from user service");
             $http.get("/rest/user/"+username)
             .success(callback)
         }
@@ -36,6 +37,7 @@
             .success(callback);
         }
 
+
         function loginUser(user, callback)
         {
             console.log("in service  "+ user.username);
@@ -43,9 +45,10 @@
             .success(callback);
         }
 
+
         function logoutUser(user, callback)
         {
-            $http.put("/logout", user)
+            $http.post("rest/logout")
             .success(callback);
         }
 
