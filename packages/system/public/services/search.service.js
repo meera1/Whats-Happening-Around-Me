@@ -22,7 +22,7 @@
             var deferred = $q.defer();
 
             var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&"+eventLocation;
-
+            console.log("Fetching data from: " + url);
              $http.get(url)
                    .success(function(response){
                         console.log(response);

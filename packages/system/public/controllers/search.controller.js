@@ -28,6 +28,8 @@
         $scope.getCompleteAddress = getCompleteAddress;
         $scope.getOnlyValidEvents = getOnlyValidEvents;
 
+        initAutocomplete();
+
         function search(eventName, eventLocation){
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
@@ -41,12 +43,13 @@
                 $scope.$apply();
                 console.log($scope.model);
 
-                if(eventsResponse.events == null){
-                    document.getElementById("event-error").style.display = "block"
-                    document.getElementById("map_canvas").style.display = "none"
+                if(eventsResponse.events == null || eventsResponse.events == ""){
+                    document.getElementById("event-error").style.display = "block";
+                    document.getElementById("map_canvas").style.display = "none";
+                    return;
                 } else {
-                    document.getElementById("event-error").style.display = "none"
-                    document.getElementById("map_canvas").style.display = "block"
+                    document.getElementById("event-error").style.display = "none";
+                    document.getElementById("map_canvas").style.display = "block";
                 }
 
 
@@ -128,13 +131,13 @@
 
             var completeAddress = "";
 
-             if(address_1 != "")
+             if(address_1 != null && address_1 != "")
                 completeAddress = completeAddress + address_1 + ", ";
-            if(address_2 != "")
+            if(address_2 != null && address_2 != "")
                 completeAddress = completeAddress + address_2 + ", ";
-            if(city != "")
+            if(city != null && city != "")
                 completeAddress = completeAddress + city + ", ";
-            if(region != "")
+            if(region != null && region != "")
                 completeAddress = completeAddress + region;
 
             if(completeAddress.length === 0)
@@ -230,6 +233,11 @@
                 infoWindow(marker, map, title, address, url);
                 return marker;
             }
+        }
+
+        function initAutocomplete() {
+          var input = document.getElementById('event-location');
+          var searchBox = new google.maps.places.SearchBox(input);
         }
 
         function getValidEventName(eventName){
