@@ -23,11 +23,10 @@
              var url = "https://www.eventbriteapi.com/v3/events/"+id+"/?token=WMM76DC53N75L2J5T32V";
 
             $http.get(url)
-                .success(function(response){
+               .success(function(response){
                     console.log(response);
                     deferred.resolve(response);
-
-                });
+            });
 
             return deferred.promise;
         }
