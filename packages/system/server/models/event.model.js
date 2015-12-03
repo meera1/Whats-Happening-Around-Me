@@ -9,8 +9,7 @@ module.exports = function(mongoose, db){
 
     var EventSchemaForComment = mongoose.Schema({
             "userID":String,
-            "eventID":String,
-            "comment":String
+            "eventID":String,                             "comment":String
         },{collection: "comments"});
 
     var EventModel = mongoose.model("EventModel", EventSchema);

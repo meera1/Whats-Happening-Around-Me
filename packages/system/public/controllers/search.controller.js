@@ -28,7 +28,10 @@
         $scope.getCompleteAddress = getCompleteAddress;
         $scope.getOnlyValidEvents = getOnlyValidEvents;
 
+        initAutocomplete();
+
         function search(eventName, eventLocation){
+            eventLocation = document.getElementById("event-location").value;
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
 
@@ -41,20 +44,21 @@
                 $scope.$apply();
                 console.log($scope.model);
 
-                if(eventsResponse.events == null){
-                    document.getElementById("event-error").style.display = "block"
-                    document.getElementById("map_canvas").style.display = "none"
+                if(eventsResponse.events == null || eventsResponse.events == ""){
+                    document.getElementById("event-error").style.display = "block";
+                    document.getElementById("map_canvas").style.display = "none";
+                    return;
                 } else {
-                    document.getElementById("event-error").style.display = "none"
-                    document.getElementById("map_canvas").style.display = "block"
+                    document.getElementById("event-error").style.display = "none";
+                    document.getElementById("map_canvas").style.display = "block";
                 }
 
 
                 var results = [];
 
                 var newlocations = [];
-
-                for(i=0;i<10;i++){
+                var size = filteredResponse.length < 10 ? filteredResponse.length : 10;
+                for(i=0;i<size;i++){
 
                         SearchService.getAllVenues(filteredResponse[i].venue_id).then(function(response){
 
@@ -128,13 +132,13 @@
 
             var completeAddress = "";
 
-             if(address_1 != "")
+             if(address_1 != null && address_1 != "")
                 completeAddress = completeAddress + address_1 + ", ";
-            if(address_2 != "")
+            if(address_2 != null && address_2 != "")
                 completeAddress = completeAddress + address_2 + ", ";
-            if(city != "")
+            if(city != null && city != "")
                 completeAddress = completeAddress + city + ", ";
-            if(region != "")
+            if(region != null && region != "")
                 completeAddress = completeAddress + region;
 
             if(completeAddress.length === 0)
@@ -232,6 +236,11 @@
             }
         }
 
+        function initAutocomplete() {
+          var input = document.getElementById('event-location');
+          var searchBox = new google.maps.places.SearchBox(input);
+        }
+
         function getValidEventName(eventName){
             if(eventName == undefined) eventName = ""
             return eventName
@@ -243,8 +252,16 @@
             if(eventLocation == undefined || eventLocation.trim() == "")
                 if(latitude == 0.0 || longitude ==0.0){
                      eventLocation = "location.address=Boston, MA"
+                     document.getElementById("event-location").value = "Boston, MA";
                 } else {
                     eventLocation = "location.latitude=" + latitude + "&location.longitude=" + longitude;
+                    var location = ""
+                    var latlng = {lat: latitude, lng: longitude};
+                    geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({'location': latlng}, function(results, status) {
+                        document.getElementById("event-location").value = location;
+                    });
+
                 }
             else{
                 eventLocation = "location.address=" + eventLocation;

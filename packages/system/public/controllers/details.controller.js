@@ -4,7 +4,7 @@
         .module("eventapp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($routeParams,$scope, DetailsService){
+    function DetailsController($routeParams,$scope, DetailsService, SearchService){
 
         var id = $routeParams.id;
 
@@ -13,11 +13,31 @@
         detailsModel.addLikeForEvent = addLikeForEvent;
         detailsModel.addCommentForEvent = addCommentForEvent;
 
-
         DetailsService.searchById(id).then(function(response){
-
+                var completeAddress = "";
+                var venueName = "<No Name Specified>";
+                var updatedURL = "";
+                var eventName = "<No Event Name Specified>";
                 detailsModel.event = response;
-                $scope.$apply();
+                console.log(response);
+                 if(response.name.text != null){
+                    eventName = response.name.text;
+                }
+                SearchService.getAllVenues(response.venue_id).then(function(venue_response){
+                    if(venue_response.name != null){
+                        venueName = venue_response.name;
+                    }
+                    var completeAddress = getCompleteAddress(venue_response.address.address_1,venue_response.address.address_2,
+                              venue_response.address.city,venue_response.address.region);
+                    console.log("venue_response.name.text:"  +venue_response.name.text);
+                    console.log(" response.name:"  + response.name   );
+                    populateMap([[venueName,venue_response.latitude+","+venue_response.longitude,
+                                    completeAddress, eventName]]);
+
+
+                    $scope.$apply();
+                });
+
          });
 
         function addLikeForEvent(eventId){
@@ -44,6 +64,112 @@
 
         }
 
+        function populateMap(locations){
+//            locations = [];
+
+//            events.event.forEach(function(event){
+//                locations.push([event.title, event.latitude + "," + event.longitude, event.url])
+//            });
+
+            var geocoder;
+            var map;
+            var bounds = new google.maps.LatLngBounds();
+            initialize();
+
+            function initialize() {
+                map = new google.maps.Map(
+                document.getElementById("map_canvas"), {
+                    //center: new google.maps.LatLng(37.4419, -122.1419),
+                    //zoom: -20,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+                geocoder = new google.maps.Geocoder();
+
+                for (i = 0; i < locations.length; i++) {
+                    geocodeAddress(locations, i);
+                }
+
+            }
+            //google.maps.event.addDomListener(document.getElementById("search-button"), "click", initialize);
+
+            function geocodeAddress(locations, i) {
+                var title = locations[i][0];
+                var address = locations[i][1];
+
+                var completeAddress = locations[i][2];
+                var eventName = locations[i][3];
+                geocoder.geocode({
+                    'address': locations[i][1]
+                },
+
+                function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var marker = new google.maps.Marker({
+                            icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
+                            map: map,
+                            position: results[0].geometry.location,
+                            title: title,
+                            animation: google.maps.Animation.DROP,
+                            address: address,
+                            completeAddress: completeAddress,
+                            eventName: eventName
+                        })
+                        infoWindow(marker, map, title, address, completeAddress, eventName);
+                        bounds.extend(marker.getPosition());
+                        map.fitBounds(bounds);
+                    } else {
+                        console.log("geocode of " + address + " failed:" + status);
+                    }
+                });
+            }
+
+            function infoWindow(marker, map, title, address, completeAddress, eventName) {
+                google.maps.event.addListener(marker, 'click', function () {
+                    var html = "<div><h3>" + eventName + "</h3><p>"+ title + "</p><p>" + completeAddress + "</p></div>";
+                    iw = new google.maps.InfoWindow({
+                        content: html,
+                        maxWidth: 350
+                    });
+                    iw.open(map, marker);
+                });
+            }
+
+            function createMarker(results) {
+                var marker = new google.maps.Marker({
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
+                    map: map,
+                    position: results[0].geometry.location,
+                    title: title,
+                    animation: google.maps.Animation.DROP,
+                    address: address,
+                    url: url
+                })
+                bounds.extend(marker.getPosition());
+                map.fitBounds(bounds);
+                infoWindow(marker, map, title, address, url);
+                return marker;
+            }
+        }
+
+        function getCompleteAddress(address_1, address_2, city, region){
+
+            var completeAddress = "";
+
+             if(address_1 != null && address_1 != "")
+                completeAddress = completeAddress + address_1 + ", ";
+            if(address_2 != null && address_2 != "")
+                completeAddress = completeAddress + address_2 + ", ";
+            if(city != null && city != "")
+                completeAddress = completeAddress + city.trim() + ", ";
+            if(region != null && region != "")
+                completeAddress = completeAddress + region;
+
+            if(completeAddress.length === 0)
+                completeAddress = "<No Address Specified>";
+
+            return completeAddress;
+
+        }
      }
 
 })();

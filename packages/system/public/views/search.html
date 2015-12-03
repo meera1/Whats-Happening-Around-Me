@@ -5,7 +5,7 @@
             <div class="input-group col-md-12">
                 <input type="text" style="width: 50%" class="form-control input-lg" ng-model="eventName"
                        placeholder="Search for Event..."/>
-                <input type="text" style="width: 50%;border-left: solid 1px #ccc" ng-model="eventLocation"
+                <input id="event-location" type="text" style="width: 50%;border-left: solid 1px #ccc" ng-model="eventLocation"
                        class="form-control input-lg" placeholder="Location Ex: Boston"/>
                     <span class="input-group-btn">
                         <button id="search-button" class="btn btn-info btn-lg" ng-click="model.search(eventName,eventLocation)"
@@ -24,12 +24,12 @@
     <div style="width: 40%; margin: 0 auto;"> <strong>Error!</strong> Unable to retrieve events for given keyword and/or location. </div>
 </div>
 
-<div id="map_canvas" style="width:750px; height:450px; border: 2px solid #3872ac; margin: 0 auto; display: none;"></div>
+<div id="map_canvas" style="width:100%; height:300px; border: 2px solid #3872ac; margin: 0 auto; display: none;"></div>
 
 <div style="padding:3%; margin-right:2%" class="row">
     <ul class="thumbnails">
 
-        <div class="col-md-6" style="min-height:540px" ng-repeat="event in model.data">
+        <div class="col-md-6" style="min-height:450px" ng-repeat="event in model.data">
             <div class="thumbnail">
                 <img ng-src={{event.logo.url}} style="height:100px" alt="ALT NAME" class="img-responsive"/>
 
