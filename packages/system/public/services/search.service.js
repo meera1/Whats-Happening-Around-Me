@@ -21,7 +21,7 @@
             var $q = injector.get("$q");
             var deferred = $q.defer();
 
-            var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&"+eventLocation;
+            var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&"+eventLocation + "&q=" + eventName;
             console.log("Fetching data from: " + url);
              $http.get(url)
                    .success(function(response){

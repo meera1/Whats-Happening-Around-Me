@@ -31,6 +31,7 @@
         initAutocomplete();
 
         function search(eventName, eventLocation){
+            eventLocation = document.getElementById("event-location").value;
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
 
@@ -56,8 +57,8 @@
                 var results = [];
 
                 var newlocations = [];
-
-                for(i=0;i<10;i++){
+                var size = filteredResponse.length < 10 ? filteredResponse.length : 10;
+                for(i=0;i<size;i++){
 
                         SearchService.getAllVenues(filteredResponse[i].venue_id).then(function(response){
 
@@ -251,8 +252,16 @@
             if(eventLocation == undefined || eventLocation.trim() == "")
                 if(latitude == 0.0 || longitude ==0.0){
                      eventLocation = "location.address=Boston, MA"
+                     document.getElementById("event-location").value = "Boston, MA";
                 } else {
                     eventLocation = "location.latitude=" + latitude + "&location.longitude=" + longitude;
+                    var location = ""
+                    var latlng = {lat: latitude, lng: longitude};
+                    geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({'location': latlng}, function(results, status) {
+                        document.getElementById("event-location").value = location;
+                    });
+
                 }
             else{
                 eventLocation = "location.address=" + eventLocation;
