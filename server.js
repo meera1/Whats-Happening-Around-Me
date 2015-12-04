@@ -18,7 +18,7 @@ var mongoose = require('mongoose');
 
 var connectionString = 'mongodb://localhost/eventappDb';
 
-if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
         process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
         process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
@@ -33,7 +33,7 @@ var db = mongoose.connect(connectionString);
 app.use(express.static(__dirname + ''));
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 require("./packages/system/server/app.js")(app, mongoose, db);
 
@@ -41,6 +41,25 @@ app.listen(port, ipaddress);
 
 
 
+
+
+
+var CategoriesSchema = mongoose.Schema({
+    "categoryId": String,
+    "categoryName": String
+}, {collection: "Categories"});
+
+var CategoriesModel = mongoose.model("CategoriesModel", CategoriesSchema);
+
+
+
+
+app.get("/api/wham/eventapp/categories", function (req, res) {
+
+    CategoriesModel.find(function(err, categories) {
+        res.json(categories);
+    });
+});
 
 
 

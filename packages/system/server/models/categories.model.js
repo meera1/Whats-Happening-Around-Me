@@ -3,14 +3,15 @@ var q = require("q");
 module.exports = function(mongoose, db){
 
     var CategoriesSchema = mongoose.Schema({
-        "categoryId":String,
-        "categoryName":String
+        "id":String,
+        "name":String
     },{collection: "Categories"});
 
     var CategoriesModel = mongoose.model("CategoriesModel", CategoriesSchema);
 
     var api = {
         insertCategories : insertCategories
+        //retrieveCategories : retrieveCategories
     };
 
     return api;
@@ -26,6 +27,10 @@ module.exports = function(mongoose, db){
         });
 
         return deferred.promise;
-
     }
+
+    //function retrieveCategories(){
+    //    return CategoriesModel.find();
+    //}
+
 };
