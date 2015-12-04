@@ -8,11 +8,13 @@
         console.log(" == inside HomeController");
         var homeModel = this;
 
-        HomeService.getCategories().then(function (response) {
+        retrieveCategories();
 
-            retrieveCategories();
-            //insertCategories(response.categories);
-        });
+        //HomeService.getCategories().then(function (response) {
+        //
+        //    retrieveCategories();
+        //    //insertCategories(response.categories);
+        //});
 
         function insertCategories(categories) {
             HomeService

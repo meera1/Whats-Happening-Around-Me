@@ -44,14 +44,14 @@ app.listen(port, ipaddress);
 
 
 
+
 var CategoriesSchema = mongoose.Schema({
-    "categoryId": String,
-    "categoryName": String
+    "id": String,
+    "name": String
 }, {collection: "Categories"});
 
+
 var CategoriesModel = mongoose.model("CategoriesModel", CategoriesSchema);
-
-
 
 
 app.get("/api/wham/eventapp/categories", function (req, res) {
@@ -60,6 +60,3 @@ app.get("/api/wham/eventapp/categories", function (req, res) {
         res.json(categories);
     });
 });
-
-
-
