@@ -85,14 +85,11 @@ var UserSchema = new mongoose.Schema({
 var User = mongoose.model("User", UserSchema);
 
 
-
 var auth = function (req, res, next) {
 
     if (!req.isAuthenticated()) {
         res.send(401);
-
     }
-
     else
         next();
 };
@@ -157,12 +154,7 @@ app.post("/rest/user", function(req, res){
         else
             res.json(null);
     });
-
-
-
 });
-
-
 
 
 
