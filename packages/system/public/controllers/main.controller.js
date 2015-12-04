@@ -13,10 +13,13 @@
 
        function logout()
        {
-         UserService.logoutUser(function(response)
-         {
-            $rootScope.currentUser = null;
-            $location.url("/home");
+         var currentUser = $rootScope.currentUser;
+
+         UserService.logoutUser(currentUser, function(response){
+
+                console.log("success inside main controller");
+                $rootScope.currentUser = null;
+                $location.url("/home");
          });
        }
     }

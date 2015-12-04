@@ -33,7 +33,7 @@
 
         function updateUser(user, callback)
         {
-            $http.put("rest/update/user", user)
+            $http.put("/rest/update/user", user)
             .success(callback);
         }
 
@@ -41,14 +41,14 @@
         function loginUser(user, callback)
         {
             console.log("in service  "+ user.username);
-            $http.post("rest/login", user)
+            $http.post("/rest/login", user)
             .success(callback);
         }
 
 
         function logoutUser(user, callback)
         {
-            $http.post("rest/logout")
+            $http.post("/rest/logout")
             .success(callback);
         }
 

@@ -214,7 +214,7 @@ app.put("/rest/update/user", auth, function(req, res){
 });
 
 
-app.post('rest/logout', function (req, res) {
+app.post('/rest/logout', function (req, res) {
 
     req.logOut();
     //req.session.destroy();
