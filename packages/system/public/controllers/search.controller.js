@@ -251,8 +251,9 @@
             console.log("Input:" + eventLocation);
             if(eventLocation == undefined || eventLocation.trim() == "")
                 if(latitude == 0.0 || longitude ==0.0){
-                     eventLocation = "location.address=Boston, MA"
-                     document.getElementById("event-location").value = "Boston, MA";
+                     eventLocation = "location.address=Boston, MA";
+                     if(document.getElementById("event-location") != null)
+                        document.getElementById("event-location").value = "Boston, MA";
                 } else {
                     eventLocation = "location.latitude=" + latitude + "&location.longitude=" + longitude;
                     var location = ""
