@@ -221,6 +221,12 @@ app.post('/rest/logout', function (req, res) {
     res.send(200);
 });
 
+app.get('/rest/loggedin', function(req, res)
+{
+      res.send(req.isAuthenticated() ? req.user : '0');
+
+});
+
 
 
 var CategoriesSchema = mongoose.Schema({

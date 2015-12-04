@@ -19,40 +19,56 @@
                 controller: "HomeController",
                 controllerAs: "homeModel"
             })
-            .when("/search",{
-                            templateUrl: "views/search.html",
-                            controller: "SearchController",
-                            controllerAs: "model"
-                        })
+//            .when("/search",{
+//                            templateUrl: "views/search.html",
+//                            controller: "SearchController",
+//                            controllerAs: "model"
+//                        })
             .when("/details/:id",{
                             templateUrl: "views/details.html",
                             controller: "DetailsController",
                             controllerAs: "detailsModel"
                         })
+            .when("/profile",{
+                            templateUrl: "views/profile.html",
+                            controller: "ProfileController",
+                            resolve:{
+                                loggedin : checkLoggedin
+                            }
+            })
             .when("/login",{
                             templateUrl: "views/login.html",
                             controller: "LoginController"
                         })
-//            .when("/logout",{
-//                            templateUrl: "views/home.html",
-//                            controller: "HomeController"
-//
-//                        })
-            .when("/profile",{
-                            templateUrl: "views/profile.html",
-                            controller: "ProfileController"
-                        })
-//            .when("/profile",{
-//                                        templateUrl: "views/profile.html",
-//                                        controller: "ProfileController"
-//                                    })
             .when("/signup",{
                             templateUrl: "views/signup.html",
                             controller: "SignupController"
                         })
             .otherwise({
-                redirectTo: "/search"
+                redirectTo: "/home"
             });
     }
 
 })();
+
+var checkLoggedin = function($q, $timeout, $http, $location, $rootScope)
+{
+  var deferred = $q.defer();
+
+  $http.get('/rest/loggedin').success(function(user)
+  {
+    if (user !== '0')
+    {
+      $rootScope.currentUser = user;
+      deferred.resolve();
+    }
+    else
+    {
+      $rootScope.errorMessage = 'You need to log in.';
+      deferred.reject();
+      $location.url('/login');
+    }
+  });
+
+  return deferred.promise;
+};

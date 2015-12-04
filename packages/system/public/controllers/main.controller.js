@@ -11,8 +11,7 @@
 
        vm.logout = logout;
 
-       function logout()
-       {
+       function logout(){
          var currentUser = $rootScope.currentUser;
 
          UserService.logoutUser(currentUser, function(response){
@@ -23,6 +22,4 @@
          });
        }
     }
-
-
 })();
