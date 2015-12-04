@@ -1,8 +1,10 @@
 module.exports = function(app, mongoose, db){
 
-    var model = require("./models/event.model.js")(mongoose, db);
-    //var categoriesModel = require("./models/categories.model.js")(mongoose, db);
+//    var model = require("./models/event.model.js")(mongoose, db);
+//    require("./services/event.service.server.js")(app, model);
 
-    require("./services/event.service.server.js")(app, model);
-    //require("./services/home.service.server.js")(app, categoriesModel);
+
+// var model = require("./models/user.model.js")(mongoose, db);
+//    require("./services/user.service.server.js")(app, model);
+
 };

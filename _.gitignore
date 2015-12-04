@@ -1,7 +1,3 @@
-node_modules
-_node_modules
-
-
 # --------------------
 # OSX Files
 # --------------------
@@ -35,7 +31,7 @@ nb-configuration.xml
 # --------------------
 .nodemonignore
 npm-debug.log
-**/node_modules
+node_modules/
 
 # --------------------
 # SASS Files

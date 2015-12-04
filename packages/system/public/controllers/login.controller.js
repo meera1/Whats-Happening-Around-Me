@@ -4,22 +4,35 @@
         .module("eventapp")
         .controller("LoginController", LoginController);
 
-    function LoginController($scope){
+    function LoginController($scope, $location, $rootScope, UserService)
+    {
 
-        $('#login-form-link').click(function(e) {
-        		$("#login-form").delay(100).fadeIn(100);
-         		$("#register-form").fadeOut(100);
-        		$('#register-form-link').removeClass('active');
-        		$(this).addClass('active');
-        		e.preventDefault();
-        	});
-        	$('#register-form-link').click(function(e) {
-        		$("#register-form").delay(100).fadeIn(100);
-         		$("#login-form").fadeOut(100);
-        		$('#login-form-link').removeClass('active');
-        		$(this).addClass('active');
-        		e.preventDefault();
-        	});
+        console.log("Inside login controller");
 
-}})();
+        $scope.login = function (user)
+        {
+            console.log(user);
+            UserService.loginUser(user, function(user)
+            {
+                console.log(user + " from login controller");
+                if(user != null)
+                {
+                    $rootScope.currentUser = user;
+                    //console.log("user from login contorller " + $rootScope.currentUser);
+                    //$location.url('/profile'+user.username); // work on this and its routing in config.js
+                    $location.url('/search');
+                }
+                else
+                    {
+                        alert("User not found");
+                    }
+
+            });
+        }
+
+
+
+    }
+
+})();
 

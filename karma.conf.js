@@ -18,7 +18,8 @@ module.exports = function(config) {
     files: _.flatten(_.values(assets.core.js)).concat([
       'packages/*/public/*.js',
       'packages/*/public/*/*.js',
-      "bower_components/angular-route/angular-route.min.js"
+      "bower_components/angular-route/angular-route.min.js",
+      "http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"
     ]),
 
     // list of files to exclude

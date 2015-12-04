@@ -1,14 +1,23 @@
 <div style="padding:3%; margin-right:2%" class="row">
     <ul class="thumbnails">
 
-        <div class="col-lg">
-            <div class="thumbnail">
-                <img ng-src={{detailsModel.event.images.image[0].url}} alt="ALT NAME" class="img-responsive"/>
+        <div class="col-lg" style="">
+            <div class="thumbnail" >
+                <div>
+                <img ng-src={{detailsModel.event.logo.url}} alt="ALT NAME" style="float:left; width:40%;height:300px;" class="img-responsive"/>
+                <div id="map_canvas" style="float:left; width:60%; height:300px; border: 2px solid #3872ac; margin: 0 auto;"></div>
+                </div>
 
-                <div class="caption">
-                    <h3>{{detailsModel.event.title}}</h3>
+                <div style="padding-top:30%" class="caption">
+                    <h3>{{detailsModel.event.name.text}}</h3>
 
-                    <p>{{detailsModel.event.description}}
+                    <p>{{detailsModel.event.description.text}}</p>
+
+                    <p>
+                        <a target="_blank" ng-href={{detailsModel.event.url}} class="btn btn-info">
+                            view at Eventbrite
+                        </a>
+                    </p>
 
                     <p>
                         <button ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-info">
@@ -67,10 +76,12 @@
                 </div>
             </div>
 
+
             {{blah}}
 
             {{comments}}
         </div>
+
 
     </ul>
 </div>
