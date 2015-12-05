@@ -132,14 +132,14 @@
 
             var completeAddress = "";
 
-             if(address_1 != null && address_1 != "")
-                completeAddress = completeAddress + address_1 + ", ";
+            if(address_1 != null && address_1 != "")
+                completeAddress = completeAddress + address_1;
             if(address_2 != null && address_2 != "")
-                completeAddress = completeAddress + address_2 + ", ";
+                completeAddress = completeAddress + ", " + address_2;
             if(city != null && city != "")
-                completeAddress = completeAddress + city + ", ";
+                completeAddress = completeAddress + ", " + city;
             if(region != null && region != "")
-                completeAddress = completeAddress + region;
+                completeAddress = completeAddress + ", " + region;
 
             if(completeAddress.length === 0)
                 completeAddress = "<No Address Specified>";
