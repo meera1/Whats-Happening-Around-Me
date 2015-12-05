@@ -14,7 +14,7 @@
                             controller: "SearchController",
                             controllerAs: "model",
                             resolve:{
-                                loggedin : checkLoggedin
+                                loggedin : checkLoggedinForHome
                             }
             })
             .when("/category",{
@@ -22,11 +22,6 @@
                 controller: "HomeController",
                 controllerAs: "homeModel"
             })
-//            .when("/search",{
-//                            templateUrl: "views/search.html",
-//                            controller: "SearchController",
-//                            controllerAs: "model"
-//                        })
             .when("/details/:id",{
                             templateUrl: "views/details.html",
                             controller: "DetailsController",
@@ -71,6 +66,28 @@ var checkLoggedin = function($q, $timeout, $http, $location, $rootScope)
       deferred.reject();
       $location.url('/login');
     }
+  });
+
+  return deferred.promise;
+};
+
+var checkLoggedinForHome = function($q, $timeout, $http, $location, $rootScope)
+{
+  var deferred = $q.defer();
+
+  $http.get('/rest/loggedin').success(function(user)
+  {
+    if (user !== '0')
+    {
+      $rootScope.currentUser = user;
+      deferred.resolve();
+    }
+    else
+    {
+      deferred.resolve();
+      $location.url('/home');
+    }
+
   });
 
   return deferred.promise;
