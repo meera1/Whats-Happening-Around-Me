@@ -12,7 +12,10 @@
             .when("/home",{
                             templateUrl: "views/search.html",
                             controller: "SearchController",
-                            controllerAs: "model"
+                            controllerAs: "model",
+                            resolve:{
+                                loggedin : checkLoggedin
+                            }
             })
             .when("/category",{
                 templateUrl: "views/home.html",
