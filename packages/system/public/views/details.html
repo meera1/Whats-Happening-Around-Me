@@ -12,6 +12,7 @@
                     <h3>{{detailsModel.event.name.text}}</h3>
 
                     <p>{{detailsModel.event.description.text}}</p>
+                </div>
 
                     <p>
                         <a target="_blank" ng-href={{detailsModel.event.url}} class="btn btn-info">
@@ -19,15 +20,14 @@
                         </a>
                     </p>
 
-                    <p>
+                    <p ng-if="currentUser!=null">
                         <button ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-info">
                             <span class="glyphicon glyphicon-thumbs-up"></span>
                         </button>
                     </p>
-                    <p>
 
-                    <div class="input-group">
-                        <input class="form-control" placeholder="Add a comment" ng-model="comment" type="text">
+                    <div ng-if="currentUser!=null" class="input-group">
+                        <input class="form-control" placeholder="Add a comment" ng-model="comment" type="text"/>
                              <span class="input-group-addon">
                                  <!--<button class="btn btn-info btn-sm">-->
                                      <!--<span class="glyphicon glyphicon-edit"></span>-->
@@ -35,7 +35,6 @@
                                 <a ng-click="detailsModel.addCommentForEvent(detailsModel.event.id,comment)"><i class="glyphicon glyphicon-edit"></i></a>
                             </span>
                     </div>
-                    </p>
                     <p>
                         <section class="comment-list">
                             <!-- First Comment -->
@@ -80,7 +79,6 @@
             {{blah}}
 
             {{comments}}
-        </div>
 
 
     </ul>
