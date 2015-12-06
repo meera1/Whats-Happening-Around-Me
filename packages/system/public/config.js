@@ -22,35 +22,45 @@
                 controller: "HomeController",
                 controllerAs: "homeModel"
             })
-            .when("/details/:id",{
-                            templateUrl: "views/details.html",
-                            controller: "DetailsController",
-                            controllerAs: "detailsModel"
-                        })
-            .when("/profile",{
-                            templateUrl: "views/profile.html",
-                            controller: "ProfileController",
-                            controllerAs: "profileModel",
-                            resolve:{
-                                loggedin : checkLoggedin
-                            }
+            .when("/details/:id", {
+                templateUrl: "views/details.html",
+                controller: "DetailsController",
+                controllerAs: "detailsModel"
             })
-            .when("/profile/:username",{
-                                        templateUrl: "views/profile.html",
-                                        controller: "ProfileController",
-                                        resolve:{
-                                            loggedin : checkLoggedin
-                                        }
-                        })
-            .when("/login",{
-                            templateUrl: "views/login.html",
-                            controller: "LoginController"
-                        })
+            .when("/profile", {
+                templateUrl: "views/profile.html",
+                controller: "ProfileController",
+                controllerAs: "profileModel",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when("/profile/:username", {
+                templateUrl: "views/profile.html",
+                controller: "ProfileController",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when("/login", {
+                templateUrl: "views/login.html",
+                controller: "LoginController"
+            })
 
-            .when("/signup",{
-                            templateUrl: "views/signup.html",
-                            controller: "SignupController"
-                        })
+            .when("/signup", {
+                templateUrl: "views/signup.html",
+                controller: "SignupController"
+            })
+            .when("/reservation/:eventname", {
+                templateUrl: "views/reservation.html",
+                controller: "ReservationController",
+                controllerAs: "reservationModel"
+            })
+            .when("/admin", {
+                templateUrl: "views/admin.html",
+                controller: "AdminController",
+                controllerAs: "adminModel"
+            })
             .otherwise({
                 redirectTo: "/home"
             });

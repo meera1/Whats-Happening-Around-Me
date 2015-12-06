@@ -18,6 +18,10 @@
                         <a target="_blank" ng-href={{detailsModel.event.url}} class="btn btn-info">
                             view at Eventbrite
                         </a>
+
+                        <a ng-href="#/reservation/{{detailsModel.event.name.text}}" class="btn btn-success">
+                            Reserve Tickets »
+                        </a>
                     </p>
 
                     <p ng-if="currentUser!=null">
