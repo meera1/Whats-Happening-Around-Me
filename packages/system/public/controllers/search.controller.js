@@ -17,16 +17,20 @@
     }
 
 
-    function SearchController($scope, SearchService){
+    function SearchController($scope, $rootScope, SearchService, UserService){
 
         console.log("Inside Search controller");
-
         var model = this;
         model.search = search;
         $scope.getValidEventLocation = getValidEventLocation;
         $scope.getValidEventName = getValidEventName;
         $scope.getCompleteAddress = getCompleteAddress;
         $scope.getOnlyValidEvents = getOnlyValidEvents;
+        var username = $rootScope.currentUser.username;
+        $scope.preferences = [];
+        UserService.lookupUserByUsername(username, function(user){
+              $scope.preferences = user.preferences
+        });
 
         initAutocomplete();
 
@@ -34,8 +38,9 @@
             eventLocation = document.getElementById("event-location").value;
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
+            preferences = $scope.preferences;
 
-            SearchService.searchEventByNameAndLocation(eventName, eventLocation).then(function(eventsResponse){
+            SearchService.searchEventByNameAndLocation(eventName, eventLocation, preferences).then(function(eventsResponse){
                 console.log("already reached controller with response: " + eventsResponse);
 
                 var filteredResponse = getOnlyValidEvents(eventsResponse);

@@ -13,15 +13,16 @@
 
         return api;
 
-        function searchEventByNameAndLocation(eventName, eventLocation, callback){
+        function searchEventByNameAndLocation(eventName, eventLocation, preferences, callback){
 
             if(eventName == undefined) eventName = "";
 
             var injector = angular.injector(["ng"]);
             var $q = injector.get("$q");
             var deferred = $q.defer();
+            var categories = preferences.join();
 
-            var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&"+eventLocation + "&q=" + eventName;
+            var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&"+eventLocation + "&q=" + eventName + "&categories=" + categories;
             console.log("Fetching data from: " + url);
              $http.get(url)
                    .success(function(response){
