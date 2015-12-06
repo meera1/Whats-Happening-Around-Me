@@ -16,7 +16,7 @@
         });
     }
 
-    var map;
+    //var map;
     var cachedEvents;
     var cachedLocations;
 
@@ -65,11 +65,11 @@
             document.getElementById("event-error").style.display = "none";
             document.getElementById("map_canvas").style.display = "block";
 
-            if (map == undefined) {
+            //if (map == undefined) {
                 setTimeout(function () {
                     populateMap(cachedLocations);
                 }, 2000);
-            }
+            //}
         } else{
             search("", "", "");
         }
@@ -250,7 +250,7 @@
 //            });
 
             var geocoder;
-            //var map;
+            var map;
             var bounds = new google.maps.LatLngBounds();
             initialize();
 
