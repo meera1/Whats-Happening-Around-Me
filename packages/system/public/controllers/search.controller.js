@@ -50,16 +50,20 @@
 
         initAutocomplete();
 
-        function search(eventName, eventLocation) {
+        function search(eventName, eventLocation, reqPageNumber) {
             eventLocation = document.getElementById("event-location").value;
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
             preferences = $scope.preferences;
 
-            SearchService.searchEventByNameAndLocation(eventName, eventLocation, preferences).then(function(eventsResponse){
+            SearchService.searchEventByNameAndLocation(eventName, eventLocation, preferences, reqPageNumber).then(function(eventsResponse){
 
-                console.log("already reached controller with response: " + eventsResponse);
-
+                console.log("already reached controller with response: ");
+                console.log(eventsResponse);
+                var pageCount = eventsResponse.pagination.page_count;
+                $scope.pageCount = pageCount;
+                var pageNumber = eventsResponse.pagination.page_number;
+                $scope.pageNumber = pageNumber;
                 var filteredResponse = getOnlyValidEvents(eventsResponse);
                 cachedEvents = filteredResponse;
 
@@ -295,6 +299,13 @@
             console.log("Output:" + eventLocation);
             return eventLocation
         }
+
+        $scope.range = function(n) {
+            var toReturn = [];
+            for(i = 1; i <= n && i <= 15 ; i++)
+                toReturn.push(i);
+            return toReturn;
+        };
     }
 
 })();

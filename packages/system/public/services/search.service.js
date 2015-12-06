@@ -13,7 +13,7 @@
 
         return api;
 
-        function searchEventByNameAndLocation(eventName, eventLocation, preferences, callback){
+        function searchEventByNameAndLocation(eventName, eventLocation, preferences, pageNumber, callback){
 
             if (eventName == undefined) eventName = "";
 
@@ -23,7 +23,7 @@
             var categories = preferences.join();
 
             //var url = "https://www.eventbriteapi.com/v3/events/search/?token=IGMX6ZKRMBLH5TOCEMKU&"+eventLocation + "&q=" + eventName + "&categories=" + categories;
-            var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&"+eventLocation + "&q=" + eventName + "&categories=" + categories;
+            var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&"+eventLocation + "&q=" + eventName + "&categories=" + categories + "&page=" + pageNumber;
 
             console.log("Fetching data from: " + url);
             $http.get(url)
