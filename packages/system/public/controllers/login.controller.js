@@ -6,7 +6,6 @@
 
     function LoginController($scope, $location, $rootScope, UserService)
     {
-
         console.log("Inside login controller");
 
         $scope.login = function (user)
@@ -18,21 +17,16 @@
                 if(user != null)
                 {
                     $rootScope.currentUser = user;
-                    //console.log("user from login contorller " + $rootScope.currentUser);
+                    //console.log("user from login controller " + $rootScope.currentUser);
                     //$location.url('/profile'+user.username); // work on this and its routing in config.js
-                    $location.url('/search');
+                    $location.url('/home');
                 }
                 else
                     {
                         alert("User not found");
                     }
-
             });
         }
-
-
-
     }
-
 })();
 

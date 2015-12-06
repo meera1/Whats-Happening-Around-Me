@@ -19,7 +19,7 @@
                     $rootScope.currentUser = user;
                     console.log("user from signup contorller " + $rootScope.currentUser);
                     //$location.url('/profile'+user.username); // work on this and its routing in config.js
-                    $location.url('/profile'+user.username);
+                    $location.url('/profile/'+user.username);
                 }
                 else
                     {

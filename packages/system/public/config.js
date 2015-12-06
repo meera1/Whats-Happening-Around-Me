@@ -34,6 +34,13 @@
                                 loggedin : checkLoggedin
                             }
             })
+            .when("/profile/:username",{
+                                        templateUrl: "views/profile.html",
+                                        controller: "ProfileController",
+                                        resolve:{
+                                            loggedin : checkLoggedin
+                                        }
+                        })
             .when("/login",{
                             templateUrl: "views/login.html",
                             controller: "LoginController"

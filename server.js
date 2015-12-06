@@ -147,7 +147,12 @@ app.post("/rest/user", function(req, res){
         {
             User.create(user, function(err, newUser)
             {
-                res.json(newUser);
+                req.login(newUser, function(err){
+                    if(err){
+                        return next(err);
+                    }
+                    res.json(newUser);
+                });
             })
 
         }
@@ -195,11 +200,8 @@ app.put("/rest/update/user", auth, function(req, res){
 
         }
         else {
-
             console.log("Error form updatin user profile in server:" + error);
             console.log("***************************************************");
-
-
         }
 
 
