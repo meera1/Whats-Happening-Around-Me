@@ -23,7 +23,7 @@
                 }
                 else
                     {
-                        alert("User Already Exists");
+                        alert("User Already Exists. Please use a unique username and email!");
                     }
 
             });
