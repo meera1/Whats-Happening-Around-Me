@@ -4,7 +4,25 @@
         .module("eventapp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($routeParams,$scope, DetailsService, SearchService, $rootScope){
+
+    function DetailsController($routeParams,$scope,$rootScope, DetailsService, SearchService){
+
+         $rootScope.apiKeys = ["IGMX6ZKRMBLH5TOCEMKU","WMM76DC53N75L2J5T32V","WXRBOESQZZRDO4WWV72X","LOGWBWOABJJTLQZDQI2A","CCLCEWYWLCGOE47RAALI"];
+
+         if($rootScope.currentApiKey == null || $rootScope.currentApiKey == "" || $rootScope.currentApiKey == undefined){
+            var randomIndex = 0;
+            var maxLength = $rootScope.apiKeys.length;
+
+            //choosing a random key
+            while(true){
+                randomIndex = Math.floor(Math.random()*(maxLength+1)+0);
+                if(randomIndex<=5){
+                    break;
+                }
+            }
+
+            $rootScope.currentApiKey = $rootScope.apiKeys[randomIndex];
+        }
 
         var username = $rootScope.currentUser.username;
         var id = $routeParams.id;
@@ -25,6 +43,10 @@
                  if(response.name.text != null){
                     eventName = response.name.text;
                 }
+
+                document.getElementById("event-error").style.display = "none";
+                $("#detailContent").show();
+
                 SearchService.getAllVenues(response.venue_id).then(function(venue_response){
                     if(venue_response.name != null){
                         venueName = venue_response.name;
@@ -36,6 +58,8 @@
                     populateMap([[venueName,venue_response.latitude+","+venue_response.longitude,
                                     completeAddress, eventName]]);
 
+                    document.getElementById("event-error").style.display = "none";
+                    $("#detailContent").show();
 
                     $scope.$apply();
                 },function(reason){
@@ -53,6 +77,9 @@
                         }
                     }
 
+                     document.getElementById("event-error").style.display = "block";
+                     $("#detailContent").hide();
+
                 });
 
          },function(reason){
@@ -69,7 +96,8 @@
                     break;
                 }
             }
-
+             document.getElementById("event-error").style.display = "block";
+             $("#detailContent").hide();
          });
 
 

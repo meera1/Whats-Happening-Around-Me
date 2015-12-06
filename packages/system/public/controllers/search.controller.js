@@ -16,13 +16,13 @@
         });
     }
 
-    var map;
+    //var map;
     var cachedEvents;
     var cachedLocations;
 
     function SearchController($scope, $rootScope, SearchService, UserService) {
 
-        $rootScope.apiKeys = ["IGMX6ZKRMBLH5TOCEMKU","WMM76DC53N75L2J5T32V","WXRBOESQZZRDO4WWV72X","LOGWBWOABJJTLQZDQI2A","HIWZN4LLCZBJRAIDF5","CCLCEWYWLCGOE47RAALI"];
+        $rootScope.apiKeys = ["IGMX6ZKRMBLH5TOCEMKU","WMM76DC53N75L2J5T32V","WXRBOESQZZRDO4WWV72X","LOGWBWOABJJTLQZDQI2A","CCLCEWYWLCGOE47RAALI"];
 
         if($rootScope.currentApiKey == null || $rootScope.currentApiKey == "" || $rootScope.currentApiKey == undefined){
             var randomIndex = 0;
@@ -65,11 +65,11 @@
             document.getElementById("event-error").style.display = "none";
             document.getElementById("map_canvas").style.display = "block";
 
-            if (map == undefined) {
+            //if (map == undefined) {
                 setTimeout(function () {
                     populateMap(cachedLocations);
                 }, 2000);
-            }
+            //}
         } else{
             search("", "", "");
         }
@@ -250,7 +250,7 @@
 //            });
 
             var geocoder;
-            //var map;
+            var map;
             var bounds = new google.maps.LatLngBounds();
             initialize();
 
