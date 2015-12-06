@@ -61,6 +61,11 @@
                 controller: "AdminController",
                 controllerAs: "adminModel"
             })
+            .when("/about", {
+                templateUrl: "views/about.html",
+                controller: "AboutController",
+                controllerAs: "aboutModel"
+            })
             .otherwise({
                 redirectTo: "/home"
             });

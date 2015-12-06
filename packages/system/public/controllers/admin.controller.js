@@ -13,7 +13,6 @@
 
         var adminModel = this;
 
-        adminModel.name = "ameya";
         retrieveCategories();
 
         function manageCategories(categories) {
