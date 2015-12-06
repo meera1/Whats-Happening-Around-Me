@@ -4,13 +4,15 @@
         .module("eventapp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($routeParams,$scope, DetailsService, SearchService){
+    function DetailsController($routeParams,$scope, DetailsService, SearchService, $rootScope){
 
+        var username = $rootScope.currentUser.username;
         var id = $routeParams.id;
 
         var detailsModel = this;
 
         detailsModel.addLikeForEvent = addLikeForEvent;
+        detailsModel.addDisLikeForEvent = addDisLikeForEvent;
         detailsModel.addCommentForEvent = addCommentForEvent;
 
         DetailsService.searchById(id).then(function(response){
@@ -40,16 +42,41 @@
 
          });
 
+
+
+         DetailsService.checkforlikes(username,id, function(event){
+                     console.log("after lookup event schema for that user choice " + event.username +"  " + event.choice);
+                     //$scope.user = user;
+                     //$scope.selection = $scope.user.preferences;
+                 });
+
+
+
         function addLikeForEvent(eventId){
+            var username = $rootScope.currentUser.username;
+            console.log(username + eventId+ " from details.controller like");
+            DetailsService.addLikeForEvent(eventId, username, function(callback)
+            {
+                console.log(callback + "from details controller for like");
+                $scope.like = callback.choice;
+            });
 
-            DetailsService
-                   .addLikeForEvent(eventId)
-                   .then(function(response){
-
-                        $scope.blah = response;
-
-                   });
         }
+
+
+
+        function addDisLikeForEvent(eventId){
+            var username = $rootScope.currentUser.username;
+            console.log(username + eventId+ " from details.controller dislike");
+            DetailsService.addDisLikeForEvent(eventId, username, function(callback)
+            {
+                console.log(callback + "from details controller for dislike");
+                $scope.dislike = callback.choice;
+
+            });
+
+                }
+
 
         function addCommentForEvent(eventId, comment){
 

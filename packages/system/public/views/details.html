@@ -19,16 +19,29 @@
                             view at Eventbrite
                         </a>
 
-                        <a ng-href="#/reservation/{{detailsModel.event.name.text}}" class="btn btn-success">
+                        <a ng-href="#/reservation/{{detailsModel.event.name.text}}" class="btn btn-warning">
                             Reserve Tickets »
                         </a>
                     </p>
 
                     <p ng-if="currentUser!=null">
-                        <button ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-info">
+                        <button ng-hide="like" ng-show="dislike" ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-success">
                             <span class="glyphicon glyphicon-thumbs-up"></span>
                         </button>
+                        <button ng-show="like" ng-hide="dislike" class="btn btn-success">
+                            <span>Liked</span>
+                        </button>
+
+                        <button ng-hide="dislike" ng-show="like" ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                        </button>
+                        <button ng-show="dislike" ng-hide="like" class="btn btn-danger">
+                            <span>Disliked</span>
+                        </button>
+
                     </p>
+
+
 
                     <div ng-if="currentUser!=null" class="input-group">
                         <input class="form-control" placeholder="Add a comment" ng-model="comment" type="text"/>
