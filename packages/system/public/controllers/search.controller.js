@@ -19,6 +19,7 @@
     //var map;
     var cachedEvents;
     var cachedLocations;
+    var cachedPageRange;
 
     function SearchController($scope, $rootScope, SearchService, UserService) {
 
@@ -54,13 +55,15 @@
         if ($rootScope.currentUser != undefined) {
             username = $rootScope.currentUser.username;
             UserService.lookupUserByUsername(username, function (user) {
-                $scope.preferences = user.preferences
+                $scope.preferences = user.preferences;
+                search("", "", "");
             });
         }
 
 
         if (cachedEvents != null) {
             this.data = cachedEvents;
+            this.pageRange = cachedPageRange;
             console.log("cached locations == " + cachedLocations);
             document.getElementById("event-error").style.display = "none";
             document.getElementById("map_canvas").style.display = "block";
@@ -69,8 +72,8 @@
                 setTimeout(function () {
                     populateMap(cachedLocations);
                 }, 2000);
-            //}
-        } else{
+
+        } else if ($rootScope.currentUser == undefined){
             search("", "", "");
         }
 
@@ -84,19 +87,25 @@
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
             preferences = $scope.preferences;
+            if(reqPageNumber == undefined)
+                reqPageNumber = 1;
 
             SearchService.searchEventByNameAndLocation(eventName, eventLocation, preferences, reqPageNumber).then(function (eventsResponse) {
 
                 console.log("already reached controller with response: ");
                 console.log(eventsResponse);
                 var pageCount = eventsResponse.pagination.page_count;
-                $scope.pageCount = pageCount;
+                //$scope.pageCount = pageCount;
                 var pageNumber = eventsResponse.pagination.page_number;
-                $scope.pageNumber = pageNumber;
+                //$scope.pageNumber = pageNumber;
                 var filteredResponse = getOnlyValidEvents(eventsResponse);
                 cachedEvents = filteredResponse;
 
                 model.data = filteredResponse;
+                model.pageRange = $scope.range(pageCount);
+                console.log("model.pageRange:")
+                console.log(model.pageRange)
+                cachedPageRange = model.pageRange;
                 $scope.$apply();
                 console.log($scope.model);
 
@@ -370,7 +379,7 @@
 
         $scope.range = function (n) {
             var toReturn = [];
-            for (i = 1; i <= n && i <= 15; i++)
+            for (i = 1; i <= n && i <= 8; i++)
                 toReturn.push(i);
             return toReturn;
         };
