@@ -9,14 +9,22 @@
         .module("eventapp")
         .controller("AdminController", AdminController);
 
-    function AdminController($scope) {
+    function AdminController($scope, AdminService) {
 
         var adminModel = this;
 
         adminModel.name = "ameya";
+        retrieveCategories();
 
         function manageCategories(categories) {
 
+        }
+
+        function retrieveCategories() {
+            AdminService
+                .retrieveCategories(function (categories) {
+                    $scope.adminModel.data = categories;
+                });
         }
 
     }
