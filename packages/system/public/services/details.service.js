@@ -4,7 +4,7 @@
         .module("eventapp")
         .factory("DetailsService", DetailsService);
 
-    function DetailsService($http, $q){
+    function DetailsService($http, $q, $rootScope){
 
         var api = {
                 searchById: searchById,
@@ -22,12 +22,19 @@
             var $q = injector.get("$q");
             var deferred = $q.defer();
 
-             var url = "https://www.eventbriteapi.com/v3/events/"+id+"/?token=LOGWBWOABJJTLQZDQI2A";
+
+             var url = "https://www.eventbriteapi.com/v3/events/"+id+"/?token=" + $rootScope.currentApiKey;
 
             $http.get(url)
                .success(function(response){
                     console.log(response);
                     deferred.resolve(response);
+            })
+            .error(function(error){
+
+                console.log("error inside details service at searchbyId call" + error);
+                deferred.reject(error);
+
             });
 
             return deferred.promise;

@@ -16,10 +16,28 @@
         });
     }
 
+    var map;
     var cachedEvents;
     var cachedLocations;
 
-    function SearchController($scope, $rootScope, SearchService, UserService){
+    function SearchController($scope, $rootScope, SearchService, UserService) {
+
+        $rootScope.apiKeys = ["IGMX6ZKRMBLH5TOCEMKU","WMM76DC53N75L2J5T32V","WXRBOESQZZRDO4WWV72X","LOGWBWOABJJTLQZDQI2A","HIWZN4LLCZBJRAIDF5","CCLCEWYWLCGOE47RAALI"];
+
+        if($rootScope.currentApiKey == null || $rootScope.currentApiKey == "" || $rootScope.currentApiKey == undefined){
+            var randomIndex = 0;
+            var maxLength = $rootScope.apiKeys.length;
+
+            //choosing a random key
+            while(true){
+                randomIndex = Math.floor(Math.random()*(maxLength+1)+0);
+                if(randomIndex<=5){
+                    break;
+                }
+            }
+
+            $rootScope.currentApiKey = $rootScope.apiKeys[randomIndex];
+        }
 
         console.log("Inside Search controller");
         var model = this;
@@ -33,10 +51,10 @@
         var username = ""
         $scope.preferences = [];
 
-        if($rootScope.currentUser != undefined){
+        if ($rootScope.currentUser != undefined) {
             username = $rootScope.currentUser.username;
-            UserService.lookupUserByUsername(username, function(user){
-                          $scope.preferences = user.preferences
+            UserService.lookupUserByUsername(username, function (user) {
+                $scope.preferences = user.preferences
             });
         }
 
@@ -46,24 +64,28 @@
             console.log("cached locations == " + cachedLocations);
             document.getElementById("event-error").style.display = "none";
             document.getElementById("map_canvas").style.display = "block";
-            setTimeout(function () {
-                populateMap(cachedLocations);
-            }, 2000);
+
+            if (map == undefined) {
+                setTimeout(function () {
+                    populateMap(cachedLocations);
+                }, 2000);
+            }
+        } else{
+            search("", "", "");
         }
 
         initAutocomplete();
 
-        search("","","");
-
-
         function search(eventName, eventLocation, reqPageNumber) {
             $("#loaderIcon").show();
-            eventLocation = document.getElementById("event-location").value;
+            eventLocation = "";
+            if (document != undefined && document.getElementById("event-location") != undefined)
+                eventLocation = document.getElementById("event-location").value;
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
             preferences = $scope.preferences;
 
-            SearchService.searchEventByNameAndLocation(eventName, eventLocation, preferences, reqPageNumber).then(function(eventsResponse){
+            SearchService.searchEventByNameAndLocation(eventName, eventLocation, preferences, reqPageNumber).then(function (eventsResponse) {
 
                 console.log("already reached controller with response: ");
                 console.log(eventsResponse);
@@ -130,6 +152,25 @@
                         newlocations.push([venueName, response.latitude + "," + response.longitude,
                             updatedURL, completeAddress, eventName]);
                         cachedLocations = newlocations;
+                    },function(reason){
+
+                        console.log("failed in search controller promise for venues: " + reason);
+
+                        for(i=0;i<$rootScope.apiKeys.length;i++){
+                            if($rootScope.currentApiKey === $rootScope.apiKeys[i]){
+                                if(i == $rootScope.apiKeys.length - 1){
+                                    $rootScope.currentApiKey = $rootScope.apiKeys[0];
+                                }else{
+                                    $rootScope.currentApiKey = $rootScope.apiKeys[i+1];
+                                }
+                                break;
+                            }
+                        }
+
+                        $("#loaderIcon").hide();
+                        document.getElementById("event-error").style.display = "block";
+                        document.getElementById("map_canvas").style.display = "none";
+
                     });
 
                 }
@@ -137,6 +178,24 @@
                 setTimeout(function () {
                     populateMap(newlocations);
                 }, 2000);
+
+            },function(reason){
+
+                console.log("failed in search contoller promise for event search: " + reason);
+                for(i=0;i<$rootScope.apiKeys.length;i++){
+                    if($rootScope.currentApiKey === $rootScope.apiKeys[i]){
+                        if(i == $rootScope.apiKeys.length - 1){
+                            $rootScope.currentApiKey = $rootScope.apiKeys[0];
+                        }else{
+                            $rootScope.currentApiKey = $rootScope.apiKeys[i+1];
+                        }
+                        break;
+                    }
+                }
+
+                $("#loaderIcon").hide();
+                document.getElementById("event-error").style.display = "block";
+                document.getElementById("map_canvas").style.display = "none";
 
             });
         }
@@ -191,7 +250,7 @@
 //            });
 
             var geocoder;
-            var map;
+            //var map;
             var bounds = new google.maps.LatLngBounds();
             initialize();
 
@@ -309,9 +368,9 @@
             return eventLocation
         }
 
-        $scope.range = function(n) {
+        $scope.range = function (n) {
             var toReturn = [];
-            for(i = 1; i <= n && i <= 15 ; i++)
+            for (i = 1; i <= n && i <= 15; i++)
                 toReturn.push(i);
             return toReturn;
         };
