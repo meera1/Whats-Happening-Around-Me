@@ -31,12 +31,15 @@
         console.log("Checking user in $rootScope...");
         console.log($rootScope.currentUser);
         var username = ""
-        if($rootScope.currentUser != undefined)
-            username = $rootScope.currentUser.username;
         $scope.preferences = [];
-        UserService.lookupUserByUsername(username, function(user){
-              $scope.preferences = user.preferences
-        });
+
+        if($rootScope.currentUser != undefined){
+            username = $rootScope.currentUser.username;
+            UserService.lookupUserByUsername(username, function(user){
+                          $scope.preferences = user.preferences
+            });
+        }
+
 
         if (cachedEvents != null) {
             this.data = cachedEvents;
