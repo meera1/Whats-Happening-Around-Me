@@ -45,7 +45,7 @@
         function checkforlikes(username, id, callback){
             var parameters = {username: username, id: id};
             //var config = {params: parameters};
-            $http.get("/rest/check", parameters)
+            $http.get("/rest/" + username + "/event/" + id + "/check")
             .success(callback);
 
         }

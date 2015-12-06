@@ -337,21 +337,15 @@ app.post('/rest/dislike', auth, function(req, res){
 
 
 
-app.get("/rest/check", function(req, res){
-    var parameters = req.body.parameters;
-    //var username = parameters.username;
-    //var id = parameters.id;
-    console.log(req.query.parameters+ "   "+ req.body.parameters+ "   "+ req.params.parameters);
-    //var object = req.params.object;
-    //var username = params.username;
-    //var id = params.id;
-    //var username = object.username;
-    //var id = object.id;
-    //console.log(username +"  from server check for user choice  "+ id);
 
-//    User.find({username: username}, function(err, users)
-//    {
-//        res.json(users[0]);
-//    });
+
+app.get("/rest/:username/event/:id/check", auth, function(req,res){
+
+    var username = req.params.username;
+    var eventId = req.params.id;
+
+    console.log(username+"   "+ eventId+ "from server checking likes and dislikes");
+
 
 });
+
