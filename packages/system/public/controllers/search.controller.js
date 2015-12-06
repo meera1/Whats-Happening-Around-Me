@@ -49,12 +49,11 @@
             setTimeout(function () {
                 populateMap(cachedLocations);
             }, 2000);
+        }else{
+            search("","","");
         }
 
         initAutocomplete();
-
-        search("","","");
-
 
         function search(eventName, eventLocation, reqPageNumber) {
             $("#loaderIcon").show();
