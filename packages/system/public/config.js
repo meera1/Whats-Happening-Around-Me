@@ -30,6 +30,7 @@
             .when("/profile",{
                             templateUrl: "views/profile.html",
                             controller: "ProfileController",
+                            controllerAs: "profileModel",
                             resolve:{
                                 loggedin : checkLoggedin
                             }
@@ -45,6 +46,7 @@
                             templateUrl: "views/login.html",
                             controller: "LoginController"
                         })
+
             .when("/signup",{
                             templateUrl: "views/signup.html",
                             controller: "SignupController"
