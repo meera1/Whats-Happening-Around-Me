@@ -17,7 +17,7 @@
 
         reservationModel.confirmed = false;
         reservationModel.eventName = $routeParams.eventname;
-        
+
         function confirmTicket() {
             reservationModel.confirmed = true;
         }
