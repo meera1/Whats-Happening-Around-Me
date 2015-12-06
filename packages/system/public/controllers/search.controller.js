@@ -20,7 +20,7 @@
     var cachedEvents;
     var cachedLocations;
 
-    function SearchController($scope, $rootScope, SearchService, UserService){
+    function SearchController($scope, $rootScope, SearchService, UserService) {
 
         console.log("Inside Search controller");
         var model = this;
@@ -34,10 +34,10 @@
         var username = ""
         $scope.preferences = [];
 
-        if($rootScope.currentUser != undefined){
+        if ($rootScope.currentUser != undefined) {
             username = $rootScope.currentUser.username;
-            UserService.lookupUserByUsername(username, function(user){
-                          $scope.preferences = user.preferences
+            UserService.lookupUserByUsername(username, function (user) {
+                $scope.preferences = user.preferences
             });
         }
 
@@ -47,17 +47,17 @@
             console.log("cached locations == " + cachedLocations);
             document.getElementById("event-error").style.display = "none";
             document.getElementById("map_canvas").style.display = "block";
+
             if (map == undefined) {
                 setTimeout(function () {
                     populateMap(cachedLocations);
                 }, 2000);
             }
+        } else {
+            search("", "", "");
         }
 
         initAutocomplete();
-
-        search("","","");
-
 
         function search(eventName, eventLocation, reqPageNumber) {
             $("#loaderIcon").show();
@@ -68,7 +68,7 @@
             eventName = getValidEventName(eventName);
             preferences = $scope.preferences;
 
-            SearchService.searchEventByNameAndLocation(eventName, eventLocation, preferences, reqPageNumber).then(function(eventsResponse){
+            SearchService.searchEventByNameAndLocation(eventName, eventLocation, preferences, reqPageNumber).then(function (eventsResponse) {
 
                 console.log("already reached controller with response: ");
                 console.log(eventsResponse);
@@ -314,9 +314,9 @@
             return eventLocation
         }
 
-        $scope.range = function(n) {
+        $scope.range = function (n) {
             var toReturn = [];
-            for(i = 1; i <= n && i <= 15 ; i++)
+            for (i = 1; i <= n && i <= 15; i++)
                 toReturn.push(i);
             return toReturn;
         };
