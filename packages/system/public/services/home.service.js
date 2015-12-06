@@ -19,7 +19,7 @@
             var $q = injector.get("$q");
             var deferred = $q.defer();
 
-            var url = "https://www.eventbriteapi.com/v3/categories/?token=WMM76DC53N75L2J5T32V";
+            var url = "https://www.eventbriteapi.com/v3/categories/?token=LOGWBWOABJJTLQZDQI2A";
 
             $http({
                 url: url,

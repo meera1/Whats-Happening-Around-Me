@@ -4,6 +4,7 @@
         .module("eventapp")
         .controller("DetailsController", DetailsController);
 
+
     function DetailsController($routeParams,$scope,$rootScope, DetailsService, SearchService){
 
          $rootScope.apiKeys = ["IGMX6ZKRMBLH5TOCEMKU","WMM76DC53N75L2J5T32V","WXRBOESQZZRDO4WWV72X","LOGWBWOABJJTLQZDQI2A","CCLCEWYWLCGOE47RAALI"];
@@ -23,11 +24,13 @@
             $rootScope.currentApiKey = $rootScope.apiKeys[randomIndex];
         }
 
+        var username = $rootScope.currentUser.username;
         var id = $routeParams.id;
 
         var detailsModel = this;
 
         detailsModel.addLikeForEvent = addLikeForEvent;
+        detailsModel.addDisLikeForEvent = addDisLikeForEvent;
         detailsModel.addCommentForEvent = addCommentForEvent;
 
         DetailsService.searchById(id).then(function(response){
@@ -97,16 +100,41 @@
              $("#detailContent").hide();
          });
 
+
+
+         DetailsService.checkforlikes(username,id, function(event){
+                     console.log("after lookup event schema for that user choice " + event.username +"  " + event.choice);
+                     //$scope.user = user;
+                     //$scope.selection = $scope.user.preferences;
+                 });
+
+
+
         function addLikeForEvent(eventId){
+            var username = $rootScope.currentUser.username;
+            console.log(username + eventId+ " from details.controller like");
+            DetailsService.addLikeForEvent(eventId, username, function(callback)
+            {
+                console.log(callback + "from details controller for like");
+                $scope.like = callback.choice;
+            });
 
-            DetailsService
-                   .addLikeForEvent(eventId)
-                   .then(function(response){
-
-                        $scope.blah = response;
-
-                   });
         }
+
+
+
+        function addDisLikeForEvent(eventId){
+            var username = $rootScope.currentUser.username;
+            console.log(username + eventId+ " from details.controller dislike");
+            DetailsService.addDisLikeForEvent(eventId, username, function(callback)
+            {
+                console.log(callback + "from details controller for dislike");
+                $scope.dislike = callback.choice;
+
+            });
+
+                }
+
 
         function addCommentForEvent(eventId, comment){
 

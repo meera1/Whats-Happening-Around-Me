@@ -53,25 +53,12 @@ var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 app.listen(port, ipaddress);
 
 
+//-------------------------------------------------------------
 
-// Describing the schema
 
-//   var UserSchema = new mongoose.Schema({
-//        "userID": String,
-//        "first": String,
-//        last: String,
-//        company: String,
-//        email: String,
-//        time-zone: {type: Date, enum: ['(GMT-10:00) Hawaii', '(GMT-09:00) Alaska', '(GMT-08:00) Pacific Time (US &amp; Canada)','(GMT-07:00) Arizona','(GMT-07:00) Mountain Time (US & Canada', '(GMT-06:00) Central Time (US & Canada)','(GMT-05:00) Eastern Time (US & Canada)','(GMT-05:00) Indiana (East)']}
-//        username: String,
-//        password: String,
-//        confirm-password: String,
-//        likes: [String],
-//        dislikes: [String],
-//        "eventID": [Number]
-//        reviews: [{eventID: Number , comment: String}]  // or make a event schema having userID and his comments like below
-//    }, { collection: "UserModel" });
-//
+var globalLikeValue = 1;
+var globalDislikeValue = -1;
+
 
 var UserSchema = new mongoose.Schema({
     username: String,
@@ -82,8 +69,28 @@ var UserSchema = new mongoose.Schema({
     preferences: [String]
 }, {collection: "User"});
 
-
 var User = mongoose.model("User", UserSchema);
+
+
+var CategoriesSchema = mongoose.Schema({
+    "id": String,
+    "name": String
+}, {collection: "Categories"});
+
+var CategoriesModel = mongoose.model("CategoriesModel", CategoriesSchema);
+
+
+var EventSchema = mongoose.Schema({
+    "eventId": Number,
+    "username": String,
+    "choice": Number,
+    "comment": String
+});
+
+var Events = mongoose.model("Events", EventSchema);
+
+
+
 
 
 var auth = function (req, res, next) {
@@ -140,6 +147,8 @@ app.post("/rest/login", passport.authenticate('local'), function (req, res) {
 app.post("/rest/user", function(req, res){
 
     var user = req.body;
+//    var email = user.email;
+//    user.username = email;
     console.log("user from server " + user);
 
     User.findOne({$or: [{username: user.username}, {email: user.email}]}, function(err, existingUser){
@@ -148,12 +157,13 @@ app.post("/rest/user", function(req, res){
         {
             User.create(user, function(err, newUser)
             {
-                req.login(newUser, function(err){
-                    if(err){
-                        return next(err);
-                    }
-                    res.json(newUser);
-                });
+                req.login(newUser, function (err) {
+
+                            if (err) {
+                                return next(err);
+                            }
+                            res.json(newUser);
+                        });
             })
 
         }
@@ -211,10 +221,6 @@ app.put("/rest/update/user", auth, function(req, res){
     });
 
     res.json(user);
-    //    User.find({username: username}, function(err, users)
-    //    {
-    //        res.json(users[0]);
-    //    });
 
 });
 
@@ -222,7 +228,6 @@ app.put("/rest/update/user", auth, function(req, res){
 app.post('/rest/logout', function (req, res) {
 
     req.logOut();
-    //req.session.destroy();
     res.send(200);
 });
 
@@ -234,18 +239,113 @@ app.get('/rest/loggedin', function(req, res)
 
 
 
-var CategoriesSchema = mongoose.Schema({
-    "id": String,
-    "name": String
-}, {collection: "Categories"});
-
-
-var CategoriesModel = mongoose.model("CategoriesModel", CategoriesSchema);
-
-
 app.get("/api/wham/eventapp/categories", function (req, res) {
     CategoriesModel.find(function(err, categories) {
         res.json(categories);
     });
+});
+
+
+app.post('/rest/like', auth, function(req, res){
+        var username = req.body.username;
+        var eventId = req.body.eventId;
+        console.log("likes user " + username+ "  "+ eventId);
+            Events.findOne({eventId: eventId, username: username}, function(err, existingEvent){
+
+                if(existingEvent == null)
+                {
+
+                    var newEvent = new Events({
+                    eventId: eventId,
+                    username: username,
+                    choice: globalLikeValue,
+                    comments: null
+                    });
+
+                    newEvent.save(function (err, document) {
+                    if (err) console.log(err);
+                    else
+                    {
+                          console.log('Saved : ', document ) ;
+                          res.json(document);
+                          };
+                    });
+
+
+                }
+                else
+                    {
+                        Events.findByIdAndUpdate(
+                        existingEvent._id,
+                        { $set: { choice: globalLikeValue } },
+                         function (err, document) {
+                          if (err) console.log("Error in updating event with likes "+ err);
+                          else res.json(document);
+                        });
+
+                    };
+            });
+
 
 });
+
+
+
+
+app.post('/rest/dislike', auth, function(req, res){
+        var username = req.body.username;
+        var eventId = req.body.eventId;
+        console.log("dislikes user " + username+ "  "+ eventId);
+            Events.findOne({eventId: eventId, username: username}, function(err, existingEvent){
+
+                if(existingEvent == null)
+                {
+
+                    var newEvent = new Events({
+                    eventId: eventId,
+                    username: username,
+                    choice: globalDislikeValue,
+                    comments: null
+                    });
+
+                    newEvent.save(function (err, document) {
+                    if (err) console.log(err);
+                    else
+                    {
+                          console.log('Saved : ', document ) ;
+                          res.json(document);
+                          };
+                    });
+
+
+                }
+                else
+                    {
+                        Events.findByIdAndUpdate(
+                        existingEvent._id,
+                        { $set: { choice: globalDislikeValue } },
+                         function (err, document) {
+                          if (err) console.log("Error in updating event with dislikes "+ err);
+                          else res.json(document);
+                        });
+
+                    };
+            });
+
+
+});
+
+
+
+
+
+app.get("/rest/:username/event/:id/check", auth, function(req,res){
+
+    var username = req.params.username;
+    var eventId = req.params.id;
+
+    console.log(username+"   "+ eventId+ "from server checking likes and dislikes");
+
+
+});
+

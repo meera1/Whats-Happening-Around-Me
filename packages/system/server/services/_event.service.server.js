@@ -1,6 +1,6 @@
 module.exports = function(app, model){
 
-    app.post("/api/wham/eventapp/user/:userId/event/:eventId/like", addLikeForEvent);
+    app.post("/api/wham/eventapp/:eventId/:username/like", addLikeForEvent);
 
     app.post("/api/wham/eventapp/user/:userId/event/:eventId/comment/:comment", addCommentForEvent);
 
@@ -9,12 +9,13 @@ module.exports = function(app, model){
 
     function addLikeForEvent(req, res){
 
-            var userID = req.params.userId;
+            var username = req.params.username;
 
             var eventID = req.params.eventId;
+            console.log("from event server service "+ eventId + username);
 
             var likeForEvent = {
-                        userID: userID,
+                        username: username,
                         eventID: eventID
             };
 
