@@ -44,6 +44,11 @@
                 </div>
             </div>
         </div>
+    </ul>
+</div>
 
+<div id="pagination" style="width: 90%;margin: 0 auto;">
+    <ul class="pagination" ng-repeat="i in range(pageCount) track by $index">
+        <li><a href="javascript:void(0)" ng-click="model.search(eventName,eventLocation, i)">{{i}}</a></li>
     </ul>
 </div>
