@@ -78,7 +78,8 @@ var UserSchema = new mongoose.Schema({
     password: String,
     fname: String,
     lname: String,
-    email: String
+    email: String,
+    preferences: [String]
 }, {collection: "User"});
 
 
@@ -147,7 +148,12 @@ app.post("/rest/user", function(req, res){
         {
             User.create(user, function(err, newUser)
             {
-                res.json(newUser);
+                req.login(newUser, function(err){
+                    if(err){
+                        return next(err);
+                    }
+                    res.json(newUser);
+                });
             })
 
         }
@@ -177,6 +183,7 @@ app.put("/rest/update/user", auth, function(req, res){
     var fname = req.params.fname;
     var lname = req.params.lname;
     var email = req.params.email;
+    var preferences = req.params.preferences;
 
     console.log(user.username);
 
@@ -189,17 +196,15 @@ app.put("/rest/update/user", auth, function(req, res){
             doc.fname = user.fname;
             doc.lname = user.lname;
             doc.email = user.email;
+            doc.preferences = user.preferences;
 
 
             doc.save();
 
         }
         else {
-
             console.log("Error form updatin user profile in server:" + error);
             console.log("***************************************************");
-
-
         }
 
 
@@ -239,8 +244,8 @@ var CategoriesModel = mongoose.model("CategoriesModel", CategoriesSchema);
 
 
 app.get("/api/wham/eventapp/categories", function (req, res) {
-
     CategoriesModel.find(function(err, categories) {
         res.json(categories);
     });
+
 });

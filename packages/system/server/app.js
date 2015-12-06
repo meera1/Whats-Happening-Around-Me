@@ -7,4 +7,8 @@ module.exports = function(app, mongoose, db){
 // var model = require("./models/user.model.js")(mongoose, db);
 //    require("./services/user.service.server.js")(app, model);
 
+//Uncomment for loading Categories in database
+// var model = require("./models/categories.model.js")(mongoose, db);
+//    require("./services/home.service.server.js")(app, model);
+
 };

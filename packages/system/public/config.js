@@ -22,26 +22,35 @@
                 controller: "HomeController",
                 controllerAs: "homeModel"
             })
-            .when("/details/:id", {
-                templateUrl: "views/details.html",
-                controller: "DetailsController",
-                controllerAs: "detailsModel"
+            .when("/details/:id",{
+                            templateUrl: "views/details.html",
+                            controller: "DetailsController",
+                            controllerAs: "detailsModel"
+                        })
+            .when("/profile",{
+                            templateUrl: "views/profile.html",
+                            controller: "ProfileController",
+                            controllerAs: "profileModel",
+                            resolve:{
+                                loggedin : checkLoggedin
+                            }
             })
-            .when("/profile", {
-                templateUrl: "views/profile.html",
-                controller: "ProfileController",
-                resolve: {
-                    loggedin: checkLoggedin
-                }
-            })
-            .when("/login", {
-                templateUrl: "views/login.html",
-                controller: "LoginController"
-            })
-            .when("/signup", {
-                templateUrl: "views/signup.html",
-                controller: "SignupController"
-            })
+            .when("/profile/:username",{
+                                        templateUrl: "views/profile.html",
+                                        controller: "ProfileController",
+                                        resolve:{
+                                            loggedin : checkLoggedin
+                                        }
+                        })
+            .when("/login",{
+                            templateUrl: "views/login.html",
+                            controller: "LoginController"
+                        })
+
+            .when("/signup",{
+                            templateUrl: "views/signup.html",
+                            controller: "SignupController"
+                        })
             .otherwise({
                 redirectTo: "/home"
             });
