@@ -142,7 +142,7 @@ app.post("/rest/user", function(req, res){
     var user = req.body;
     console.log("user from server " + user);
 
-    User.findOne({username: user.username}, function(err, existingUser){
+    User.findOne({$or: [{username: user.username}, {email: user.email}]}, function(err, existingUser){
 
         if(existingUser == null)
         {
