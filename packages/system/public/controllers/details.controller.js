@@ -36,7 +36,37 @@
 
 
                     $scope.$apply();
+                },function(reason){
+
+                    console.log("failed at Details controller at getAllvenues promise" + reason);
+
+                     for(i=0;i<$rootScope.apiKeys.length;i++){
+                        if($rootScope.currentApiKey === $rootScope.apiKeys[i]){
+                            if(i == $rootScope.apiKeys.length - 1){
+                                $rootScope.currentApiKey = $rootScope.apiKeys[0];
+                            }else{
+                                $rootScope.currentApiKey = $rootScope.apiKeys[i+1];
+                            }
+                            break;
+                        }
+                    }
+
                 });
+
+         },function(reason){
+
+            console.log("failed at Details controller at details searchbyid promise: " + reason);
+
+             for(i=0;i<$rootScope.apiKeys.length;i++){
+                if($rootScope.currentApiKey === $rootScope.apiKeys[i]){
+                    if(i == $rootScope.apiKeys.length - 1){
+                        $rootScope.currentApiKey = $rootScope.apiKeys[0];
+                    }else{
+                        $rootScope.currentApiKey = $rootScope.apiKeys[i+1];
+                    }
+                    break;
+                }
+            }
 
          });
 

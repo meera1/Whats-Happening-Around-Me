@@ -22,6 +22,23 @@
 
     function SearchController($scope, $rootScope, SearchService, UserService) {
 
+        $rootScope.apiKeys = ["IGMX6ZKRMBLH5TOCEMKU","WMM76DC53N75L2J5T32V","WXRBOESQZZRDO4WWV72X","LOGWBWOABJJTLQZDQI2A","HIWZN4LLCZBJRAIDF5","CCLCEWYWLCGOE47RAALI"];
+
+        if($rootScope.currentApiKey == null || $rootScope.currentApiKey == "" || $rootScope.currentApiKey == undefined){
+            var randomIndex = 0;
+            var maxLength = $rootScope.apiKeys.length;
+
+            //choosing a random key
+            while(true){
+                randomIndex = Math.floor(Math.random()*(maxLength+1)+0);
+                if(randomIndex<=5){
+                    break;
+                }
+            }
+
+            $rootScope.currentApiKey = $rootScope.apiKeys[randomIndex];
+        }
+
         console.log("Inside Search controller");
         var model = this;
         model.search = search;
@@ -53,7 +70,7 @@
                     populateMap(cachedLocations);
                 }, 2000);
             }
-        } else {
+        } else{
             search("", "", "");
         }
 
@@ -135,6 +152,25 @@
                         newlocations.push([venueName, response.latitude + "," + response.longitude,
                             updatedURL, completeAddress, eventName]);
                         cachedLocations = newlocations;
+                    },function(reason){
+
+                        console.log("failed in search controller promise for venues: " + reason);
+
+                        for(i=0;i<$rootScope.apiKeys.length;i++){
+                            if($rootScope.currentApiKey === $rootScope.apiKeys[i]){
+                                if(i == $rootScope.apiKeys.length - 1){
+                                    $rootScope.currentApiKey = $rootScope.apiKeys[0];
+                                }else{
+                                    $rootScope.currentApiKey = $rootScope.apiKeys[i+1];
+                                }
+                                break;
+                            }
+                        }
+
+                        $("#loaderIcon").hide();
+                        document.getElementById("event-error").style.display = "block";
+                        document.getElementById("map_canvas").style.display = "none";
+
                     });
 
                 }
@@ -142,6 +178,24 @@
                 setTimeout(function () {
                     populateMap(newlocations);
                 }, 2000);
+
+            },function(reason){
+
+                console.log("failed in search contoller promise for event search: " + reason);
+                for(i=0;i<$rootScope.apiKeys.length;i++){
+                    if($rootScope.currentApiKey === $rootScope.apiKeys[i]){
+                        if(i == $rootScope.apiKeys.length - 1){
+                            $rootScope.currentApiKey = $rootScope.apiKeys[0];
+                        }else{
+                            $rootScope.currentApiKey = $rootScope.apiKeys[i+1];
+                        }
+                        break;
+                    }
+                }
+
+                $("#loaderIcon").hide();
+                document.getElementById("event-error").style.display = "block";
+                document.getElementById("map_canvas").style.display = "none";
 
             });
         }
