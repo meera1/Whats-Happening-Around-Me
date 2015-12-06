@@ -22,7 +22,7 @@
             var deferred = $q.defer();
             var categories = preferences.join();
 
-            //var url = "https://www.eventbriteapi.com/v3/events/search/?token=IGMX6ZKRMBLH5TOCEMKU&"+eventLocation + "&q=" + eventName + "&categories=" + categories;
+//            var url = "https://www.eventbriteapi.com/v3/events/search/?token=IGMX6ZKRMBLH5TOCEMKU&"+eventLocation + "&q=" + eventName + "&categories=" + categories + "&page=" + pageNumber;
             var url = "https://www.eventbriteapi.com/v3/events/search/?token=WMM76DC53N75L2J5T32V&"+eventLocation + "&q=" + eventName + "&categories=" + categories + "&page=" + pageNumber;
 
             console.log("Fetching data from: " + url);
@@ -46,7 +46,7 @@
             var $q = injector.get("$q");
             var deferred = $q.defer();
 
-            //var url = "https://www.eventbriteapi.com/v3/venues/"+venue_id+"/?token=IGMX6ZKRMBLH5TOCEMKU";
+//            var url = "https://www.eventbriteapi.com/v3/venues/"+venue_id+"/?token=IGMX6ZKRMBLH5TOCEMKU";
             var url = "https://www.eventbriteapi.com/v3/venues/" + venue_id + "/?token=WMM76DC53N75L2J5T32V";
 
             $http.get(url)

@@ -50,7 +50,11 @@
 
         initAutocomplete();
 
+        search("","","");
+
+
         function search(eventName, eventLocation, reqPageNumber) {
+            $("#loaderIcon").show();
             eventLocation = document.getElementById("event-location").value;
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
@@ -70,6 +74,8 @@
                 model.data = filteredResponse;
                 $scope.$apply();
                 console.log($scope.model);
+
+                $("#loaderIcon").hide();
 
                 if (eventsResponse.events == null || eventsResponse.events == "") {
                     document.getElementById("event-error").style.display = "block";
