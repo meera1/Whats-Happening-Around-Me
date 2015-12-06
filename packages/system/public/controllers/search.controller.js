@@ -28,7 +28,11 @@
         $scope.getValidEventName = getValidEventName;
         $scope.getCompleteAddress = getCompleteAddress;
         $scope.getOnlyValidEvents = getOnlyValidEvents;
-        var username = $rootScope.currentUser.username;
+        console.log("Checking user in $rootScope...");
+        console.log($rootScope.currentUser);
+        var username = ""
+        if($rootScope.currentUser != undefined)
+            username = $rootScope.currentUser.username;
         $scope.preferences = [];
         UserService.lookupUserByUsername(username, function(user){
               $scope.preferences = user.preferences
