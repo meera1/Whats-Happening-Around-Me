@@ -16,6 +16,7 @@
         });
     }
 
+    var map;
     var cachedEvents;
     var cachedLocations;
 
@@ -46,9 +47,11 @@
             console.log("cached locations == " + cachedLocations);
             document.getElementById("event-error").style.display = "none";
             document.getElementById("map_canvas").style.display = "block";
-            setTimeout(function () {
-                populateMap(cachedLocations);
-            }, 2000);
+            if (map == undefined) {
+                setTimeout(function () {
+                    populateMap(cachedLocations);
+                }, 2000);
+            }
         }
 
         initAutocomplete();
@@ -58,7 +61,9 @@
 
         function search(eventName, eventLocation, reqPageNumber) {
             $("#loaderIcon").show();
-            eventLocation = document.getElementById("event-location").value;
+            eventLocation = "";
+            if (document != undefined && document.getElementById("event-location") != undefined)
+                eventLocation = document.getElementById("event-location").value;
             eventLocation = getValidEventLocation(eventLocation);
             eventName = getValidEventName(eventName);
             preferences = $scope.preferences;
@@ -191,7 +196,7 @@
 //            });
 
             var geocoder;
-            var map;
+            //var map;
             var bounds = new google.maps.LatLngBounds();
             initialize();
 
