@@ -16,6 +16,9 @@
                     console.log("user from signup contorller " + $rootScope.currentUser);
                     $location.url('/profile/' + user.username);
                 }
+                else {
+                    alert("User Already Exists. Please use a unique username and email!");
+                }
 
             });
         }
