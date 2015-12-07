@@ -378,7 +378,8 @@
                     var latlng = {lat: latitude, lng: longitude};
                     geocoder = new google.maps.Geocoder();
                     geocoder.geocode({'location': latlng}, function (results, status) {
-                        document.getElementById("event-location").value = location;
+                        console.log("latlng result");
+                        document.getElementById("event-location").value = results[1].formatted_address;
                     });
 
                 }
