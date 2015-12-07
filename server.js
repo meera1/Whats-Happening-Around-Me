@@ -156,9 +156,6 @@ app.post("/rest/user", function(req, res){
     });
 });
 
-
-
-
 app.get("/rest/user/:username", function(req, res){
 
     var username = req.params.username;
