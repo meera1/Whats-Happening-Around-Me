@@ -68,9 +68,8 @@
             document.getElementById("event-error").style.display = "none";
             document.getElementById("map_canvas").style.display = "block";
 
-            //if (map == undefined) {
-                setTimeout(function () {
-                    populateMap(cachedLocations);
+            setTimeout(function () {
+                populateMap(cachedLocations);
                 }, 2000);
 
         } else if ($rootScope.currentUser == undefined){
@@ -89,6 +88,10 @@
             preferences = $scope.preferences;
             if(reqPageNumber == undefined)
                 reqPageNumber = 1;
+
+            var newlocations = [];
+            var successOrFailureStatus = false;
+
 
             SearchService.searchEventByNameAndLocation(eventName, eventLocation, preferences, reqPageNumber).then(function (eventsResponse) {
 
@@ -123,7 +126,7 @@
 
                 var results = [];
 
-                var newlocations = [];
+                newlocations = [];
                 var size = filteredResponse.length < 10 ? filteredResponse.length : 10;
                 for (i = 0; i < size; i++) {
 
@@ -161,6 +164,8 @@
                         newlocations.push([venueName, response.latitude + "," + response.longitude,
                             updatedURL, completeAddress, eventName]);
                         cachedLocations = newlocations;
+
+                        successOrFailureStatus = true;
                     },function(reason){
 
                         console.log("failed in search controller promise for venues: " + reason);
@@ -180,13 +185,20 @@
                         document.getElementById("event-error").style.display = "block";
                         document.getElementById("map_canvas").style.display = "none";
 
+                        successOrFailureStatus = false;
+
+                    }).finally(function(blah, blah){
+
+                        if(successOrFailureStatus){
+                            populateMap(newlocations);
+                        }
                     });
 
                 }
 
-                setTimeout(function () {
-                    populateMap(newlocations);
-                }, 2000);
+//                setTimeout(function () {
+//                    populateMap(newlocations);
+//                }, 2000);
 
             },function(reason){
 
