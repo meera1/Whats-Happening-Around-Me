@@ -81,7 +81,7 @@
 //           })
 //        });
 
-//        it('Should return complete address - return address with all fields', function(){
+//        it('Must return complete address - return address with all fields', function(){
 //            var cases = [{
 //                address_1 : "75 St Alphonsus",
 //                address_2 : "Apt 1002",
@@ -96,7 +96,7 @@
 //           })
 //        });
 //
-//        it('Should return complete address - missing address 2', function(){
+//        it('Must return complete address - missing address 2', function(){
 //            var cases = [{
 //                address_1 : "75 Peterborough",
 //                address_2 : "",
@@ -111,7 +111,7 @@
 //           })
 //        });
 
-        it('Should return complete address - undefined address 2', function(){
+        it('Must return complete address - undefined address 2', function(){
             var cases = [{
                 address_1 : "75 Peterborough",
                 address_2 : undefined,
@@ -126,7 +126,7 @@
             })
         });
 
-        it('Should return complete address - missing city', function(){
+        it('Must return complete address - missing city', function(){
             var cases = [{
                 address_1 : "75 Peterborough",
                 address_2 : "Apt 101",
@@ -141,7 +141,7 @@
             })
         });
 
-        it('Should return complete address - undefined city', function(){
+        it('Must return complete address - undefined city', function(){
             var cases = [{
                 address_1 : "75 Peterborough",
                 address_2 : "Apt 101",
@@ -156,7 +156,7 @@
             })
         });
 
-        it('Should return complete address - missing region', function(){
+        it('Must return complete address - missing region', function(){
             var cases = [{
                 address_1 : "75 Peterborough",
                 address_2 : "Apt 101",
@@ -171,7 +171,7 @@
             })
         });
 
-        it('Should return complete address - undefined region', function(){
+        it('Must return complete address - undefined region', function(){
             var cases = [{
                 address_1 : "75 Peterborough",
                 address_2 : "Apt 101",
@@ -186,7 +186,7 @@
            })
         });
 
-        it('Should return complete address - missing address 2 and region', function(){
+        it('Must return complete address - missing address 2 and region', function(){
             var cases = [{
                 address_1 : "75 Peterborough",
                 address_2 : "",
@@ -201,7 +201,7 @@
            })
         });
 
-        it('Should return complete address - undefined address 2 and region', function(){
+        it('Must return complete address - undefined address 2 and region', function(){
             var cases = [{
                 address_1 : "75 Peterborough",
                 address_2 : undefined,
@@ -216,7 +216,7 @@
            })
         });
 
-        it('Should return complete address - missing address 2 and city', function(){
+        it('Must return complete address - missing address 2 and city', function(){
             var cases = [{
                 address_1 : "75 Peterborough",
                 address_2 : "",
@@ -231,7 +231,7 @@
            })
         });
 
-        it('Should return complete address - undefined address 2 and city', function(){
+        it('Must return complete address - undefined address 2 and city', function(){
             var cases = [{
                 address_1 : "75 Peterborough",
                 address_2 : undefined,
@@ -247,7 +247,7 @@
         });
 
 
-        it('Should return complete address - missing address 2, city and region', function(){
+        it('Must return complete address - missing address 2, city and region', function(){
             var cases = [{
                 address_1 : "75 St Alphonsus",
                 address_2 : "",
@@ -262,7 +262,7 @@
             })
             });
 
-        it('Should return complete address - undefined address 2, city and region', function(){
+        it('Must return complete address - undefined address 2, city and region', function(){
             var cases = [{
                 address_1 : "75 St Alphonsus",
                 address_2 : undefined,
@@ -277,7 +277,7 @@
             })
         });
 
-        it('Should return complete address - undefined address 2, city and region', function(){
+        it('Must return complete address - undefined address 2, city and region', function(){
             var cases = [{
                 address_1 : "75 St Alphonsus",
                 address_2 : "",
@@ -292,7 +292,7 @@
             })
         });
 
-        it('Should return complete address - undefined address 2, city and region', function(){
+        it('Must return complete address - undefined address 2, city and region', function(){
             var cases = [{
                 address_1 : "75 St Alphonsus",
                 address_2 : undefined,
@@ -307,7 +307,7 @@
             })
         });
 
-        it('Should return complete address - undefined address 2, city and region', function(){
+        it('Must return complete address - undefined address 2, city and region', function(){
             var cases = [{
                 address_1 : "75 St Alphonsus",
                 address_2 : undefined,
@@ -322,7 +322,7 @@
             })
         });
 
-        it('Should return complete address - missing all address fields', function(){
+        it('Must return complete address - missing all address fields', function(){
             var cases = [{
                address_1 : "",
                address_2 : "",
@@ -337,7 +337,7 @@
             })
             });
 
-        it('Should return complete address - undefined all address fields', function(){
+        it('Must return complete address - undefined all address fields', function(){
             var cases = [{
                address_1 : undefined,
                address_2 : undefined,
@@ -352,7 +352,7 @@
             })
         });
 
-        it('Event location validator should return the same location name, if input is valid, else return Boston, MA - return Boston, MA', function(){
+        it('Event location validator must return the same location name, if input is valid, else return Boston, MA - return Boston, MA', function(){
             var cases = [{
                 input : "",
                 expected: "location.address=Boston, MA"
@@ -364,7 +364,7 @@
             })
         });
 
-        it('Event location validator should return the same location name, if input is valid, else return Boston, MA - return Boston, MA', function(){
+        it('Event location validator must return the same location name, if input is valid, else return Boston, MA - return Boston, MA', function(){
             var cases = [{
                 input : undefined,
                 expected: "location.address=Boston, MA"
@@ -376,7 +376,7 @@
             })
         });
 
-        it('Event location validator should return the same location name, if input is valid, else return Boston, MA - return location', function(){
+        it('Event location validator must return the same location name, if input is valid, else return Boston, MA - return location', function(){
             var cases = [{
                input : "New York",
                expected: "location.address=New York"
@@ -388,7 +388,7 @@
            })
         });
 
-        it('Event location validator should return the same location name, if input is valid, else return Boston, MA - return location', function(){
+        it('Event location validator must return the same location name, if input is valid, else return Boston, MA - return location', function(){
             var cases = [{
                input : "Chicago, IL",
                expected: "location.address=Chicago, IL"
@@ -400,7 +400,7 @@
            })
         });
 
-        it('Event location validator should return the same location name, if input is valid, else return Boston, MA - return location', function(){
+        it('Event location validator must return the same location name, if input is valid, else return Boston, MA - return location', function(){
             var cases = [{
                input : "Chicago, IL, US",
                expected: "location.address=Chicago, IL, US"
@@ -412,7 +412,7 @@
             })
         });
 
-        it('Event name validator should return the same location name, if input is valid, else return a blank string - return blank screen', function(){
+        it('Event name validator must return the same location name, if input is valid, else return a blank string - return blank screen', function(){
             var cases = [{
                input : undefined,
                expected: ""
@@ -424,7 +424,7 @@
 
         });
 
-        it('Event name validator should return the same location name, if input is valid, else return a blank string - return blank screen', function(){
+        it('Event name validator must return the same location name, if input is valid, else return a blank string - return blank screen', function(){
             var cases = [{
                 input : "",
                 expected: ""
@@ -436,7 +436,7 @@
 
         });
 
-        it('Event name validator should return the same location name, if input is valid, else return a blank string - return blank screen', function(){
+        it('Event name validator must return the same location name, if input is valid, else return a blank string - return blank screen', function(){
             var cases = [{
                 input : undefined,
                 expected: ""
@@ -448,7 +448,7 @@
 
         });
 
-        it('Event name validator should return the same location name, if input is valid, else return a blank string - return same location', function(){
+        it('Event name validator must return the same location name, if input is valid, else return a blank string - return same location', function(){
             var cases = [{
                 input : "Music",
                 expected: "Music"
@@ -460,7 +460,7 @@
 
         });
 
-        it('Event name validator should return the same location name, if input is valid, else return a blank string - return same location', function(){
+        it('Event name validator must return the same location name, if input is valid, else return a blank string - return same location', function(){
             var cases = [{
                 input : "Party",
                 expected: "Party"
@@ -472,7 +472,7 @@
 
         });
 
-        it('Event name validator should return the same location name, if input is valid, else return a blank string - return same location', function(){
+        it('Event name validator must return the same location name, if input is valid, else return a blank string - return same location', function(){
             var cases = [{
                 input : "Dinner",
                 expected: "Dinner"
