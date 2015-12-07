@@ -1,16 +1,11 @@
-<h1>Profile</h1>
-
 <div class="row">
     <!-- left column -->
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        <!--<div class="text-center">-->
-            <!--<img src="http://lorempixel.com/200/200/people/9/" class="avatar img-circle img-thumbnail" alt="avatar">-->
-            <!--<h6>Upload a different photo...</h6>-->
-            <!--<input type="file" class="text-center center-block well well-sm">-->
-        <!--</div>-->
-        <h2>Welcome {{username}}</h2>
+    <div class="col-md-3"></div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
 
-        <h3>Your Personal info:</h3>
+        <h2>Profile</h2>
+
+        <h3>Welcome {{username}}</h3>
 
         <form class="form-horizontal" role="form">
             <div class="form-group">
@@ -27,13 +22,7 @@
                     <input ng-model="user.lname" class="form-control" value="Bishop" type="text">
                 </div>
             </div>
-            <!--<div class="form-group">-->
-                <!--<label class="col-lg-3 control-label">Company:</label>-->
 
-                <!--<div class="col-lg-8">-->
-                    <!--<input ng-model="company" class="form-control" value="" type="text">-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="form-group">
                 <label class="col-lg-3 control-label">Email:</label>
 
@@ -41,30 +30,7 @@
                     <input ng-model="user.email" class="form-control" value="janesemail@gmail.com" type="text">
                 </div>
             </div>
-            <!--<div class="form-group">-->
-                <!--<label class="col-lg-3 control-label">Time Zone:</label>-->
 
-                <!--<div class="col-lg-8">-->
-                    <!--<div class="ui-select">-->
-                        <!--<select id="user_time_zone" class="form-control">-->
-                            <!--<option value="Hawaii">(GMT-10:00) Hawaii</option>-->
-                            <!--<option value="Alaska">(GMT-09:00) Alaska</option>-->
-                            <!--<option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)-->
-                            <!--</option>-->
-                            <!--<option value="Arizona">(GMT-07:00) Arizona</option>-->
-                            <!--<option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp;-->
-                                <!--Canada)-->
-                            <!--</option>-->
-                            <!--<option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time-->
-                                <!--(US &amp; Canada)-->
-                            <!--</option>-->
-                            <!--<option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)-->
-                            <!--</option>-->
-                            <!--<option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>-->
-                        <!--</select>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="form-group">
                 <label class="col-md-3 control-label">Username:</label>
 
@@ -83,86 +49,132 @@
             <div class="form-group">
                 <label class="col-md-3 control-label">Select Preferences:</label>
 
-                <!--<div class="col-md-8">-->
-                    <!--<div ng-repeat="category in profileModel.categories" >-->
-                        <!--<input type="checkbox" id="{{category.id}}"-->
-                               <!--ng-click="toggleSelection(category.id)"-->
-                               <!--ng-checked="user.preferences.indexOf(category.id) > -1"-->
-                               <!--value={{category.id}}/>{{category.name}}-->
-                    <!--</div>-->
-
-                <!--</div>-->
                 <div class="col-md-8">
-                    <label>
-                        <input type="checkbox" id="103" ng-click="toggleSelection('103')" ng-checked="user.preferences.indexOf('103') > -1" value="103">Music
-                    </label>
-                    <label>
-                        <input type="checkbox" id="101" ng-click="toggleSelection('101')" ng-checked="user.preferences.indexOf('101') > -1" value="101">Business &amp; Professional
-                    </label>
-                    <label>
-                        <input type="checkbox" id="110" ng-click="toggleSelection('110')" ng-checked="user.preferences.indexOf('110') > -1" value="110">Food &amp; Drink
-                    </label>
-                    <label>
-                        <input type="checkbox" id="113" ng-click="toggleSelection('113')" ng-checked="user.preferences.indexOf('113') > -1" value="113">Community &amp; Culture
-                    </label>
-                    <label>
-                        <input type="checkbox" id="105" ng-click="toggleSelection('105')" ng-checked="user.preferences.indexOf('105') > -1" value="105">Performing &amp; Visual Arts
-                    </label>
-                    <label>
-                        <input type="checkbox" id="104" ng-click="toggleSelection('104')" ng-checked="user.preferences.indexOf('104') > -1" value="104">Film, Media &amp; Entertainment
-                    </label>
-                    <label>
-                        <input type="checkbox" id="108" ng-click="toggleSelection('108')" ng-checked="user.preferences.indexOf('108') > -1" value="108">Sports &amp; Fitness
-                    </label>
-                    <label>
-                        <input type="checkbox" id="107" ng-click="toggleSelection('107')" ng-checked="user.preferences.indexOf('107') > -1" value="107">Health &amp; Wellness
-                    </label>
-                    <label>
-                        <input type="checkbox" id="102" ng-click="toggleSelection('102')" ng-checked="user.preferences.indexOf('102') > -1" value="102">Science &amp; Technology
-                    </label>
-                    <label>
-                        <input type="checkbox" id="109" ng-click="toggleSelection('109')" ng-checked="user.preferences.indexOf('109') > -1" value="109">Travel &amp; Outdoor
-                    </label>
-                    <label>
-                        <input type="checkbox" id="111" ng-click="toggleSelection('111')" ng-checked="user.preferences.indexOf('111') > -1" value="111">Charity &amp; Causes
-                    </label>
-                    <label>
-                        <input type="checkbox" id="114" ng-click="toggleSelection('114')" ng-checked="user.preferences.indexOf('114') > -1" value="114">Religion &amp; Spirituality
-                    </label>
-                    <label>
-                        <input type="checkbox" id="115" ng-click="toggleSelection('115')" ng-checked="user.preferences.indexOf('115') > -1" value="115">Family &amp; Education
-                    </label>
-                    <label>
-                        <input type="checkbox" id="116" ng-click="toggleSelection('116')" ng-checked="user.preferences.indexOf('116') > -1" value="116">Seasonal &amp; Holiday
-                    </label>
-                    <label>
-                        <input type="checkbox" id="112" ng-click="toggleSelection('112')" ng-checked="user.preferences.indexOf('112') > -1" value="112">Government &amp; Politics
-                    </label>
-                    <label>
-                        <input type="checkbox" id="106" ng-click="toggleSelection('106')" ng-checked="user.preferences.indexOf('106') > -1" value="106">Fashion &amp; Beauty
-                    </label>
-                    <label>
-                        <input type="checkbox" id="117" ng-click="toggleSelection('117')" ng-checked="user.preferences.indexOf('117') > -1" value="117">Home &amp; Lifestyle
-                    </label>
-                    <label>
-                        <input type="checkbox" id="118" ng-click="toggleSelection('118')" ng-checked="user.preferences.indexOf('118') > -1" value="118">Auto, Boat &amp; Air
-                    </label>
-                    <label>
-                        <input type="checkbox" id="119" ng-click="toggleSelection('119')" ng-checked="user.preferences.indexOf('119') > -1" value="119">Hobbies &amp; Special Interest
-                    </label>
-                    <label>
-                        <input type="checkbox" id="199" ng-click="toggleSelection('199')" ng-checked="user.preferences.indexOf('199') > -1" value="199">Other
-                    </label>
+                    <table class="table  mytable">
+
+                        <tbody>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="103" ng-click="toggleSelection('103')"
+                                       ng-checked="user.preferences.indexOf('103') > -1" value="103">Music
+                            </td>
+                            <td>
+                                <input type="checkbox" id="101" ng-click="toggleSelection('101')"
+                                       ng-checked="user.preferences.indexOf('101') > -1" value="101">Business &amp;
+                                Professional
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="110" ng-click="toggleSelection('110')"
+                                       ng-checked="user.preferences.indexOf('110') > -1" value="110">Food &amp; Drink
+                            </td>
+                            <td>
+                                <input type="checkbox" id="113" ng-click="toggleSelection('113')"
+                                       ng-checked="user.preferences.indexOf('113') > -1" value="113">Community &amp;
+                                Culture
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="105" ng-click="toggleSelection('105')"
+                                       ng-checked="user.preferences.indexOf('105') > -1" value="105">Performing &amp;
+                                Visual Arts
+                            </td>
+                            <td>
+                                <input type="checkbox" id="104" ng-click="toggleSelection('104')"
+                                       ng-checked="user.preferences.indexOf('104') > -1" value="104">Film, Media &amp;
+                                Entertainment
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="108" ng-click="toggleSelection('108')"
+                                       ng-checked="user.preferences.indexOf('108') > -1" value="108">Sports &amp;
+                                Fitness
+                            </td>
+                            <td>
+                                <input type="checkbox" id="107" ng-click="toggleSelection('107')"
+                                       ng-checked="user.preferences.indexOf('107') > -1" value="107">Health &amp;
+                                Wellness
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="102" ng-click="toggleSelection('102')"
+                                       ng-checked="user.preferences.indexOf('102') > -1" value="102">Science &amp;
+                                Technology
+                            </td>
+                            <td>
+                                <input type="checkbox" id="109" ng-click="toggleSelection('109')"
+                                       ng-checked="user.preferences.indexOf('109') > -1" value="109">Travel &amp;
+                                Outdoor
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="111" ng-click="toggleSelection('111')"
+                                       ng-checked="user.preferences.indexOf('111') > -1" value="111">Charity &amp;
+                                Causes
+                            </td>
+                            <td>
+                                <input type="checkbox" id="114" ng-click="toggleSelection('114')"
+                                       ng-checked="user.preferences.indexOf('114') > -1" value="114">Religion &amp;
+                                Spirituality
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="115" ng-click="toggleSelection('115')"
+                                       ng-checked="user.preferences.indexOf('115') > -1" value="115">Family &amp;
+                                Education
+                            </td>
+                            <td>
+                                <input type="checkbox" id="116" ng-click="toggleSelection('116')"
+                                       ng-checked="user.preferences.indexOf('116') > -1" value="116">Seasonal &amp;
+                                Holiday
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="112" ng-click="toggleSelection('112')"
+                                       ng-checked="user.preferences.indexOf('112') > -1" value="112">Government &amp;
+                                Politics
+                            </td>
+                            <td>
+                                <input type="checkbox" id="106" ng-click="toggleSelection('106')"
+                                       ng-checked="user.preferences.indexOf('106') > -1" value="106">Fashion &amp;
+                                Beauty
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="117" ng-click="toggleSelection('117')"
+                                       ng-checked="user.preferences.indexOf('117') > -1" value="117">Home &amp;
+                                Lifestyle
+                            </td>
+                            <td>
+                                <input type="checkbox" id="118" ng-click="toggleSelection('118')"
+                                       ng-checked="user.preferences.indexOf('118') > -1" value="118">Auto, Boat &amp;
+                                Air
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="119" ng-click="toggleSelection('119')"
+                                       ng-checked="user.preferences.indexOf('119') > -1" value="119">Hobbies &amp;
+                                Special Interest
+                            </td>
+                            <td>
+                                <input type="checkbox" id="199" ng-click="toggleSelection('199')"
+                                       ng-checked="user.preferences.indexOf('199') > -1" value="199">Other
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <!--<div class="form-group">-->
-                <!--<label class="col-md-3 control-label">Confirm password:</label>-->
-
-                <!--<div class="col-md-8">-->
-                    <!--<input class="form-control" value="11111122333" type="password">-->
-                <!--</div>-->
-            <!--</div>-->
             <div class="form-group">
                 <label class="col-md-3 control-label"></label>
 
@@ -174,13 +186,4 @@
             </div>
         </form>
     </div>
-    </div>
-    <!-- edit form column -->
-    <!--<div class="col-md-8 col-sm-6 col-xs-12 personal-info">-->
-        <!--<div class="alert alert-info alert-dismissable">-->
-            <!--<a class="panel-close close" data-dismiss="alert">×</a>-->
-            <!--<i class="fa fa-coffee"></i>-->
-            <!--This is an <strong>.alert</strong>. Use this to show important messages to the user.-->
-        <!--</div>-->
-
 </div>
