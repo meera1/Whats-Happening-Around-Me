@@ -12,7 +12,6 @@ var session = require('express-session');
 var app = express();
 var mongoose = require('mongoose');
 var connectionString = 'mongodb://localhost/eventappDb';
-var db = mongoose.connect(connectionString);
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -21,7 +20,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
         process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
         process.env.OPENSHIFT_APP_NAME;
 }
-
+var db = mongoose.connect(connectionString);
 app.use(express.static(__dirname + '/packages/system/public'));
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -157,9 +156,6 @@ app.post("/rest/user", function(req, res){
     });
 });
 
-
-
-
 app.get("/rest/user/:username", function(req, res){
 
     var username = req.params.username;
@@ -169,7 +165,6 @@ app.get("/rest/user/:username", function(req, res){
     });
 
 });
-
 
 app.put("/rest/update/user", auth, function(req, res){
     var user = req.body;

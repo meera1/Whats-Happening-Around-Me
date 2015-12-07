@@ -1,20 +1,18 @@
-<div style="padding-left:20%;padding-right:20%" >
+<div style="padding-left:20%;padding-right:20%">
     <form class="form-signin">
-        <h2 class="form-signin-heading">Sign In</h2><hr>
+        <h2 class="form-signin-heading">Sign In</h2>
+        <hr>
         <div class="input-group margin-bottom-20">
             <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
-            <input ng-model="user.username" size="60" maxlength="255" class="form-control" placeholder="Username" name="username" id="username" type="text">
+            <input ng-model="user.username" size="60" maxlength="255" class="form-control" placeholder="Username"
+                   name="username" id="username" type="text" required/>
         </div>
         &nbsp;
         <div class="input-group margin-bottom-20">
             <span class="input-group-addon"><i class="glyphicon glyphicon-lock mycolor"></i></span>
-            <input ng-model="user.password" size="60" maxlength="255" class="form-control" placeholder="Password" name="password" id="password" type="password">
+            <input ng-model="user.password" size="60" maxlength="255" class="form-control" placeholder="Password"
+                   name="password" id="password" type="password" required/>
         </div>
-        <!--div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div-->
         &nbsp
         <button class="btn btn-lg btn-info btn-block" type="submit" ng-click="login(user)">Sign in</button>
     </form>
