@@ -102,21 +102,25 @@
 
 
 
-         DetailsService.checkforlikes(username,id, function(event){
-                     console.log("after lookup event schema for that user choice " + event.username +"  " + event.choice);
+         DetailsService.checkforlikes(username,id, function(callback){
+                     //console.log("after lookup event schema for that user choice " + event.username +"  " + event.choice);
                      //$scope.user = user;
                      //$scope.selection = $scope.user.preferences;
+                     console.log("check for like in details controller  "+ callback);
+                     $scope.choice = callback;
+
                  });
 
 
 
         function addLikeForEvent(eventId){
+
             var username = $rootScope.currentUser.username;
             console.log(username + eventId+ " from details.controller like");
             DetailsService.addLikeForEvent(eventId, username, function(callback)
             {
                 console.log(callback + "from details controller for like");
-                $scope.like = callback.choice;
+                $scope.choice = callback.choice;
             });
 
         }
@@ -129,7 +133,7 @@
             DetailsService.addDisLikeForEvent(eventId, username, function(callback)
             {
                 console.log(callback + "from details controller for dislike");
-                $scope.dislike = callback.choice;
+                $scope.choice = callback.choice;
 
             });
 

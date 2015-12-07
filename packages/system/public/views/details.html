@@ -28,17 +28,31 @@
                     </p>
 
                     <p ng-if="currentUser!=null">
-                        <button ng-hide="like" ng-show="dislike" ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-success">
+                        <!--<button ng-hide="like" ng-show="dislike" ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-success">-->
+                            <!--<span class="glyphicon glyphicon-thumbs-up"></span>-->
+                        <!--</button>-->
+                        <!--<button ng-show="like" ng-hide="dislike" class="btn btn-success">-->
+                            <!--<span>Liked</span>-->
+                        <!--</button>-->
+
+                        <!--<button ng-hide="dislike" ng-show="like" ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)" class="btn btn-danger">-->
+                            <!--<span class="glyphicon glyphicon-thumbs-down"></span>-->
+                        <!--</button>-->
+                        <!--<button ng-show="dislike" ng-hide="like" class="btn btn-danger">-->
+                            <!--<span>Disliked</span>-->
+                        <!--</button>-->
+
+
+                        <button ng-if="choice == 0 || choice == -1" ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-success">
                             <span class="glyphicon glyphicon-thumbs-up"></span>
                         </button>
-                        <button ng-show="like" ng-hide="dislike" class="btn btn-success">
+                        <button ng-if="choice == 1" class="btn btn-success">
                             <span>Liked</span>
                         </button>
-
-                        <button ng-hide="dislike" ng-show="like" ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)" class="btn btn-danger">
+                        <button ng-if="choice == 0 || choice == 1" ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)" class="btn btn-danger">
                             <span class="glyphicon glyphicon-thumbs-down"></span>
                         </button>
-                        <button ng-show="dislike" ng-hide="like" class="btn btn-danger">
+                        <button ng-if="choice == -1" class="btn btn-danger">
                             <span>Disliked</span>
                         </button>
 

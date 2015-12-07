@@ -330,7 +330,25 @@ app.get("/rest/:username/event/:id/check", auth, function(req,res){
     var eventId = req.params.id;
 
     console.log(username+"   "+ eventId+ "from server checking likes and dislikes");
+    Events.findOne({eventId: eventId, username: username}, function(err, existingEvent){
 
+      if(existingEvent == null)
+      {
+
+      var choice = 0;
+
+      res.json(choice);
+
+
+      }
+      else
+      {
+      var choice = existingEvent.choice;
+      res.json(choice);
+
+
+      }
+      });
 
 });
 
