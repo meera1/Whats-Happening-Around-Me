@@ -34,11 +34,12 @@
             .success(callback);
         }
 
-        function loginUser(user, callback)
+        function loginUser(user, callback, errorCallback)
         {
             console.log("in service  "+ user.username);
             $http.post("/rest/login", user)
-            .success(callback);
+            .success(callback)
+            .error(errorCallback);
         }
 
         function logoutUser(user, callback)
