@@ -4,8 +4,18 @@
         .module("eventapp")
         .controller("DetailsController", DetailsController);
 
+    var latitude = 0.0;
+    var longitude = 0.0;
 
-    function DetailsController($routeParams,$scope,$rootScope, DetailsService, SearchService){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+        });
+    }
+
+
+    function DetailsController($routeParams,$scope,$rootScope,$sce, DetailsService, SearchService){
 
          $rootScope.apiKeys = ["IGMX6ZKRMBLH5TOCEMKU","WMM76DC53N75L2J5T32V","WXRBOESQZZRDO4WWV72X","LOGWBWOABJJTLQZDQI2A","CCLCEWYWLCGOE47RAALI"];
 
@@ -37,6 +47,11 @@
         detailsModel.addLikeForEvent = addLikeForEvent;
         detailsModel.addDisLikeForEvent = addDisLikeForEvent;
         detailsModel.addCommentForEvent = addCommentForEvent;
+        detailsModel.showDirections = showDirections;
+        detailsModel.renderHtml = renderHtml;
+
+        var source = "";
+        var destination = "";
 
         DetailsService.searchById(id).then(function(response){
                 var completeAddress = "";
@@ -58,6 +73,7 @@
                     }
                     var completeAddress = getCompleteAddress(venue_response.address.address_1,venue_response.address.address_2,
                               venue_response.address.city,venue_response.address.region);
+                    destination = completeAddress;
                     console.log("venue_response.name.text:"  +venue_response.name.text);
                     console.log(" response.name:"  + response.name   );
                     populateMap([[venueName,venue_response.latitude+","+venue_response.longitude,
@@ -115,6 +131,42 @@
              document.getElementById("event-error").style.display = "block";
              $("#detailContent").hide();
          });
+
+        function showDirections(mdl) {
+            getAddress();
+        }
+
+        function renderHtml(unrendered) {
+            return $sce.trustAsHtml(unrendered);
+        }
+
+        function getAddress(eventLocation) {
+            if (eventLocation == undefined || eventLocation.trim() == "")
+                if (latitude == 0.0 || longitude == 0.0) {
+                    source = "Boston, MA";
+                } else {
+                    var latlng = {lat: latitude, lng: longitude};
+                    geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({'location': latlng}, function (results, status) {
+                        source = results[0].formatted_address;
+
+                        directionsService = new google.maps.DirectionsService();
+                        var request = {
+                            origin:source,
+                            destination:destination,
+                            travelMode: google.maps.TravelMode.DRIVING
+                        };
+
+                        directionsService.route(request, function(result, status) {
+                            if (status == google.maps.DirectionsStatus.OK) {
+                                detailsModel.directionSteps = result;
+                                $scope.$apply();
+                                console.log(detailsModel.directionSteps);
+                            }
+                        });
+                    });
+                }
+        }
 
         function addLikeForEvent(eventId){
 
