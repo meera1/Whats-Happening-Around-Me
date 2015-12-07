@@ -72,33 +72,36 @@
                     <p>
                         <section class="comment-list">
                             <!-- First Comment -->
-                            <article ng-repeat="comment in detailsModel.allComments" class="row">
+                            <article ng-repeat="event in detailsModel.events"
+                                     ng-if="event.comment.length != 0"
+                                     class="row">
                                 <div class="col-md-2 col-sm-2 hidden-xs">
                                     <figure class="thumbnail">
-                                        <img class="img-responsive"
-                                             src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
-                                        <figcaption class="text-center">username</figcaption>
+                                        <!--<img class="img-responsive"-->
+                                             <!--src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>-->
+                                        <figcaption class="text-center">{{event.username}}</figcaption>
                                     </figure>
                                 </div>
                                 <div class="col-md-10 col-sm-10">
                                     <div class="panel panel-default arrow left">
                                         <div class="panel-body">
                                             <header class="text-left">
-                                                <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-                                                <time class="comment-date" datetime="16-12-2014 01:05"><i
-                                                        class="fa fa-clock-o"></i> Dec 16, 2014
-                                                </time>
+                                                <div class="comment-user"><i class="fa fa-user"></i> </div>
+                                                <!--<time class="comment-date" datetime="16-12-2014 01:05"><i-->
+                                                        <!--class="fa fa-clock-o]="></i> Dec 16, 2014-->
+                                                <!--</time>-->
                                             </header>
-                                            <div class="comment-post">
+                                            <div class="comment-post" ng-repeat="commentText in event.comment track by $index   ">
                                                 <p>
-                                                    {{comment.comment}}
+                                                    {{commentText}}
                                                 </p>
-                                                <!--<p>-->
-                                                    <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do-->
-                                                    <!--eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim-->
-                                                    <!--ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut-->
-                                                    <!--aliquip ex ea commodo consequat.-->
-                                                <!--</p>-->
+                                                <button class="btn btn-sm btn-danger"
+                                                        ng-if="detailsModel.usernameUI === event.username"
+                                                        ng-click="detailsModel.removeCommentForEvent(event.eventId,commentText)">
+                                                    <!--<i class="glyphicon glyphicon-remove"></i>-->
+                                                    Delete
+                                                </button>
+                                                <hr/>
                                             </div>
                                         </div>
                                     </div>
@@ -108,12 +111,5 @@
                     </p>
                 </div>
             </div>
-
-
-            {{blah}}
-
-            {{comments}}
-
-
     </ul>
 </div>
