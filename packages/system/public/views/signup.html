@@ -2,38 +2,46 @@
     <div class="col-md-2"></div>
     <div class="col-md-6">
         <div class="row myborder">
-            <h2 class="form-signin-heading">Sign Up</h2><hr>
-            <div class="input-group margin-bottom-20">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
-                <input ng-model="user.username" size="60" maxlength="255" class="form-control" placeholder="Username" name="username" id="username" type="text">
-            </div>
-            &nbsp;
-            <div class="input-group margin-bottom-20">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-lock mycolor"></i></span>
-                <input ng-model="user.password" size="60" maxlength="255" class="form-control" placeholder="Password" name="password" id="password" type="password">
-            </div>
-            &nbsp;
-            <div class="input-group margin-bottom-20">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
-                <input ng-model="user.fname" size="60" maxlength="255" class="form-control" placeholder="First Name" name="fname" id="fname" type="text">
-            </div>
-            &nbsp;
-            <div class="input-group margin-bottom-20">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
-                <input ng-model="user.lname" size="60" maxlength="255" class="form-control" placeholder="Last Name" name="lname" id="lname" type="text">
-            </div>
-            &nbsp;
-            <div class="input-group margin-bottom-20">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope mycolor"></i></span>
-                <input ng-model="user.email" size="60" maxlength="255" class="form-control" placeholder="Email Address" name="email" id="email" type="email">
-            </div>
-            &nbsp;
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-lg btn-info btn-block" type="submit" ng-click="signup(user)">Sign Up</button>
+            <form class="form-signup" ng-submit="signup(user)">
+                <h2 class="form-signin-heading">Sign Up</h2>
+                <hr>
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
+                    <input ng-model="user.username" size="60" maxlength="255" class="form-control"
+                           placeholder="Username" name="username" id="username" type="text" required/>
                 </div>
-            </div>
-            &nbsp;
+                &nbsp;
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock mycolor"></i></span>
+                    <input ng-model="user.password" size="60" maxlength="255" class="form-control"
+                           placeholder="Password" name="password" id="password" type="password" required/>
+                </div>
+                &nbsp;
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
+                    <input ng-model="user.fname" size="60" maxlength="255" class="form-control" placeholder="First Name"
+                           name="fname" id="fname" type="text" required/>
+                </div>
+                &nbsp;
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user mycolor"></i></span>
+                    <input ng-model="user.lname" size="60" maxlength="255" class="form-control" placeholder="Last Name"
+                           name="lname" id="lname" type="text" required/>
+                </div>
+                &nbsp;
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope mycolor"></i></span>
+                    <input ng-model="user.email" size="60" maxlength="255" class="form-control"
+                           placeholder="Email Address" name="email" id="email" type="email" required/>
+                </div>
+                &nbsp;
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-lg btn-info btn-block" type="submit">Sign Up</button>
+                    </div>
+                </div>
+                &nbsp;
+            </form>
         </div>
         <div class="col-md-2"></div>
     </div>
