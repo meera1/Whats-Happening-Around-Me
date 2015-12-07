@@ -32,7 +32,7 @@
             //choosing a random key
             while(true){
                 randomIndex = Math.floor(Math.random()*(maxLength+1)+0);
-                if(randomIndex<$rootScope.apiKeys.length){
+                if(randomIndex<maxLength){
                     break;
                 }
             }

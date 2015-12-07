@@ -122,7 +122,8 @@ var checkLoggedinForDetails = function ($q, $timeout, $http, $location, $rootSco
         }
         else {
             deferred.resolve();
-            $location.url('/details');
+//            $location.url('/details/:id');
+            
         }
 
     });

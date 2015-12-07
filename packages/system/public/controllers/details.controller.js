@@ -16,7 +16,7 @@
             //choosing a random key
             while(true){
                 randomIndex = Math.floor(Math.random()*(maxLength+1)+0);
-                if(randomIndex<=5){
+                if(randomIndex<maxLength){
                     break;
                 }
             }
@@ -24,7 +24,12 @@
             $rootScope.currentApiKey = $rootScope.apiKeys[randomIndex];
         }
 
-        var username = $rootScope.currentUser.username;
+        var username = null;
+
+        if($rootScope.currentUser != null){
+            username = $rootScope.currentUser.username;
+        }
+
         var id = $routeParams.id;
 
         var detailsModel = this;
@@ -60,6 +65,17 @@
 
                     document.getElementById("event-error").style.display = "none";
                     $("#detailContent").show();
+
+                    if($rootScope.currentUser!=null){
+                         DetailsService.checkforlikes(username,id, function(callback){
+                                 //console.log("after lookup event schema for that user choice " + event.username +"  " + event.choice);
+                                 //$scope.user = user;
+                                 //$scope.selection = $scope.user.preferences;
+                                 console.log("check for like in details controller  "+ callback);
+                                 $scope.choice = callback;
+
+                        });
+                    }
 
                     $scope.$apply();
                 },function(reason){
@@ -100,19 +116,6 @@
              $("#detailContent").hide();
          });
 
-
-
-         DetailsService.checkforlikes(username,id, function(callback){
-                     //console.log("after lookup event schema for that user choice " + event.username +"  " + event.choice);
-                     //$scope.user = user;
-                     //$scope.selection = $scope.user.preferences;
-                     console.log("check for like in details controller  "+ callback);
-                     $scope.choice = callback;
-
-                 });
-
-
-
         function addLikeForEvent(eventId){
 
             var username = $rootScope.currentUser.username;
@@ -137,7 +140,7 @@
 
             });
 
-                }
+        }
 
 
         function addCommentForEvent(eventId, comment){
