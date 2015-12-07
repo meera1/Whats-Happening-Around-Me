@@ -25,7 +25,10 @@
             .when("/details/:id", {
                 templateUrl: "views/details.html",
                 controller: "DetailsController",
-                controllerAs: "detailsModel"
+                controllerAs: "detailsModel",
+                resolve: {
+                    loggedin: checkLoggedinForDetails
+                }
             })
             .when("/profile", {
                 templateUrl: "views/profile.html",
@@ -102,6 +105,24 @@ var checkLoggedinForHome = function ($q, $timeout, $http, $location, $rootScope)
         else {
             deferred.resolve();
             $location.url('/home');
+        }
+
+    });
+
+    return deferred.promise;
+};
+
+var checkLoggedinForDetails = function ($q, $timeout, $http, $location, $rootScope) {
+    var deferred = $q.defer();
+
+    $http.get('/rest/loggedin').success(function (user) {
+        if (user !== '0') {
+            $rootScope.currentUser = user;
+            deferred.resolve();
+        }
+        else {
+            deferred.resolve();
+            $location.url('/details');
         }
 
     });
