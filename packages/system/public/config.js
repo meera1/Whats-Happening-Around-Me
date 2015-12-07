@@ -35,24 +35,29 @@
                 controller: "ProfileController",
                 controllerAs: "profileModel",
                 resolve: {
-                    loggedin: checkLoggedin
+                    loggedin: checkLoggedinForProfile
                 }
             })
             .when("/profile/:username", {
                 templateUrl: "views/profile.html",
                 controller: "ProfileController",
                 resolve: {
-                    loggedin: checkLoggedin
+                    loggedin: checkLoggedinForProfile
                 }
             })
             .when("/login", {
                 templateUrl: "views/login.html",
-                controller: "LoginController"
+                controller: "LoginController",
+                resolve: {
+                    loggedin: checkLoggedinForLogin
+                }
             })
-
             .when("/signup", {
                 templateUrl: "views/signup.html",
-                controller: "SignupController"
+                controller: "SignupController",
+                resolve: {
+                    loggedin: checkLoggedinForSignUp
+                }
             })
             .when("/reservation/:eventname", {
                 templateUrl: "views/reservation.html",
@@ -76,7 +81,7 @@
 
 })();
 
-var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope) {
+var checkLoggedinForProfile = function ($q, $timeout, $http, $location, $rootScope) {
     var deferred = $q.defer();
 
     $http.get('/rest/loggedin').success(function (user) {
@@ -87,7 +92,7 @@ var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope) {
         else {
             $rootScope.errorMessage = 'You need to log in.';
             deferred.reject();
-            $location.url('/login');
+            $location.url("/login");
         }
     });
 
@@ -104,7 +109,42 @@ var checkLoggedinForHome = function ($q, $timeout, $http, $location, $rootScope)
         }
         else {
             deferred.resolve();
+        }
+
+    });
+
+    return deferred.promise;
+};
+
+var checkLoggedinForLogin = function ($q, $timeout, $http, $location, $rootScope) {
+    var deferred = $q.defer();
+
+    $http.get('/rest/loggedin').success(function (user) {
+        if (user !== '0') {
+            $rootScope.currentUser = user;
+            deferred.resolve();
+            $location.url("/home");
+        }
+        else {
+            deferred.resolve();
+        }
+
+    });
+
+    return deferred.promise;
+};
+
+var checkLoggedinForSignUp = function ($q, $timeout, $http, $location, $rootScope) {
+    var deferred = $q.defer();
+
+    $http.get('/rest/loggedin').success(function (user) {
+        if (user !== '0') {
+            $rootScope.currentUser = user;
+            deferred.resolve();
             $location.url('/home');
+        }
+        else {
+            deferred.resolve();
         }
 
     });
@@ -113,20 +153,17 @@ var checkLoggedinForHome = function ($q, $timeout, $http, $location, $rootScope)
 };
 
 var checkLoggedinForDetails = function ($q, $timeout, $http, $location, $rootScope) {
-    var deferred = $q.defer();
+      var deferred = $q.defer();
 
-    $http.get('/rest/loggedin').success(function (user) {
-        if (user !== '0') {
-            $rootScope.currentUser = user;
-            deferred.resolve();
-        }
-        else {
-            deferred.resolve();
-//            $location.url('/details/:id');
-            
-        }
+      $http.get('/rest/loggedin').success(function (user) {
+          if (user !== '0') {
+              $rootScope.currentUser = user;
+              deferred.resolve();
+          }
+          else {
+              deferred.resolve();
+          }
+      });
 
-    });
-
-    return deferred.promise;
-};
+      return deferred.promise;
+  };

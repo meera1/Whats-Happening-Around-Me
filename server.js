@@ -12,7 +12,6 @@ var session = require('express-session');
 var app = express();
 var mongoose = require('mongoose');
 var connectionString = 'mongodb://localhost/eventappDb';
-var db = mongoose.connect(connectionString);
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -21,7 +20,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
         process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
         process.env.OPENSHIFT_APP_NAME;
 }
-
+var db = mongoose.connect(connectionString);
 app.use(express.static(__dirname + '/packages/system/public'));
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -260,17 +259,30 @@ app.post('/rest/like', auth, function(req, res){
                 }
                 else
                     {
-                        Events.findByIdAndUpdate(
-                        existingEvent._id,
-                        { $set: { choice: globalLikeValue } },
-                         function (err, document) {
-                          if (err) console.log("Error in updating event with likes "+ err);
-                          else res.json(document);
+                        if(existingEvent.choice == 1)
+                        {
+                            Events.findByIdAndUpdate(
+                            existingEvent._id,
+                            { $set: { choice: 0 } },
+                             function (err, document) {
+                              if (err) console.log("Error in updating event with likes "+ err);
+                              else res.json(document);
                         });
+                        }
+                        else
+                        {
+                           Events.findByIdAndUpdate(
+                           existingEvent._id,
+                           { $set: { choice: globalLikeValue } },
+                            function (err, document) {
+                             if (err) console.log("Error in updating event with likes "+ err);
+                             else res.json(document);
+                        });
+                        }
 
-                    };
-            });
+                        }
 
+                    });
 
 });
 
@@ -306,18 +318,30 @@ app.post('/rest/dislike', auth, function(req, res){
                 }
                 else
                     {
-                        Events.findByIdAndUpdate(
-                        existingEvent._id,
-                        { $set: { choice: globalDislikeValue } },
-                         function (err, document) {
-                          if (err) console.log("Error in updating event with dislikes "+ err);
-                          else res.json(document);
-                        });
+                        if(existingEvent.choice == -1)
+                        {
+                           Events.findByIdAndUpdate(
+                           existingEvent._id,
+                           { $set: { choice: 0 } },
+                            function (err, document) {
+                             if (err) console.log("Error in updating event with dislikes "+ err);
+                             else res.json(document);
+                           });
+                        }
+                        else
+                        {
+                            Events.findByIdAndUpdate(
+                            existingEvent._id,
+                            { $set: { choice: globalDislikeValue } },
+                             function (err, document) {
+                              if (err) console.log("Error in updating event with dislikes "+ err);
+                              else res.json(document);
+                            });
+                        }
+
 
                     };
             });
-
-
 });
 
 
