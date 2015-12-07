@@ -68,8 +68,8 @@ var EventSchema = mongoose.Schema({
     "eventId": Number,
     "username": String,
     "choice": Number,
-    "comment": String
-});
+    "comment": [String]
+}, {collection: "Events"});
 
 var Events = mongoose.model("Events", EventSchema);
 
@@ -239,7 +239,7 @@ app.post('/rest/like', auth, function(req, res){
                     eventId: eventId,
                     username: username,
                     choice: globalLikeValue,
-                    comments: null
+                    comment: []
                     });
 
                     newEvent.save(function (err, document) {
@@ -298,7 +298,7 @@ app.post('/rest/dislike', auth, function(req, res){
                     eventId: eventId,
                     username: username,
                     choice: globalDislikeValue,
-                    comments: null
+                    comment: []
                     });
 
                     newEvent.save(function (err, document) {
@@ -372,3 +372,87 @@ app.get("/rest/:username/event/:id/check", auth, function(req,res){
 
 });
 
+app.post("/rest/addcomment", auth, function(req,res){
+    var username = req.body.username;
+    var eventId = req.body.eventId;
+    var comment = req.body.comment;
+
+    Events.findOne({eventId: eventId, username: username}, function(err, existingEvent){
+        if(existingEvent == null)
+        {
+            var newEvent = new Events({
+            eventId: eventId,
+            username: username,
+            choice: globalLikeValue,
+            comment: comment
+            });
+
+            newEvent.save(function (err, document) {
+            if (err) console.log(err);
+            else
+            {
+                  console.log('Saved : ', document ) ;
+                  res.json(document);
+                  };
+            });
+        }
+        else
+            {
+                var commentList = existingEvent.comment;
+                commentList.push(comment);
+                Events.findByIdAndUpdate(
+                existingEvent._id,
+                { $set: { comment: commentList } },
+                 function (err, document) {
+                  if (err) console.log("Error in updating comment for event "+ err);
+                  else res.json(document);
+                });
+            };
+    });
+});
+
+app.get("/rest/comment/:eventId", auth, function(req,res){
+    var eventId = req.params.eventId;
+    console.log(eventId+ " - retrieve comments");
+    Events.find({eventId: eventId}, function(err, eventList){
+        res.json(eventList);
+    });
+});
+
+
+app.post("/rest/removecomment", auth, function(req,res){
+    var username = req.body.username;
+    var eventId = req.body.eventId;
+    var comment = req.body.comment;
+    console.log("Remove");
+    console.log(eventId);
+    console.log(username);
+    Events.findOne({eventId: eventId, username: username}, function(err, existingEvent){
+        console.log("Remove find");
+        console.log(existingEvent);
+        if(existingEvent == null)
+        {
+            res.json({"eventId": 0,
+                      "username": ""});
+        }
+        else
+            {
+                var commentList = [];
+                console.log(commentList);
+                existingEvent.comment.forEach(function(comm){
+                    console.log(comm + "  " + comment);
+                    console.log(comm !== comment);
+                    if(comm !== comment){
+                        commentList.push(comm);
+                    }
+                });
+                Events.findByIdAndUpdate(
+                existingEvent._id,
+                { $set: { comment: commentList } },
+                 function (err, document) {
+                  if (err) console.log("Error in deleting comment for event "+ err);
+                  else res.json(document);
+                });
+            };
+    });
+});

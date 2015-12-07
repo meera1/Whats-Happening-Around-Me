@@ -34,24 +34,32 @@
             $rootScope.currentApiKey = $rootScope.apiKeys[randomIndex];
         }
 
+        var detailsModel = this;
         var username = null;
-
+        detailsModel.usernameUI = null;
         if($rootScope.currentUser != null){
             username = $rootScope.currentUser.username;
+            detailsModel.usernameUI = $rootScope.currentUser.username;
         }
 
         var id = $routeParams.id;
-
-        var detailsModel = this;
 
         detailsModel.addLikeForEvent = addLikeForEvent;
         detailsModel.addDisLikeForEvent = addDisLikeForEvent;
         detailsModel.addCommentForEvent = addCommentForEvent;
         detailsModel.showDirections = showDirections;
         detailsModel.renderHtml = renderHtml;
+        detailsModel.removeCommentForEvent = removeCommentForEvent;
+        detailsModel.events = {}
 
         var source = "";
         var destination = "";
+
+        DetailsService.getAllEvents(id, function(response){
+            console.log("getAllEvents:")
+            console.log(response)
+            detailsModel.events = response;
+        });
 
         DetailsService.searchById(id).then(function(response){
                 var completeAddress = "";
@@ -196,17 +204,52 @@
 
 
         function addCommentForEvent(eventId, comment){
-
+            var username = $rootScope.currentUser.username;
             DetailsService
-                   .addCommentForEvent(eventId,comment)
-                   .then(function(response){
-
-                        $scope.comments = response;
-                        detailsModel.allComments = response;
-
+                   .addCommentForEvent(username, eventId, comment, function(response){
+                        console.log("Add Comment Response: ");
+                        console.log(response);
+                        //$scope.comments = response;
+                        detailsModel.events = getUpdatedEventList(response);
+                        console.log(detailsModel.events);
                    });
-
         }
+
+        function removeCommentForEvent(eventId, comment){
+            var username = $rootScope.currentUser.username;
+            DetailsService
+                   .removeCommentForEvent(username, eventId, comment, function(response){
+                        console.log("Remove Comment: ");
+                        console.log(response);
+                        //$scope.comments = response;
+                        detailsModel.events = getUpdatedEventList(response);
+                   });
+        }
+
+        function getUpdatedEventList(modifiedEvent){
+            var toReturn = [];
+            var hasEvent = false;
+
+            for(i in detailsModel.events){
+                console.log("detailsModel.events:");
+                console.log(detailsModel.events[i].username);
+                console.log(modifiedEvent.username);
+                if(detailsModel.events[i].username === modifiedEvent.username){
+                    toReturn.push(modifiedEvent);
+                    hasEvent = true;
+                } else {
+                    toReturn.push(detailsModel.events[i]);
+                }
+            }
+
+            if(!hasEvent)
+                toReturn.push(modifiedEvent)
+
+            console.log("toReturn:");
+            console.log(toReturn);
+            return toReturn;
+        }
+
 
         function populateMap(locations){
 //            locations = [];
