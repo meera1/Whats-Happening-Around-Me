@@ -69,8 +69,8 @@ var EventSchema = mongoose.Schema({
     "eventId": Number,
     "username": String,
     "choice": Number,
-    "comment": String
-});
+    "comment": [String]
+}, {collection: "Events"});
 
 var Events = mongoose.model("Events", EventSchema);
 
@@ -244,7 +244,7 @@ app.post('/rest/like', auth, function(req, res){
                     eventId: eventId,
                     username: username,
                     choice: globalLikeValue,
-                    comments: null
+                    comments: []
                     });
 
                     newEvent.save(function (err, document) {
@@ -303,7 +303,7 @@ app.post('/rest/dislike', auth, function(req, res){
                     eventId: eventId,
                     username: username,
                     choice: globalDislikeValue,
-                    comments: null
+                    comments: []
                     });
 
                     newEvent.save(function (err, document) {
