@@ -260,17 +260,30 @@ app.post('/rest/like', auth, function(req, res){
                 }
                 else
                     {
-                        Events.findByIdAndUpdate(
-                        existingEvent._id,
-                        { $set: { choice: globalLikeValue } },
-                         function (err, document) {
-                          if (err) console.log("Error in updating event with likes "+ err);
-                          else res.json(document);
+                        if(existingEvent.choice == 1)
+                        {
+                            Events.findByIdAndUpdate(
+                            existingEvent._id,
+                            { $set: { choice: 0 } },
+                             function (err, document) {
+                              if (err) console.log("Error in updating event with likes "+ err);
+                              else res.json(document);
                         });
+                        }
+                        else
+                        {
+                           Events.findByIdAndUpdate(
+                           existingEvent._id,
+                           { $set: { choice: globalLikeValue } },
+                            function (err, document) {
+                             if (err) console.log("Error in updating event with likes "+ err);
+                             else res.json(document);
+                        });
+                        }
 
-                    };
-            });
+                        }
 
+                    });
 
 });
 
@@ -306,18 +319,30 @@ app.post('/rest/dislike', auth, function(req, res){
                 }
                 else
                     {
-                        Events.findByIdAndUpdate(
-                        existingEvent._id,
-                        { $set: { choice: globalDislikeValue } },
-                         function (err, document) {
-                          if (err) console.log("Error in updating event with dislikes "+ err);
-                          else res.json(document);
-                        });
+                        if(existingEvent.choice == -1)
+                        {
+                           Events.findByIdAndUpdate(
+                           existingEvent._id,
+                           { $set: { choice: 0 } },
+                            function (err, document) {
+                             if (err) console.log("Error in updating event with dislikes "+ err);
+                             else res.json(document);
+                           });
+                        }
+                        else
+                        {
+                            Events.findByIdAndUpdate(
+                            existingEvent._id,
+                            { $set: { choice: globalDislikeValue } },
+                             function (err, document) {
+                              if (err) console.log("Error in updating event with dislikes "+ err);
+                              else res.json(document);
+                            });
+                        }
+
 
                     };
             });
-
-
 });
 
 
