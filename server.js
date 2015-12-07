@@ -166,7 +166,6 @@ app.get("/rest/user/:username", function(req, res){
 
 });
 
-
 app.put("/rest/update/user", auth, function(req, res){
     var user = req.body;
     var username = req.params.username;
