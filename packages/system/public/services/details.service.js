@@ -22,8 +22,7 @@
             var $q = injector.get("$q");
             var deferred = $q.defer();
 
-
-             var url = "https://www.eventbriteapi.com/v3/events/"+id+"/?token=" + $rootScope.currentApiKey;
+            var url = "https://www.eventbriteapi.com/v3/events/"+id+"/?token=" + $rootScope.currentApiKey;
 
             $http.get(url)
                .success(function(response){

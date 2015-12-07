@@ -1,19 +1,7 @@
 'use strict';
 
-//// Requires meanio
-//var mean = require('meanio');
-//
-//// Creates and serves mean application
-//mean.serve({ /*options placeholder*/ }, function(app, config) {
-//  console.log('Mean app started on port ' + config.http.port + ' (' + process.env.NODE_ENV + ')');
-//  if(config.https && config.https.port){
-//    console.log('Mean secure app started on port ' + config.https.port + ' (' + process.env.NODE_ENV + ')');
-//  }
-//});
-
 var express = require('express');
 var passport = require('passport');
-//var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -26,19 +14,20 @@ var mongoose = require('mongoose');
 var connectionString = 'mongodb://localhost/eventappDb';
 var db = mongoose.connect(connectionString);
 
-//var db = mongoose.connection;
-//var db = mongoose.connect('mongodb://localhost/oauth2+angular');
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+    connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+        process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+        process.env.OPENSHIFT_APP_NAME;
+}
 
 app.use(express.static(__dirname + '/packages/system/public'));
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-//app.use(multer());
 app.use(session({ secret: 'this is the secret' }));
 
-// resave: true,
-//  saveUninitialized: true
-//})); // encrypted, sign the session id with this given string only if u have this string u can use it; paswd for session id
 app.use(cookieParser());  // parse cookie and create a map we can use
 app.use(passport.initialize());
 app.use(passport.session()); // U NEED TO CONFIGURE PASSPORT'S SESSION AFTER U CONFIGURE EXPRESSES SESSION. THIS ORDER IS VERY IMP
@@ -51,10 +40,6 @@ var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.listen(port, ipaddress);
-
-
-//-------------------------------------------------------------
-
 
 var globalLikeValue = 1;
 var globalDislikeValue = -1;
@@ -151,7 +136,7 @@ app.post("/rest/user", function(req, res){
 //    user.username = email;
     console.log("user from server " + user);
 
-    User.findOne({username: user.username}, function(err, existingUser){
+    User.findOne({$or: [{username: user.username}, {email: user.email}]}, function(err, existingUser){
 
         if(existingUser == null)
         {
