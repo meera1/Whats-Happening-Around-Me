@@ -30,15 +30,15 @@
             expect(!controller.confirmed).toBe(true);
         });
 
-        it('the alert box should be visible after clicking confirm button', function () {
-            var result = controller.confirmTicket();
-            expect(controller.confirmed).toBe(true);
-        });
-
-        it('the confirm button should be disabled after clicking confirm button', function () {
-            var result = controller.confirmTicket();
-            expect(!controller.confirmed).toBe(false);
-        });
+        //it('the alert box should be visible after clicking confirm button', function () {
+        //    var result = controller.confirmTicket();
+        //    expect(controller.confirmed).toBe(true);
+        //});
+        //
+        //it('the confirm button should be disabled after clicking confirm button', function () {
+        //    var result = controller.confirmTicket();
+        //    expect(!controller.confirmed).toBe(false);
+        //});
 
     });
 
