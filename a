@@ -1,0 +1,157 @@
+[1mdiff --git a/packages/system/public/controllers/profile.controller.js b/packages/system/public/controllers/profile.controller.js[m
+[1mindex 2e1d38b..b76f140 100644[m
+[1m--- a/packages/system/public/controllers/profile.controller.js[m
+[1m+++ b/packages/system/public/controllers/profile.controller.js[m
+[36m@@ -32,8 +32,8 @@[m
+                     console.log("After update");[m
+                     console.log(user);[m
+                     $scope.user = user;[m
+[31m-                    alert('Profile Updated');[m
+[31m-[m
+[32m+[m[32m                    //alert('Profile Updated');[m
+[32m+[m[32m                    $scope.updated = true;[m
+                });[m
+         }[m
+ [m
+[1mdiff --git a/packages/system/public/index.html b/packages/system/public/index.html[m
+[1mindex 34f329b..ade1a12 100644[m
+[1m--- a/packages/system/public/index.html[m
+[1m+++ b/packages/system/public/index.html[m
+[36m@@ -1,6 +1,20 @@[m
+ <!DOCTYPE html>[m
+ <html lang="en" ng-app="eventapp">[m
+ <head>[m
+[32m+[m[32m    <style>[m
+[32m+[m[32m        body{[m
+[32m+[m[32m            background-image: url(lantern.jpg);[m
+[32m+[m[32m            background-size:cover;[m
+[32m+[m[32m            background-position: center;[m
+[32m+[m[32m            background-repeat: no-repeat;[m
+[32m+[m[32m            background-attachment: fixed;[m
+[32m+[m
+[32m+[m[32m           }[m
+[32m+[m[32m        .myview{[m
+[32m+[m[32m            color: black;[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m    </style>[m
+ [m
+     <meta charset="UTF-8">[m
+     <meta name="viewport" content="initial-scale=1, maximum-scale=1">[m
+[36m@@ -44,7 +58,7 @@[m
+ [m
+ <div ng-controller="MainController as controller">[m
+ [m
+[31m-    <nav class="navbar navbar-default" role="navigation">[m
+[32m+[m[32m    <nav class="navbar navbar-default navbar-inverse btn-lg" role="navigation">[m
+         <div class="container-fluid">[m
+             <!-- Brand and toggle get grouped for better mobile display -->[m
+             <div class="navbar-header">[m
+[36m@@ -78,7 +92,7 @@[m
+     </nav>[m
+ [m
+     <div class="container">[m
+[31m-        <div ng-view>[m
+[32m+[m[32m        <div ng-view class="myview">[m
+ [m
+         </div>[m
+     </div>[m
+[1mdiff --git a/packages/system/public/views/profile.html b/packages/system/public/views/profile.html[m
+[1mindex f20d01b..f85fd5b 100644[m
+[1m--- a/packages/system/public/views/profile.html[m
+[1m+++ b/packages/system/public/views/profile.html[m
+[36m@@ -1,16 +1,11 @@[m
+[31m-<h1>Profile</h1>[m
+[31m-[m
+ <div class="row">[m
+     <!-- left column -->[m
+[31m-    <div class="col-md-4 col-sm-6 col-xs-12">[m
+[31m-        <!--<div class="text-center">-->[m
+[31m-            <!--<img src="http://lorempixel.com/200/200/people/9/" class="avatar img-circle img-thumbnail" alt="avatar">-->[m
+[31m-            <!--<h6>Upload a different photo...</h6>-->[m
+[31m-            <!--<input type="file" class="text-center center-block well well-sm">-->[m
+[31m-        <!--</div>-->[m
+[31m-        <h2>Welcome {{username}}</h2>[m
+[32m+[m[32m    <div class="col-md-3"></div>[m
+[32m+[m[32m    <div class="col-md-6 col-sm-6 col-xs-12">[m
+[32m+[m
+[32m+[m[32m        <h2>Profile</h2>[m
+ [m
+[31m-        <h3>Your Personal info:</h3>[m
+[32m+[m[32m        <h3>Welcome {{username}}</h3>[m
+ [m
+         <form class="form-horizontal" role="form">[m
+             <div class="form-group">[m
+[36m@@ -27,13 +22,7 @@[m
+                     <input ng-model="user.lname" class="form-control" value="Bishop" type="text">[m
+                 </div>[m
+             </div>[m
+[31m-            <!--<div class="form-group">-->[m
+[31m-                <!--<label class="col-lg-3 control-label">Company:</label>-->[m
+ [m
+[31m-                <!--<div class="col-lg-8">-->[m
+[31m-                    <!--<input ng-model="company" class="form-control" value="" type="text">-->[m
+[31m-                <!--</div>-->[m
+[31m-            <!--</div>-->[m
+             <div class="form-group">[m
+                 <label class="col-lg-3 control-label">Email:</label>[m
+ [m
+[36m@@ -41,30 +30,7 @@[m
+                     <input ng-model="user.email" class="form-control" value="janesemail@gmail.com" type="text">[m
+                 </div>[m
+             </div>[m
+[31m-            <!--<div class="form-group">-->[m
+[31m-                <!--<label class="col-lg-3 control-label">Time Zone:</label>-->[m
+ [m
+[31m-                <!--<div class="col-lg-8">-->[m
+[31m-                    <!--<div class="ui-select">-->[m
+[31m-                        <!--<select id="user_time_zone" class="form-control">-->[m
+[31m-                            <!--<option value="Hawaii">(GMT-10:00) Hawaii</option>-->[m
+[31m-                            <!--<option value="Alaska">(GMT-09:00) Alaska</option>-->[m
+[31m-                            <!--<option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)-->[m
+[31m-                            <!--</option>-->[m
+[31m-                            <!--<option value="Arizona">(GMT-07:00) Arizona</option>-->[m
+[31m-                            <!--<option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp;-->[m
+[31m-                                <!--Canada)-->[m
+[31m-                            <!--</option>-->[m
+[31m-                            <!--<option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time-->[m
+[31m-                                <!--(US &amp; Canada)-->[m
+[31m-                            <!--</option>-->[m
+[31m-                            <!--<option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)-->[m
+[31m-                            <!--</option>-->[m
+[31m-                            <!--<option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>-->[m
+[31m-                        <!--</select>-->[m
+[31m-                    <!--</div>-->[m
+[31m-                <!--</div>-->[m
+[31m-            <!--</div>-->[m
+             <div class="form-group">[m
+                 <label class="col-md-3 control-label">Username:</label>[m
+ [m
+[36m@@ -83,104 +49,141 @@[m
+             <div class="form-group">[m
+                 <label class="col-md-3 control-label">Select Preferences:</label>[m
+ [m
+[31m-                <!--<div class="col-md-8">-->[m
+[31m-                    <!--<div ng-repeat="category in profileModel.categories" >-->[m
+[31m-                        <!--<input type="checkbox" id="{{category.id}}"-->[m
+[31m-                               <!--ng-click="toggleSelection(category.id)"-->[m
+[31m-                               <!--ng-checked="user.preferences.indexOf(category.id) > -1"-->[m
+[31m-                               <!--value={{category.id}}/>{{category.name}}-->[m
+[31m-                    <!--</div>-->[m
+[31m-[m
+[31m-                <!--</div>-->[m
+                 <div class="col-md-8">[m
+[31m-                    <label>[m
+[31m-                        <input type="checkbox" id="103" ng-click="toggleSelection('103')" ng-checked="user.preferences.indexOf('103') > -1" value="103">Music[m
+[31m-                    </label>[m
+[31m-                    <label>[m
+[31m-                        <input type="checkbox" id="101" ng-click="toggleSelection('101')" ng-checked="user.preferences.indexOf('101') > -1" value="101">Business &amp; Professional[m
+[31m-                    </label>[m
+[31m-                    <label>[m
+[31m-                        <input type="checkbox" id="110" ng-click="toggleSelection('110')" ng-checked="user.preferences.indexOf('110') > -1" value="110">Food &amp; Drink[m
+[31m-                    </label>[m
+[31m-                    <label>[m
+[31m-                        <input type="checkbox" id="113" ng-click="toggleSelection('113')" ng-checked="user.preferences.indexOf('113') > -1" value="113">Community &amp; Culture[m
+[31m-                    </label>[m
+[31m-                    <label>[m
+[31m-                        <input type=
