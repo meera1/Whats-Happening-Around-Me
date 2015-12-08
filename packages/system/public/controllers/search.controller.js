@@ -189,16 +189,16 @@
 
                     }).finally(function(blah, blah){
 
-                        if(successOrFailureStatus){
-                            populateMap(newlocations);
-                        }
+//                        if(successOrFailureStatus){
+//                            populateMap(newlocations);
+//                        }
                     });
 
                 }
 
-//                setTimeout(function () {
-//                    populateMap(newlocations);
-//                }, 2000);
+                setTimeout(function () {
+                    populateMap(newlocations);
+                }, 2000);
 
             },function(reason){
 
