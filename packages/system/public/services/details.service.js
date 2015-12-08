@@ -46,7 +46,7 @@
         }
 
         function saveEvent(event) {
-            currentEvent.push(event);
+            currentEvent = event;
         }
 
         function getEvent() {
