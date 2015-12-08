@@ -27,7 +27,7 @@
                         View on Eventbrite
                     </a>
 
-                    <a ng-if="currentUser!=null" ng-href="#/reservation/{{detailsModel.event.name.text}}" class="btn btn-warning">
+                    <a ng-if="currentUser!=null" ng-click="detailsModel.saveEvent(detailsModel.event)" ng-href="#/reservation/{{detailsModel.event.name.text}}" class="btn btn-warning">
                         Reserve Tickets
                     </a>
 

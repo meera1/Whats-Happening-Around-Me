@@ -6,6 +6,8 @@
 
     function DetailsService($http, $q, $rootScope){
 
+        var currentEvent = [];
+
         var api = {
                 searchById: searchById,
                 addLikeForEvent: addLikeForEvent,
@@ -13,7 +15,9 @@
                 addCommentForEvent: addCommentForEvent,
                 checkforlikes: checkforlikes,
                 getAllEvents: getAllEvents,
-                removeCommentForEvent: removeCommentForEvent
+                removeCommentForEvent: removeCommentForEvent,
+                saveEvent: saveEvent,
+                getEvent: getEvent
         }
 
         return api;
@@ -41,7 +45,13 @@
             return deferred.promise;
         }
 
+        function saveEvent(event) {
+            currentEvent.push(event);
+        }
 
+        function getEvent() {
+            return currentEvent;
+        }
 
         function checkforlikes(username, id, callback){
             var parameters = {username: username, id: id};

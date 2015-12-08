@@ -1,11 +1,33 @@
 <!-- Created by ameyapandilwar on 12/05/15 at 22:30 PM. -->
 
-<h1>{{reservationModel.eventName}}</h1>
+<div ng-class="reservationModel.alertType" role="alert" ng-show="reservationModel.confirmed">{{reservationModel.msg}}</div>
 
-<div class="alert alert-success" role="alert" ng-show="reservationModel.confirmed">Tickets booked successfully!</div>
+<h2>{{reservationModel.currentEvent[0].name.text}}</h2>
 
+<output><b>Event ID: </b> {{reservationModel.currentEvent[0].id}}</output>
+<output><b>Capacity: </b> {{reservationModel.currentEvent[0].capacity}}</output>
+<output><b>Currency: </b> {{reservationModel.currentEvent[0].currency}}</output>
+<output><b>Start Date: </b> {{reservationModel.currentEvent[0].start.local}}</output>
+<output><b>End Date: </b> {{reservationModel.currentEvent[0].end.local}}</output>
+<output><b>Status: </b> {{reservationModel.currentEvent[0].status}}</output>
+<output><b>Online Event: </b> {{reservationModel.currentEvent[0].online_event}}</output>
+<output><b>URL: </b> {{reservationModel.currentEvent[0].vanity_url}}</output>
+<br/>
 <p>
-    <button ng-click="reservationModel.confirmTicket()" ng-disabled="reservationModel.confirmed" class="btn btn-success">
+    <button ng-click="reservationModel.confirmTicket(reservationModel.currentEvent[0])"
+            ng-disabled="reservationModel.confirmed" class="btn btn-success">
         Confirm
     </button>
+
+    <button ng-click="reservationModel.showTickets()" class="btn btn-info">
+        View Previous Reservations
+    </button>
 </p>
+<br/>
+
+<div class="list-group" ng-show="reservationModel.isHistoryVisible">
+    <a class="list-group-item" ng-repeat="ticket in reservationModel.userTickets">
+        <h4 class="list-group-item-heading">{{ticket.eventName}}</h4>
+        <p class="list-group-item-text">{{ticket.eventId}}</p>
+    </a>
+</div>

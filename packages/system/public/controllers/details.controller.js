@@ -50,6 +50,7 @@
         detailsModel.showDirections = showDirections;
         detailsModel.renderHtml = renderHtml;
         detailsModel.removeCommentForEvent = removeCommentForEvent;
+        detailsModel.saveEvent = saveEvent;
         detailsModel.events = {}
 
         var source = "";
@@ -139,6 +140,12 @@
              document.getElementById("event-error").style.display = "block";
              $("#detailContent").hide();
          });
+
+        function saveEvent(event) {
+            DetailsService.saveEvent(event, function(response){
+                console.log(response);
+            });
+        }
 
         function showDirections() {
             if (latitude == 0.0 || longitude == 0.0) {
