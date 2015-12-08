@@ -2,19 +2,19 @@
 
 <div ng-class="reservationModel.alertType" role="alert" ng-show="reservationModel.confirmed">{{reservationModel.msg}}</div>
 
-<h2>{{reservationModel.currentEvent[0].name.text}}</h2>
+<h2>{{reservationModel.currentEvent.name.text}}</h2>
 
-<output><b>Event ID: </b> {{reservationModel.currentEvent[0].id}}</output>
-<output><b>Capacity: </b> {{reservationModel.currentEvent[0].capacity}}</output>
-<output><b>Currency: </b> {{reservationModel.currentEvent[0].currency}}</output>
-<output><b>Start Date: </b> {{reservationModel.currentEvent[0].start.local}}</output>
-<output><b>End Date: </b> {{reservationModel.currentEvent[0].end.local}}</output>
-<output><b>Status: </b> {{reservationModel.currentEvent[0].status}}</output>
-<output><b>Online Event: </b> {{reservationModel.currentEvent[0].online_event}}</output>
-<output><b>URL: </b> {{reservationModel.currentEvent[0].vanity_url}}</output>
+<output><b>Event ID: </b> {{reservationModel.currentEvent.id}}</output>
+<output><b>Capacity: </b> {{reservationModel.currentEvent.capacity}}</output>
+<output><b>Currency: </b> {{reservationModel.currentEvent.currency}}</output>
+<output><b>Start Date: </b> {{reservationModel.currentEvent.start.local}}</output>
+<output><b>End Date: </b> {{reservationModel.currentEvent.end.local}}</output>
+<output><b>Status: </b> {{reservationModel.currentEvent.status}}</output>
+<output><b>Online Event: </b> {{reservationModel.currentEvent.online_event}}</output>
+<output><b>URL: </b> {{reservationModel.currentEvent.vanity_url}}</output>
 <br/>
 <p>
-    <button ng-click="reservationModel.confirmTicket(reservationModel.currentEvent[0])"
+    <button ng-click="reservationModel.confirmTicket(reservationModel.currentEvent)"
             ng-disabled="reservationModel.confirmed" class="btn btn-success">
         Confirm
     </button>
