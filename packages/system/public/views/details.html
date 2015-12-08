@@ -19,7 +19,7 @@
                 <div style="padding-top:30%" class="caption">
                     <h3>{{detailsModel.event.name.text}}</h3>
 
-                    <p>{{detailsModel.event.description.text}}</p>
+                    <output ng-bind-html="detailsModel.renderHtml(detailsModel.event.description.html)"></output>
                 </div>
 
                 <p>
