@@ -1,119 +1,152 @@
 <div id="event-error" class="alert alert-warning" style="display: none;">
-    <div style="width: 40%; margin: 0 auto;"> <strong>Error!</strong> Unable to retrieve events for given keyword and/or location. Please try again. </div>
+    <div style="width: 40%; margin: 0 auto;"><strong>Error!</strong> Unable to retrieve events for given keyword and/or
+        location. Please try again.
+    </div>
 </div>
 <div id="detailContent" style="padding:3%; margin-right:2%; display:none" class="row">
     <ul class="thumbnails">
 
         <div class="col-lg" style="">
-            <div class="thumbnail" >
+            <div class="thumbnail">
                 <div>
-                <img ng-src={{detailsModel.event.logo.url}} alt="ALT NAME" style="float:left; width:40%;height:300px;" class="img-responsive"/>
-                <div id="map_canvas" style="float:left; width:60%; height:300px; border: 2px solid #3872ac; margin: 0 auto;"></div>
+                    <img ng-src={{detailsModel.event.logo.url}} alt="ALT NAME"
+                         style="float:left; width:40%;height:300px;" class="img-responsive"/>
+
+                    <div id="map_canvas"
+                         style="float:left; width:60%; height:300px; border: 2px solid #3872ac; margin: 0 auto;"></div>
                 </div>
 
                 <div style="padding-top:30%" class="caption">
                     <h3>{{detailsModel.event.name.text}}</h3>
 
-                    <p>{{detailsModel.event.description.text}}</p>
+                    <output ng-bind-html="detailsModel.renderHtml(detailsModel.event.description.html)"></output>
                 </div>
 
-                    <p>
-                        <a target="_blank" ng-href={{detailsModel.event.url}} class="btn btn-info">
-                            view at Eventbrite
-                        </a>
-
-                        <a ng-href="#/reservation/{{detailsModel.event.name.text}}" class="btn btn-warning">
-                            Reserve Tickets »
-                        </a>
-                    </p>
-
-                    <p ng-if="currentUser!=null">
-                        <!--<button ng-hide="like" ng-show="dislike" ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-success">-->
-                            <!--<span class="glyphicon glyphicon-thumbs-up"></span>-->
-                        <!--</button>-->
-                        <!--<button ng-show="like" ng-hide="dislike" class="btn btn-success">-->
-                            <!--<span>Liked</span>-->
-                        <!--</button>-->
-
-                        <!--<button ng-hide="dislike" ng-show="like" ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)" class="btn btn-danger">-->
-                            <!--<span class="glyphicon glyphicon-thumbs-down"></span>-->
-                        <!--</button>-->
-                        <!--<button ng-show="dislike" ng-hide="like" class="btn btn-danger">-->
-                            <!--<span>Disliked</span>-->
-                        <!--</button>-->
-
-
-                        <button ng-if="choice == 0 || choice == -1" ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-success">
-                            <span class="glyphicon glyphicon-thumbs-up"></span>
-                        </button>
-                        <button ng-if="choice == 1" class="btn btn-success" ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)">
-                            <span>Liked</span>
-                        </button>
-                        <button ng-if="choice == 0 || choice == 1" ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-thumbs-down"></span>
-                        </button>
-                        <button ng-if="choice == -1" class="btn btn-danger" ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)">
-                            <span>Disliked</span>
-                        </button>
-
-                    </p>
-
-
-
-                    <div ng-if="currentUser!=null" class="input-group">
-                        <input class="form-control" placeholder="Add a comment" ng-model="comment" type="text"/>
-                             <span class="input-group-addon">
-                                 <!--<button class="btn btn-info btn-sm">-->
-                                     <!--<span class="glyphicon glyphicon-edit"></span>-->
-                                 <!--</button>-->
-                                <a ng-click="detailsModel.addCommentForEvent(detailsModel.event.id,comment)"><i class="glyphicon glyphicon-edit"></i></a>
-                            </span>
-                    </div>
-                    <p>
-                        <section class="comment-list">
-                            <!-- First Comment -->
-                            <article ng-repeat="comment in detailsModel.allComments" class="row">
-                                <div class="col-md-2 col-sm-2 hidden-xs">
-                                    <figure class="thumbnail">
-                                        <img class="img-responsive"
-                                             src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
-                                        <figcaption class="text-center">username</figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-md-10 col-sm-10">
-                                    <div class="panel panel-default arrow left">
-                                        <div class="panel-body">
-                                            <header class="text-left">
-                                                <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-                                                <time class="comment-date" datetime="16-12-2014 01:05"><i
-                                                        class="fa fa-clock-o"></i> Dec 16, 2014
-                                                </time>
-                                            </header>
-                                            <div class="comment-post">
-                                                <p>
-                                                    {{comment.comment}}
-                                                </p>
-                                                <!--<p>-->
-                                                    <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do-->
-                                                    <!--eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim-->
-                                                    <!--ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut-->
-                                                    <!--aliquip ex ea commodo consequat.-->
-                                                <!--</p>-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                        </section>
-                    </p>
+                <div>
+                    <span class='st_facebook_large' displayText='Facebook'></span>
+                    <span class='st_twitter_large' displayText='Tweet'></span>
+                    <span class='st_linkedin_large' displayText='LinkedIn'></span>
+                    <span class='st_email_large' displayText='Email'></span>
                 </div>
-            </div>
 
+                <p>
+                    <a target="_blank" ng-href={{detailsModel.event.url}} class="btn btn-info">
+                        View on Eventbrite
+                    </a>
 
-            {{blah}}
+                    <a ng-if="currentUser!=null" ng-click="detailsModel.saveEvent(detailsModel.event)" ng-href="#/reservation/{{detailsModel.event.name.text}}" class="btn btn-warning">
+                        Reserve Tickets
+                    </a>
 
-            {{comments}}
+                    <button ng-click="detailsModel.showDirections()" type="button" class="btn btn-primary"
+                            data-toggle="modal" data-target="#myModal">
+                        Directions to Event
+                    </button>
 
+                    <b>Preferred Mode of Travel: </b>
+                    <select id="mode">
+                        <option value="DRIVING">Driving</option>
+                        <option value="WALKING">Walking</option>
+                        <option value="BICYCLING">Bicycling</option>
+                        <option value="TRANSIT">Transit</option>
+                    </select>
+                </p>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{{detailsModel.event.name.text}}</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <ul ng-repeat="step in detailsModel.directionSteps.routes[0].legs[0].steps">
+                                    <p>
+                                    <li ng-bind-html="detailsModel.renderHtml(step.instructions)"></li>
+                                    <i>{{step.distance.text}}</i>
 
     </ul>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+</p>
+
+<p ng-if="currentUser!=null">
+
+    <button ng-if="choice == 0 || choice == -1"
+            ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-success">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+    </button>
+    <button ng-if="choice == 1" class="btn btn-success"
+            ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)">
+        <span>Liked</span>
+    </button>
+    <button ng-if="choice == 0 || choice == 1"
+            ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)" class="btn btn-danger">
+        <span class="glyphicon glyphicon-thumbs-down"></span>
+    </button>
+    <button ng-if="choice == -1" class="btn btn-danger"
+            ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)">
+        <span>Disliked</span>
+    </button>
+
+</p>
+
+
+<div ng-if="currentUser!=null" class="input-group">
+    <input class="form-control" placeholder="Add a comment" ng-model="comment" type="text"/>
+                        <span class="input-group-addon">
+                            <a ng-click="detailsModel.addCommentForEvent(detailsModel.event.id,comment)">
+                                <i class="glyphicon glyphicon-edit"></i></a>
+                        </span>
+</div>
+<p>
+    <section class="comment-list">
+        <!-- First Comment -->
+        <article ng-repeat="event in detailsModel.events"
+                 ng-if="event.comment.length != 0"
+                 class="row">
+            <div class="col-md-2 col-sm-2 hidden-xs">
+                <figure class="thumbnail">
+                    <!--<img class="img-responsive"-->
+                    <!--src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>-->
+                    <figcaption class="text-center">{{event.username}}</figcaption>
+                </figure>
+            </div>
+            <div class="col-md-10 col-sm-10">
+                <div class="panel panel-default arrow left">
+                    <div class="panel-body">
+                        <header class="text-left">
+                            <div class="comment-user"><i class="fa fa-user"></i></div>
+                            <!--<time class="comment-date" datetime="16-12-2014 01:05"><i-->
+                            <!--class="fa fa-clock-o]="></i> Dec 16, 2014-->
+                            <!--</time>-->
+                        </header>
+                        <div class="comment-post"
+                             ng-repeat="commentText in event.comment track by $index   ">
+                            <p>
+                                {{commentText}}
+                            </p>
+                            <button class="btn btn-sm btn-danger"
+                                    ng-if="detailsModel.usernameUI === event.username"
+                                    ng-click="detailsModel.removeCommentForEvent(event.eventId,commentText)">
+                                <!--<i class="glyphicon glyphicon-remove"></i>-->
+                                Delete
+                            </button>
+                            <hr/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</p>
+</div>
+</div>
+</ul>
 </div>

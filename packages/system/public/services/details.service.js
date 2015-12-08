@@ -6,12 +6,18 @@
 
     function DetailsService($http, $q, $rootScope){
 
+        var currentEvent = [];
+
         var api = {
                 searchById: searchById,
                 addLikeForEvent: addLikeForEvent,
                 addDisLikeForEvent: addDisLikeForEvent,
                 addCommentForEvent: addCommentForEvent,
-                checkforlikes: checkforlikes
+                checkforlikes: checkforlikes,
+                getAllEvents: getAllEvents,
+                removeCommentForEvent: removeCommentForEvent,
+                saveEvent: saveEvent,
+                getEvent: getEvent
         }
 
         return api;
@@ -39,7 +45,13 @@
             return deferred.promise;
         }
 
+        function saveEvent(event) {
+            currentEvent.push(event);
+        }
 
+        function getEvent() {
+            return currentEvent;
+        }
 
         function checkforlikes(username, id, callback){
             var parameters = {username: username, id: id};
@@ -60,20 +72,19 @@
         }
 
 
-        function addCommentForEvent(eventId, comment, callback){
+        function addCommentForEvent(username, eventId, comment, callback){
+        	$http.post("/rest/addcomment", {username: username, eventId: eventId, comment : comment})
+                            .success(callback);
+        }
 
-            var deferred = $q.defer();
+         function removeCommentForEvent(username, eventId, comment, callback){
+             $http.post("/rest/removecomment", {username: username, eventId: eventId, comment: comment})
+                            .success(callback);
+         }
 
-            console.log("here");
-
-            $http.post("/api/wham/eventapp/user/123/event/"+eventId+"/comment/"+comment)
-                .success(function(response){
-                    console.log("details service here");
-                    deferred.resolve(response);
-                });
-
-            return deferred.promise;
-
+        function getAllEvents(eventId, callback){
+            $http.get("/rest/comment/" + eventId)
+                            .success(callback);
         }
 
     }

@@ -1,18 +1,19 @@
 <!-- Created by ameyapandilwar on 12/05/15 at 22:30 PM. -->
 <div class="page-header">
     <h1>
-        What's Happening Around Me <small> | Team J.A.R.V.I.S.</small>
+        What's Happening Around Me
+        <small> | Team J.A.R.V.I.S.</small>
     </h1>
 </div>
 
 <div class="row">
-    <div class="col-xs-12">
-        <div class="thumbnail col-xs-2" ng-repeat="member in aboutModel.team">
-            <img src="{{member.imgUrl}}" alt="..." style="height:250px;width:250px">
-            <div class="caption">
-                <h4>{{member.name}}</h4>
-                <p>{{member.description}}</p>
-            </div>
+    <div class="thumbnail col-xs-2" ng-repeat="member in aboutModel.team">
+        <img src="{{member.imgUrl}}" alt="..." style="height:250px;width:250px">
+
+        <div class="caption">
+            <h4>{{member.name}}</h4>
+
+            <p>{{member.description}}</p>
         </div>
     </div>
 </div>

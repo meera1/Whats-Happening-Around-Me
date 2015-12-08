@@ -1,5 +1,5 @@
 <div style="padding-left:20%;padding-right:20%">
-    <form class="form-signin">
+    <form class="form-signin" ng-submit="login(user)">
         <h2 class="form-signin-heading">Sign In</h2>
         <hr>
         <div class="input-group margin-bottom-20">
@@ -14,6 +14,6 @@
                    name="password" id="password" type="password" required/>
         </div>
         &nbsp
-        <button class="btn btn-lg btn-info btn-block" type="submit" ng-click="login(user)">Sign in</button>
+        <button class="btn btn-lg btn-info btn-block" type="submit">Sign in</button>
     </form>
 </div>

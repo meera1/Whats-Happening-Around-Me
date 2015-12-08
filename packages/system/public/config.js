@@ -17,11 +17,11 @@
                     loggedin: checkLoggedinForHome
                 }
             })
-            .when("/category", {
-                templateUrl: "views/home.html",
-                controller: "HomeController",
-                controllerAs: "homeModel"
-            })
+//            .when("/category", {
+//                templateUrl: "views/home.html",
+//                controller: "HomeController",
+//                controllerAs: "homeModel"
+//            })
             .when("/details/:id", {
                 templateUrl: "views/details.html",
                 controller: "DetailsController",
@@ -62,18 +62,21 @@
             .when("/reservation/:eventname", {
                 templateUrl: "views/reservation.html",
                 controller: "ReservationController",
-                controllerAs: "reservationModel"
+                controllerAs: "reservationModel",
+                resolve: {
+                    loggedin: checkLoggedinForReservations
+                }
             })
-            .when("/admin", {
-                templateUrl: "views/admin.html",
-                controller: "AdminController",
-                controllerAs: "adminModel"
-            })
-            .when("/about", {
-                templateUrl: "views/about.html",
-                controller: "AboutController",
-                controllerAs: "aboutModel"
-            })
+//            .when("/admin", {
+//                templateUrl: "views/admin.html",
+//                controller: "AdminController",
+//                controllerAs: "adminModel"
+//            })
+//            .when("/about", {
+//                templateUrl: "views/about.html",
+//                controller: "AboutController",
+//                controllerAs: "aboutModel"
+//            })
             .otherwise({
                 redirectTo: "/home"
             });
@@ -167,3 +170,19 @@ var checkLoggedinForDetails = function ($q, $timeout, $http, $location, $rootSco
 
       return deferred.promise;
   };
+
+  var checkLoggedinForReservations = function ($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+
+        $http.get('/rest/loggedin').success(function (user) {
+            if (user !== '0') {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            }
+            else {
+                deferred.resolve();
+            }
+        });
+
+        return deferred.promise;
+    };

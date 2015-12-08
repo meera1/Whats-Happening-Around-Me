@@ -24,6 +24,7 @@
     <script src="services/search.service.js"></script>
     <script src="services/details.service.js"></script>
     <script src="services/home.service.js"></script>
+    <script src="services/reservation.service.js"></script>
     <script src="controllers/search.controller.js"></script>
     <script src="controllers/details.controller.js"></script>
     <script src="controllers/login.controller.js"></script>
@@ -36,7 +37,12 @@
     <script src="controllers/about.controller.js"></script>
     <script src="services/user.service.js"></script>
 
+    <script type="text/javascript">var switchTo5x=true;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({publisher: "67b3b444-2086-42c5-8895-24371da289be", doNotHash: false, doNotCopy: false, hashAddressBar: false, onhover:'false'});</script>
 
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <link rel="icon" type="image/png" href="favicon.png"/>
 </head>
 
 <body>
@@ -44,7 +50,7 @@
 
 <div ng-controller="MainController as controller">
 
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-inverse" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -55,7 +61,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#/home">WHAM</a>
+                <a class="navbar-brand" href="#/home">
+                    <img alt="WHAM" src="../assets/img/logo.png"></a>
+                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -63,11 +71,13 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#/home">Home</a></li>
                     <li><a href="#/profile">Profile</a></li>
+                    <li ng-if="currentUser==null"><a style="color:#5bc0de;font-weight: bold;">Welcome Guest!</a></li>
+                    <li ng-if="currentUser!=null"><a style="color:#5bc0de;font-weight: bold;">Welcome {{currentUser.username}}!</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
                     <li ng-if="currentUser==null"><a href="#/login">Login</a></li>
-                    <li ng-if="currentUser==null"><a href="#/signup">SignUp</a></li>
+                    <li ng-if="currentUser==null"><a href="#/signup">Sign Up</a></li>
                     <li ng-if="currentUser!=null"><a href="#/logout" ng-click="controller.logout()">Logout</a></li>
 
                 </ul>
