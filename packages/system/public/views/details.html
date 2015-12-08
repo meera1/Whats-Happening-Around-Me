@@ -24,11 +24,11 @@
 
                 <p>
                     <a target="_blank" ng-href={{detailsModel.event.url}} class="btn btn-info">
-                        view at Eventbrite
+                        View on Eventbrite
                     </a>
 
                     <a ng-href="#/reservation/{{detailsModel.event.name.text}}" class="btn btn-warning">
-                        Reserve Tickets »
+                        Reserve Tickets
                     </a>
 
                     <button ng-click="detailsModel.showDirections(detailsModel)" type="button" class="btn btn-primary"
@@ -45,66 +45,51 @@
                                     <h4 class="modal-title" id="myModalLabel">{{detailsModel.event.name.text}}</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <ul>
-                                        <li ng-repeat="step in detailsModel.directionSteps.routes[0].legs[0].steps">
-                <p ng-bind-html="detailsModel.renderHtml(step.instructions)"></p>
-                </li>
-    </ul>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-</div>
-</div>
-</div>
-</div>
-</p>
 
-<p ng-if="currentUser!=null">
-    <!--<button ng-hide="like" ng-show="dislike" ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-success">-->
-    <!--<span class="glyphicon glyphicon-thumbs-up"></span>-->
-    <!--</button>-->
-    <!--<button ng-show="like" ng-hide="dislike" class="btn btn-success">-->
-    <!--<span>Liked</span>-->
-    <!--</button>-->
+                                    <ul ng-repeat="step in detailsModel.directionSteps.routes[0].legs[0].steps">
+                                        <p>
+                                            <li ng-bind-html="detailsModel.renderHtml(step.instructions)"></li>
+                                            <i>{{step.distance.text}}</i>
+                                        </p>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p>
 
-    <!--<button ng-hide="dislike" ng-show="like" ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)" class="btn btn-danger">-->
-    <!--<span class="glyphicon glyphicon-thumbs-down"></span>-->
-    <!--</button>-->
-    <!--<button ng-show="dislike" ng-hide="like" class="btn btn-danger">-->
-    <!--<span>Disliked</span>-->
-    <!--</button>-->
+                <p ng-if="currentUser!=null">
 
+                    <button ng-if="choice == 0 || choice == -1"
+                            ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-success">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                    </button>
+                    <button ng-if="choice == 1" class="btn btn-success"
+                            ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)">
+                        <span>Liked</span>
+                    </button>
+                    <button ng-if="choice == 0 || choice == 1"
+                            ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-thumbs-down"></span>
+                    </button>
+                    <button ng-if="choice == -1" class="btn btn-danger"
+                            ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)">
+                        <span>Disliked</span>
+                    </button>
 
-    <button ng-if="choice == 0 || choice == -1"
-            ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)" class="btn btn-success">
-        <span class="glyphicon glyphicon-thumbs-up"></span>
-    </button>
-    <button ng-if="choice == 1" class="btn btn-success"
-            ng-click="detailsModel.addLikeForEvent(detailsModel.event.id)">
-        <span>Liked</span>
-    </button>
-    <button ng-if="choice == 0 || choice == 1"
-            ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)" class="btn btn-danger">
-        <span class="glyphicon glyphicon-thumbs-down"></span>
-    </button>
-    <button ng-if="choice == -1" class="btn btn-danger"
-            ng-click="detailsModel.addDisLikeForEvent(detailsModel.event.id)">
-        <span>Disliked</span>
-    </button>
-
-</p>
+                </p>
 
 
-<div ng-if="currentUser!=null" class="input-group">
-    <input class="form-control" placeholder="Add a comment" ng-model="comment" type="text"/>
-                             <span class="input-group-addon">
-                                 <!--<button class="btn btn-info btn-sm">-->
-                                 <!--<span class="glyphicon glyphicon-edit"></span>-->
-                                 <!--</button>-->
-                                <a ng-click="detailsModel.addCommentForEvent(detailsModel.event.id,comment)"><i
-                                        class="glyphicon glyphicon-edit"></i></a>
-                            </span>
-</div>
+                <div ng-if="currentUser!=null" class="input-group">
+                    <input class="form-control" placeholder="Add a comment" ng-model="comment" type="text"/>
+                        <span class="input-group-addon">
+                            <a ng-click="detailsModel.addCommentForEvent(detailsModel.event.id,comment)">
+                                <i class="glyphicon glyphicon-edit"></i></a>
+                        </span>
+                </div>
 <p>
     <section class="comment-list">
         <!-- First Comment -->

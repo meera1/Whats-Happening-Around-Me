@@ -55,7 +55,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#/home">WHAM</a>
+                <a class="navbar-brand" href="#/home">
+                    <img alt="WHAM" src="../assets/img/logo.png"></a>
+                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -63,13 +65,13 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#/home">Home</a></li>
                     <li><a href="#/profile">Profile</a></li>
-                    <li ng-if="currentUser==null"><a style="color:#5bc0de;font-weight: bold;">Welcome guest!</a></li>
+                    <li ng-if="currentUser==null"><a style="color:#5bc0de;font-weight: bold;">Welcome Guest!</a></li>
                     <li ng-if="currentUser!=null"><a style="color:#5bc0de;font-weight: bold;">Welcome {{currentUser.username}}!</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
                     <li ng-if="currentUser==null"><a href="#/login">Login</a></li>
-                    <li ng-if="currentUser==null"><a href="#/signup">SignUp</a></li>
+                    <li ng-if="currentUser==null"><a href="#/signup">Sign Up</a></li>
                     <li ng-if="currentUser!=null"><a href="#/logout" ng-click="controller.logout()">Logout</a></li>
 
                 </ul>

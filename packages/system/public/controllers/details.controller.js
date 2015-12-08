@@ -169,7 +169,6 @@
                             if (status == google.maps.DirectionsStatus.OK) {
                                 detailsModel.directionSteps = result;
                                 $scope.$apply();
-                                console.log(detailsModel.directionSteps);
                             }
                         });
                     });
