@@ -32,8 +32,8 @@
                     console.log("After update");
                     console.log(user);
                     $scope.user = user;
-                    alert('Profile Updated');
-
+                    //alert('Profile Updated');
+                    $scope.updated = true;
                });
         }
 
