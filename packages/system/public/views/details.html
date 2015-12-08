@@ -31,10 +31,18 @@
                         Reserve Tickets
                     </a>
 
-                    <button ng-click="detailsModel.showDirections(detailsModel)" type="button" class="btn btn-primary"
+                    <button ng-click="detailsModel.showDirections()" type="button" class="btn btn-primary"
                             data-toggle="modal" data-target="#myModal">
                         Directions to Event
                     </button>
+
+                    <b>Preferred Mode of Travel: </b>
+                    <select id="mode">
+                        <option value="DRIVING">Driving</option>
+                        <option value="WALKING">Walking</option>
+                        <option value="BICYCLING">Bicycling</option>
+                        <option value="TRANSIT">Transit</option>
+                    </select>
 
                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">

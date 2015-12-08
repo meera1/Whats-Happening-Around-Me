@@ -140,39 +140,36 @@
              $("#detailContent").hide();
          });
 
-        function showDirections(mdl) {
-            getAddress();
+        function showDirections() {
+            if (latitude == 0.0 || longitude == 0.0) {
+                source = "Boston, MA";
+            } else {
+                var latlng = {lat: latitude, lng: longitude};
+                geocoder = new google.maps.Geocoder();
+                geocoder.geocode({'location': latlng}, function (results, status) {
+                    source = results[0].formatted_address;
+
+                    var selectedMode = document.getElementById('mode').value;
+
+                    directionsService = new google.maps.DirectionsService();
+                    var request = {
+                        origin: source,
+                        destination: destination,
+                        travelMode: google.maps.TravelMode[selectedMode]
+                    };
+
+                    directionsService.route(request, function (result, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            detailsModel.directionSteps = result;
+                            $scope.$apply();
+                        }
+                    });
+                });
+            }
         }
 
         function renderHtml(unrendered) {
             return $sce.trustAsHtml(unrendered);
-        }
-
-        function getAddress(eventLocation) {
-            if (eventLocation == undefined || eventLocation.trim() == "")
-                if (latitude == 0.0 || longitude == 0.0) {
-                    source = "Boston, MA";
-                } else {
-                    var latlng = {lat: latitude, lng: longitude};
-                    geocoder = new google.maps.Geocoder();
-                    geocoder.geocode({'location': latlng}, function (results, status) {
-                        source = results[0].formatted_address;
-
-                        directionsService = new google.maps.DirectionsService();
-                        var request = {
-                            origin:source,
-                            destination:destination,
-                            travelMode: google.maps.TravelMode.DRIVING
-                        };
-
-                        directionsService.route(request, function(result, status) {
-                            if (status == google.maps.DirectionsStatus.OK) {
-                                detailsModel.directionSteps = result;
-                                $scope.$apply();
-                            }
-                        });
-                    });
-                }
         }
 
         function addLikeForEvent(eventId){
@@ -249,34 +246,56 @@
             return toReturn;
         }
 
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            var selectedMode = document.getElementById('mode').value;
+            var src = null;
+            if (latitude == 0.0 || longitude == 0.0) {
+                src = "Boston, MA";
+            } else {
+                src = {lat: latitude, lng: longitude};
+            }
+            directionsService.route({
+                origin: src,
+                destination: destination,
+                travelMode: google.maps.TravelMode[selectedMode]
+            }, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
 
         function populateMap(locations){
-//            locations = [];
-
-//            events.event.forEach(function(event){
-//                locations.push([event.title, event.latitude + "," + event.longitude, event.url])
-//            });
-
             var geocoder;
             var map;
             var bounds = new google.maps.LatLngBounds();
             initialize();
 
-            function initialize() {
-                map = new google.maps.Map(
-                document.getElementById("map_canvas"), {
-                    //center: new google.maps.LatLng(37.4419, -122.1419),
-                    //zoom: -20,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                });
-                geocoder = new google.maps.Geocoder();
+            showDirections();
 
-                for (i = 0; i < locations.length; i++) {
-                    geocodeAddress(locations, i);
-                }
+            function initialize() {
+                var directionsDisplay = new google.maps.DirectionsRenderer;
+                var directionsService = new google.maps.DirectionsService;
+                map = new google.maps.Map(document.getElementById('map_canvas'), {
+                    zoom: 14,
+                    center: {lat: latitude, lng: longitude}
+                });
+                directionsDisplay.setMap(map);
+
+                calculateAndDisplayRoute(directionsService, directionsDisplay);
+                document.getElementById('mode').addEventListener('change', function() {
+                    calculateAndDisplayRoute(directionsService, directionsDisplay);
+                });
+
+                //geocoder = new google.maps.Geocoder();
+                //
+                //for (i = 0; i < locations.length; i++) {
+                //    geocodeAddress(locations, i);
+                //}
 
             }
-            //google.maps.event.addDomListener(document.getElementById("search-button"), "click", initialize);
 
             function geocodeAddress(locations, i) {
                 var title = locations[i][0];
