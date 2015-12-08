@@ -122,7 +122,7 @@
                      $("#detailContent").hide();
 
                 });
-
+                stButtons.locateElements();
          },function(reason){
 
             console.log("failed at Details controller at details searchbyid promise: " + reason);
