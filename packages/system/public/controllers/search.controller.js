@@ -76,7 +76,9 @@
             search("", "", "");
         }
 
-        initAutocomplete();
+        if ($rootScope.currentUser != undefined) {
+            initAutocomplete();
+        }
 
         function search(eventName, eventLocation, reqPageNumber) {
             $("#loaderIcon").show();
