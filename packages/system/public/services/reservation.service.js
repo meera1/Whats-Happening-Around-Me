@@ -8,7 +8,8 @@
 
         var api = {
             insertBooking: insertBooking,
-            viewBooking: viewBooking
+            viewBooking: viewBooking,
+            removeTicket: removeTicket
         }
 
         return api;
@@ -22,7 +23,13 @@
         }
 
         function viewBooking(username, callback) {
+            console.log("called res service to view bookings");
             $http.get("/rest/viewticket/" + username).success(callback);
+        }
+
+        function removeTicket(username, eventId, callback){
+            console.log(username + eventId+"from reserve service");
+            $http.post("/rest/removeReservation", { username: username, eventId: eventId}).success(callback);
         }
 
     }

@@ -78,6 +78,7 @@
 
                     <li ng-if="currentUser==null"><a href="#/login">Login</a></li>
                     <li ng-if="currentUser==null"><a href="#/signup">Sign Up</a></li>
+                    <li ng-if="currentUser!=null"><a href="#/view">View Reservations</a></li>
                     <li ng-if="currentUser!=null"><a href="#/logout" ng-click="controller.logout()">Logout</a></li>
 
                 </ul>

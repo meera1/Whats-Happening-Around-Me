@@ -30,6 +30,14 @@
                     loggedin: checkLoggedinForDetails
                 }
             })
+            .when("/view", {
+                templateUrl: "views/view.html",
+                controller: "ReservationController",
+                controllerAs: "reservationModel",
+                resolve: {
+                    loggedin: checkLoggedinForDetails
+                }
+                        })
             .when("/profile", {
                 templateUrl: "views/profile.html",
                 controller: "ProfileController",

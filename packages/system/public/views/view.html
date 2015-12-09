@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+
+    <table class="table table-hover" ng-show="reservations.length > 0">
+        <thead>
+            <tr>
+                <td>
+                    <h4><b>Event ID</b></h4>
+                </td>
+                <td>
+                    <h4><b>Event Name</b></h4>
+                </td>
+                <td align="center">
+                    <h4><b>Cancel Reservation</b></h4>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="r in reservations">
+                <td>{{r.eventId}}</td>
+                <td>{{r.eventName}}</td>
+                <td align="center">
+                    <button class="btn btn-danger" ng-click="removeReservations(r)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<h3 ng-show="reservations.length == 0">No Reservations!</h3>
+</body>
+</html>

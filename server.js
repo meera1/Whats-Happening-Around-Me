@@ -333,7 +333,7 @@ app.get("/rest/:username/event/:id/check", auth, function (req, res) {
     var username = req.params.username;
     var eventId = req.params.id;
 
-    console.log(username + "   " + eventId + "from server checking likes and dislikes");
+    //console.log(username + "   " + eventId + "from server checking likes and dislikes");
     Events.findOne({eventId: eventId, username: username}, function (err, existingEvent) {
 
         if (existingEvent == null) {
@@ -473,7 +473,27 @@ app.get("/rest/viewticket/:username", auth, function (req, res) {
     var username = req.params.username;
 
     Tickets.find({username: username}, function (err, tickets) {
+        console.log("fetched reservations "+ tickets);
         res.json(tickets);
     });
+
+});
+
+
+app.post("/rest/removeReservation", auth, function(req, res){
+        var username = req.body.username;
+        var eventId = req.body.eventId;
+        console.log("remove tickets for user " + username + "  " + eventId);
+        Tickets.remove({username: username, eventId: eventId}, function (err) {
+          if (err) console.log("Error in removing the selected reservation ticket");
+          else
+          {
+            Tickets.find({username: username}, function(err, tickets){
+                console.log(tickets);
+                res.json(tickets);
+
+            });
+          }
+        });
 
 });
