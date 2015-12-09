@@ -77,7 +77,8 @@ var Events = mongoose.model("Events", EventSchema);
 var TicketsSchema = mongoose.Schema({
     "username": String,
     "eventId": Number,
-    "eventName": String
+    "eventName": String,
+    "endDate": Date
 }, {collection: "Tickets"});
 
 var Tickets = mongoose.model("Tickets", TicketsSchema);
@@ -444,6 +445,8 @@ app.post("/rest/bookticket", auth, function (req, res) {
     var username = req.body.username;
     var eventId = req.body.eventId;
     var eventName = req.body.eventName;
+    var endDate = req.body.endDate;
+    console.log(endDate+ " from server book tickets ");
 
     Tickets.findOne({eventId: eventId, username: username}, function (err, existingBooking) {
 
@@ -451,7 +454,8 @@ app.post("/rest/bookticket", auth, function (req, res) {
             var newTicket = new Tickets({
                 username: username,
                 eventId: eventId,
-                eventName: eventName
+                eventName: eventName,
+                endDate: endDate
             });
 
             newTicket.save(function (err, document) {
@@ -471,9 +475,9 @@ app.post("/rest/bookticket", auth, function (req, res) {
 app.get("/rest/viewticket/:username", auth, function (req, res) {
 
     var username = req.params.username;
-
-    Tickets.find({username: username}, function (err, tickets) {
-        console.log("fetched reservations "+ tickets);
+    var d = new Date();
+    Tickets.find({username: username, endDate: {$gte: d}}, function (err, tickets) {
+        //console.log("fetched reservations "+ tickets);
         res.json(tickets);
     });
 

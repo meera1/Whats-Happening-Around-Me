@@ -14,11 +14,12 @@
 
         return api;
 
-        function insertBooking(username, eventId, eventName, callback) {
+        function insertBooking(username, eventId, eventName, endDate, callback) {
             $http.post("/rest/bookticket", {
                 username: username,
                 eventId: eventId,
-                eventName: eventName
+                eventName: eventName,
+                endDate: endDate
             }).success(callback);
         }
 

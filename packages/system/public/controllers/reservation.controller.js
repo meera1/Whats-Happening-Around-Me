@@ -28,11 +28,14 @@
 
 
         var init = function(){
+                    if($rootScope.currentUser != undefined)
+                    {
+                         ReservationService.viewBooking($rootScope.currentUser.username, function(callback) {
+                         console.log("after fetching the reservations  "+ callback);
+                         $scope.reservations = callback;
+                    })
+                    }
 
-                    ReservationService.viewBooking($rootScope.currentUser.username, function(callback) {
-                    console.log("after fetching the reservations  "+ callback);
-                    $scope.reservations = callback;
-                })
 
         }
 
@@ -53,9 +56,10 @@
 
             console.log(event.name.text);
             console.log(event.id);
+            console.log(event.end.local);
             console.log(username);
 
-            ReservationService.insertBooking(username, event.id, event.name.text, function(callback) {
+            ReservationService.insertBooking(username, event.id, event.name.text, event.end.local, function(callback) {
                 console.log("inside insert ticket controller");
                 if (callback) {
                     reservationModel.confirmed = true;
