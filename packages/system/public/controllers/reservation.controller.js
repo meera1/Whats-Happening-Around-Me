@@ -14,14 +14,37 @@
         var reservationModel = this;
 
         reservationModel.confirmTicket = confirmTicket;
-        reservationModel.showTickets = showTickets;
+        //reservationModel.removeReservations = removeReservations;
+        //reservationModel.showTickets = showTickets;
 
         reservationModel.confirmed = false;
+        reservationModel.deleted = false;
+
         reservationModel.eventName = $routeParams.eventname;
 
         reservationModel.isHistoryVisible = false;
 
         getCurrentEvent();
+
+
+        var init = function(){
+                    if($rootScope.currentUser != undefined)
+                    {
+                         ReservationService.viewBooking($rootScope.currentUser.username, function(callback) {
+                         console.log("after fetching the reservations  "+ callback);
+                         $scope.reservations = callback;
+                    })
+                    }
+
+
+        }
+
+        init();
+
+
+
+
+
 
         function getCurrentEvent() {
             reservationModel.currentEvent = DetailsService.getEvent();
@@ -33,9 +56,10 @@
 
             console.log(event.name.text);
             console.log(event.id);
+            console.log(event.end.local);
             console.log(username);
 
-            ReservationService.insertBooking(username, event.id, event.name.text, function(callback) {
+            ReservationService.insertBooking(username, event.id, event.name.text, event.end.local, function(callback) {
                 console.log("inside insert ticket controller");
                 if (callback) {
                     reservationModel.confirmed = true;
@@ -50,16 +74,19 @@
             });
         }
 
-        function showTickets() {
-            var username = $rootScope.currentUser.username;
 
-            ReservationService.viewBooking(username, function(callback) {
-                console.log(callback);
-                reservationModel.userTickets = callback;
-                reservationModel.isHistoryVisible = true;
-            })
-
+        $scope.removeReservations = function (r){
+            console.log($rootScope.currentUser.username);
+            console.log(r.eventName+ "  from remove reservation"+ r.eventId);
+            ReservationService.removeTicket($rootScope.currentUser.username, r.eventId, function(callback){
+            console.log(callback+" after removing reservation ");
+            $scope.reservations = callback;
+            //reservationModel.deleted = true;
+            //reservationModel.msg1 = "Cancelled Reservation"
+            });
         }
+
+
     }
 
 })();
