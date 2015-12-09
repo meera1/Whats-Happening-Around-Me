@@ -13,6 +13,12 @@
             console.log("Current location: " + position.coords.latitude + ", " + position.coords.longitude);
             latitude = position.coords.latitude
             longitude = position.coords.longitude;
+            var latlng = {lat: latitude, lng: longitude};
+            geocoder = new google.maps.Geocoder();
+            geocoder.geocode({'location': latlng}, function (results, status) {
+                console.log("latlng result");
+                document.getElementById("event-location").value = results[1].formatted_address;
+            });
         });
     }
 
