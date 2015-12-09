@@ -19,6 +19,9 @@
                 console.log("latlng result");
                 document.getElementById("event-location").value = results[1].formatted_address;
             });
+        },function(error){
+            document.getElementById("event-location").value = "Boston, MA";
+
         });
     }
 
