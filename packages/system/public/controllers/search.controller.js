@@ -20,7 +20,8 @@
                 document.getElementById("event-location").value = results[1].formatted_address;
             });
         },function(error){
-            document.getElementById("event-location").value = "Boston, MA";
+            if(document.getElementById("event-location") != undefined)
+                document.getElementById("event-location").value = "Boston, MA";
 
         });
     }

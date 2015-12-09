@@ -75,15 +75,18 @@
                     loggedin: checkLoggedinForReservations
                 }
             })
+            .when("/about", {
+                  templateUrl: "views/about.html",
+                  controller: "AboutController",
+                  controllerAs: "aboutModel",
+                  resolve: {
+                      loggedin: checkLoggedinForReservations
+                  }
+              })
 //            .when("/admin", {
 //                templateUrl: "views/admin.html",
 //                controller: "AdminController",
 //                controllerAs: "adminModel"
-//            })
-//            .when("/about", {
-//                templateUrl: "views/about.html",
-//                controller: "AboutController",
-//                controllerAs: "aboutModel"
 //            })
             .otherwise({
                 redirectTo: "/home"
